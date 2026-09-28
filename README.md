@@ -20,12 +20,14 @@ Implementado e testado localmente:
 - Ingestão do seed original para área de revisão; aprovação explícita de regras executáveis.
 - IA opcional somente para sugerir mapeamento **a partir dos cabeçalhos**, sem enviar linhas de clientes.
 
-**Ainda não publicado em produção.** A conexão PostgreSQL pelo Session pooler foi validada,
+**Publicado:** [interface](https://rasputin-auditoria.vercel.app) e
+[API](https://auditoria-api-production-f923.up.railway.app/ready).
+A conexão PostgreSQL pelo Session pooler foi validada,
 e as quatro migrations foram aplicadas ao Supabase remoto, preservando as tabelas existentes.
 Os testes transacionais de RLS e integridade passaram no banco real. Os buckets `uploads` e
 `reports` são privados. A API local respondeu em `/ready` com o banco remoto e exige login.
 A planilha de regras fiscais e sua validação continuam pendentes; não há alíquotas de teste
-ativadas em produção.
+ativadas em produção. Vercel e Railway acompanham a branch `main` deste repositório.
 
 ## Rodar localmente
 

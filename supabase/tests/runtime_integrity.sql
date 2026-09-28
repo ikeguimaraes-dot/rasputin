@@ -53,4 +53,27 @@ do $$ begin
  exception when insufficient_privilege then null; end;
 end $$;
 reset role;
+-- Remover um autor deve preservar o resultado publicado, sem permitir edição direta.
+insert into auth.users(id) values('aaaaaaaa-2222-2222-2222-222222222222');
+insert into analises(id,organizacao_id,cliente_id,periodo_ini,periodo_fim,status,
+  criado_por,input_snapshot,result_payload) values
+ ('d1111111-1111-1111-1111-111111111111','11111111-1111-1111-1111-111111111111',
+  'c1111111-1111-1111-1111-111111111111','2026-08-01','2026-08-31','concluida',
+  'aaaaaaaa-2222-2222-2222-222222222222','{"original":true}','{"total":100}');
+do $$ begin
+ begin
+  update analises set criado_por=null where id='d1111111-1111-1111-1111-111111111111';
+  raise exception 'FALHA: edição direta de análise concluída aceita';
+ exception when raise_exception then
+  if sqlerrm <> 'Análise concluída imutável' then raise; end if;
+ end;
+end $$;
+delete from auth.users where id='aaaaaaaa-2222-2222-2222-222222222222';
+do $$ begin
+ if not exists(select 1 from analises where id='d1111111-1111-1111-1111-111111111111'
+  and criado_por is null and input_snapshot='{"original":true}'::jsonb
+  and result_payload='{"total":100}'::jsonb and status='concluida') then
+  raise exception 'FALHA: remoção do autor alterou resultado ou apagou análise';
+ end if;
+end $$;
 rollback;

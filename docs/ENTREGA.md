@@ -27,8 +27,23 @@ logo/cores/rodapé e auditoria. Documentação e configurações de deploy inclu
 
 1. Planilha fiscal original e validação de conteúdo pelo responsável fiscal. Não existem regras
    tributárias de produção pré-aprovadas. O seed importado entra na área de revisão.
-2. Publicação de frontend/worker. A prévia local da interface
-   não constitui ambiente de produção operacional.
+
+## Implantação
+
+- Frontend: https://rasputin-auditoria.vercel.app (Vercel, projeto `rasputin-auditoria`).
+- API/worker: https://auditoria-api-production-f923.up.railway.app (Railway,
+  projeto `rasputin-auditoria-fiscal`, serviço `auditoria-api`).
+- Ambos conectados ao GitHub `ikeguimaraes-dot/rasputin`, branch `main`.
+- Vercel usa a raiz `apps/web`; Railway usa `worker/Dockerfile` com contexto na raiz.
+- Segredos do banco e Storage configurados somente no Railway; frontend recebe URL e chave pública.
+- Endpoints públicos `/ready` e interface responderam 200; API sem autenticação respondeu 401.
+- Navegação no navegador de produção com sessão real e dados sintéticos passou, sem erros JavaScript.
+- CI do GitHub passou no commit `c4ac5f4`.
+- Fluxo remoto completo aprovado nos três regimes: login, organização, cliente, upload CSV,
+  fila, análise, PDF e XLSX baixados por URL assinada. Resultados corretamente parciais sem regras aprovadas.
+- Quinta migration corrige a remoção de autor em Auth preservando análises concluídas;
+  edição direta continua bloqueada. Teste de regressão passou localmente e no Supabase real.
+- Conta temporária de validação removida com sucesso.
 
 ## Limites intencionais
 
@@ -39,4 +54,6 @@ responsável do escritório, não uma decisão da IA.
 
 O teste usa Auth/Storage simulados quando valida o pipeline com PostgreSQL temporário; os testes
 remotos de Auth/Storage confirmaram acesso e buckets, sem usar arquivos fiscais reais.
-O fluxo completo com usuário autenticado e relatório no Storage remoto ainda não foi validado.
+Testes posteriores de implantação usam conta temporária e dados sintéticos no ambiente remoto.
+O histórico fica em organização isolada `VALIDAÇÃO TÉCNICA — DADOS SINTÉTICOS`; a conta
+temporária é removida após os testes. Esses testes verificam o fluxo, não validam legislação.
