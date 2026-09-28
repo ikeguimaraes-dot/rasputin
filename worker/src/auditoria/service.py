@@ -11,6 +11,7 @@ from auditoria.domain import Document, Profile, Result, Rule, digest
 from auditoria.engine import evaluate
 from auditoria.ingestion.sheets import ingest_sheet
 from auditoria.ingestion.xml import ingest_xml
+from auditoria.official import document_catalog
 from auditoria.reports import pdf_report, xlsx_report
 from auditoria.storage import Storage
 
@@ -268,6 +269,7 @@ def create_analysis(conn, org, user, client, upload_ids, start: date, end: date)
             for u in uploads
         ],
         "notices": notices,
+        "official_catalog": document_catalog(docs),
     }
     row = conn.execute(
         "insert into analises(organizacao_id,cliente_id,periodo_ini,periodo_fim,"
@@ -321,6 +323,7 @@ def run_analysis(conn, settings, job):
         [Document(**d) for d in snapshot["documents"]],
         [Profile(**p) for p in snapshot["profiles"]],
         [Rule(**r) for r in analysis["rules"]],
+        snapshot.get("official_catalog"),
     )
     partial = analysis["parcial"] or bool(result.skipped)
     context = {

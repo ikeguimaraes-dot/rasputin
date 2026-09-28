@@ -1,0 +1,134 @@
+L9430 (https://www.planalto.gov.br/ccivil_03/leis/l9430.htm)
+citeturn17view0 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"turn16view1","lineno":12}); Total lines: 1530
+L0: cite0†Image: Brastra.gif (4376 bytes) | Presid�ncia da Rep�blica
+L1: Casa Civil
+L2: Subchefia para Assuntos Jur�dicos
+L3: 
+L4: cite1†LEI N� 9.430, DE 27 DE DEZEMBRO DE 1996.†legislacao.planalto.gov.br L5: cite2†Texto compilado cite3†Produ��o de efeito cite4†(Vide Medida Provis�ria n� 1.152, de 2022) cite5†Vig�ncia cite6†(Vide Medida Provis�ria n� 1.262, de 2024) cite7†Vig�ncia e produ��o de efeitos cite8†(Vide Lei Complementar n� 214, de 2025) cite9†Produ��o de efeitos ~~ cite10†(Vide Medida Provis�ria n� 1.303, de 2025) cite11†Produ��o de efeitos ~~     cite12†Vig�ncia encerrada | Disp�e sobre a legisla��o tribut�ria federal, as contribui��es para a seguridade social, o processo administrativo de consulta e d� outras provid�ncias.
+L6: O  PRESIDENTE DA REP�BLICA Fa�o saber  que o Congresso Nacional decreta e eu sanciono a seguinte Lei:
+L7: 
+L8: Cap�tulo I
+L9: IMPOSTO DE RENDA - PESSOA JUR�DICA
+L10: 
+L11: Se��o I
+L12: Apura��o da Base de C�lculo
+L13: 
+L14: Per�odo de Apura��o Trimestral
+L15: Art. 1� A partir do ano-calend�rio de 1997, o imposto de renda das pessoas jur�dicas ser� determinado com base no lucro real, presumido, ou arbitrado, por per�odos de apura��o trimestrais, encerrados nos dias 31 de mar�o, 30 de junho, 30 de setembro e 31 de dezembro de cada ano-calend�rio, observada a legisla��o vigente, com as altera��es desta Lei.
+L16: � 1� Nos casos de incorpora��o, fus�o ou cis�o, a apura��o da base de c�lculo e do imposto de renda devido ser� efetuada na data do evento, observado o disposto no cite13†art. 21 da Lei n� 9.249, de 26 de dezembro de 1995 .
+L17: 
+L18: � 2� Na extin��o da pessoa jur�dica, pela encerramento da liquida��o, a apura��o da base de c�lculo e do imposto devido ser� efetuada na data desse evento.
+L19: 
+L20: Pagamento por Estimativa
+L21: ~~Art. 2� A pessoa jur�dica sujeita a tributa��o com base no lucro real poder� optar pela pagamento do imposto, em cada m�s, determinado sobre base de c�lculo estimada, mediante a aplica��o, sobre a receita bruta auferida mensalmente, dos percentuais de que trata o cite14†art. 15 da Lei n� 9.249, de 26 de dezembro de 1995 , observado o disposto nos cite15†�� 1� e cite16†2� do art. 29 e nos cite17†arts.
+L22: 30 a 32 , cite18†34 e cite19†35 da Lei n� 8.981, de 20 de janeiro de 1995 , com as altera��es da cite20†Lei n� 9.065, de 20 de junho de 1995 .              cite21†(Regulamento) ~~
+L23: Art. 2^{o}  A pessoa jur�dica sujeita a tributa��o com base no lucro real poder� optar pela pagamento do imposto, em cada m�s, determinado sobre base de c�lculo estimada, mediante a aplica��o dos percentuais de que trata o cite14†art. 15 da Lei n^{o} 9.249, de 26 de dezembro de 1995 , sobre a receita bruta definida pela cite22†art.
+L24: 12 do Decreto-Lei n^{o} 1.598, de 26 de dezembro de 1977 , auferida mensalmente, deduzida das devolu��es, vendas canceladas e dos descontos incondicionais concedidos, observado o disposto nos cite15†�� 1^{o} e 2^{o} do art. 29 e nos cite17†arts. 30, 32 , cite18†34 e 35 da Lei no 8.981, de 20 de janeiro de 1995. cite23†(Reda��o dada pela Lei n� 12.973, de 2014) cite24†(Vig�ncia) L25: � 1� O imposto a ser pago mensalmente na forma deste artigo ser� determinado mediante a aplica��o, sobre a base de c�lculo, da al�quota de quinze por cento.
+L26: 
+L27: � 2�  A parcela da base de c�lculo, apurada mensalmente, que exceder a R$ 20.000,00 (vinte mil reais) ficar� sujeita � incid�ncia de adicional de imposto de renda � al�quota de dez por cento.
+L28: � 3� A pessoa jur�dica que optar pela pagamento do imposto na forma deste artigo dever� apurar o lucro real em 31 de dezembro de cada ano, exceto nas hip�teses de que tratam os �� 1� e 2� do artigo anterior.
+L29: 
+L30: � 4� Para efeito de determina��o do saldo de imposto a pagar ou a ser compensado, a pessoa jur�dica poder� deduzir do imposto devido o valor:
+L31: I - dos incentivos fiscais de dedu��o do imposto, observados os limites e prazos fixados na legisla��o vigente, bem como o disposto no cite25†�  4� do art. 3� da Lei n� 9.249, de 26 de dezembro de 1995 ;
+L32: 
+L33:  II - dos incentivos fiscais de redu��o e isen��o do imposto, calculados com base no lucro da explora��o;
+L34: 
+L35:  III - do imposto de renda pago ou retido na fonte, incidente sobre receitas computadas na determina��o do lucro real;
+L36: 
+L37:  IV - do imposto de renda pago na forma deste  artigo.
+L38: Se��o II
+L39: Pagamento do Imposto
+L40: 
+L41: Escolha da Forma de Pagamento
+L42: 
+L43: Art. 3� A ado��o da forma de pagamento do imposto prevista no art. 1�, pelas pessoas jur�dicas sujeitas ao regime do lucro real, ou a op��o pela forma do art. 2� ser� irretrat�vel para todo o ano-calend�rio.
+L44: 
+L45:  Par�grafo �nico. A op��o pela forma estabelecida no art. 2� ser� manifestada com o pagamento do imposto correspondente ao m�s de janeiro ou de in�cio de atividade.
+L46: 
+L47: Adicional do Imposto de Renda
+L48: Art. 4� Os cite26†�� 1� e cite27†2� do art. 3� da Lei n� 9.249, de 26 de dezembro de 1995 , passam a vigorar com a seguinte reda��o:
+L49: > > "Art. 3�. ..........................................................................
+L50: >>
+L51: >> � 1� A parcela do lucro real, presumido ou arbitrado, que exceder o valor resultante da multiplica��o de R$ 20.000,00 (vinte mil reais) pela n�mero de meses do respectivo per�odo de apura��o, sujeita-se � incid�ncia de adicional de imposto de renda � al�quota de dez por cento.
+L52: >>
+L53: >> � 2� O disposto no par�grafo anterior aplica-se, inclusive, nos casos de incorpora��o, fus�o ou cis�o e de extin��o da pessoa jur�dica pela encerramento da liquida��o.
+L54: >>
+L55: >> ......................................................................................"
+L56: Imposto Correspondente a Per�odo Trimestral
+L57: 
+L58:  Art. 5� O imposto de renda devido, apurado na forma do art. 1�, ser� pago em quota �nica, at� o �ltimo dia �til do m�s subseq�ente ao do encerramento do per�odo de apura��o.
+L59: 
+L60: � 1� � op��o da pessoa jur�dica, o imposto devido poder� ser pago em at� tr�s quotas mensais, iguais e sucessivas, venc�veis no �ltimo dia �til dos tr�s meses subseq�entes ao de encerramento do per�odo de apura��o a que corresponder.
+L61:  � 2� Nenhuma quota poder� ter valor inferior a R$ 1.000,00 (mil reais) e o imposto de valor inferior a  R$ 2.000,00 (dois mil reais) ser� pago em quota �nica, at� o �ltimo dia �til do m�s subseq�ente ao do encerramento do per�odo de apura��o.
+L62: � 3� As quotas do imposto ser�o acrescidas de juros equivalentes � taxa referencial do Sistema Especial de Liquida��o e Cust�dia - SELIC, para t�tulos federais, acumulada mensalmente, calculados a partir do primeiro dia do segundo m�s subseq�ente ao do encerramento do per�odo de apura��o at� o �ltimo dia do m�s anterior ao do pagamento e de um por cento no m�s do pagamento.
+--------------------------------------------------------------------------------
+Lcp87 (https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp87.htm)
+citeturn17view1 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"turn16view0","lineno":445}); Total lines: 888
+L419: III - que, em fun��o do porte ou da atividade do estabelecimento, o imposto seja pago em parcelas peri�dicas e calculado por estimativa, para um determinado per�odo, assegurado ao sujeito passivo o direito de impugn�-la e instaurar processo contradit�rio.
+L420: � 1� Na hip�tese do inciso III, ao fim do per�odo, ser� feito o ajuste com base na escritura��o regular do contribuinte, que pagar� a diferen�a apurada, se positiva; caso contr�rio, a diferen�a ser� compensada com o pagamento referente ao per�odo ou per�odos imediatamente seguintes.
+L421: 
+L422: � 2� A inclus�o de estabelecimento no regime de que trata o inciso III n�o dispensa o sujeito passivo do cumprimento de obriga��es acess�rias.
+L423: 
+L424: Art. 27. (VETADO)
+L425: 
+L426: Art. 28.(VETADO)
+L427: 
+L428: Art. 29. (VETADO)
+L429: 
+L430: Art. 30.(VETADO)
+L431: ~~Art. 31.
+L432: At� o exerc�cio financeiro de 2.002, inclusive, a Uni�o entregar� mensalmente recursos aos Estados e seus Munic�pios, obedecidos os limites, os crit�rios, os prazos e as demais condi��es fixados no Anexo desta Lei Complementar, com base no produto da arrecada��o estadual efetivamente realizada do imposto sobre opera��es relativas � circula��o de mercadorias e sobre presta��es de servi�os de transporte interestadual e intermunicipal e de comunica��o no per�odo julho de 1995 a junho de 1996, inclusive.~~
+L433: ~~Art. 31. Nos exerc�cios financeiros de 2000, 2001 e 2002 a Uni�o entregar� mensalmente recursos aos Estados e seus Munic�pios, obedecidos os montantes, os crit�rios, os prazos e as demais condi��es fixados no Anexo desta Lei Complementar.          cite17†(Reda��o dada pela LCP n� 102, de 11.7.2000) ~~
+L434: 
+L435: ~~� 1� Do montante de recursos que couber a cada Estado, a Uni�o entregar�, diretamente:~~
+L436: ~~� 1^{o} Nos exerc�cios financeiros de 2000, 2001 e 2002 e a partir de 1^{o} de janeiro de 2003, do montante de recursos que couber a cada Estado, a Uni�o entregar�, diretamente:        cite17†(Reda��o dada pela LCP n� 102, de 11.7.2000) ~~
+L437: Art. 31. Nos exerc�cios financeiros de 2003 a 2006, a Uni�o entregar� mensalmente recursos aos Estados e seus Munic�pios, obedecidos os montantes, os crit�rios, os prazos e as demais condi��es fixadas no Anexo desta Lei Complementar.      cite41†(Reda��o dada pela LCP n� 115, de 26.12.2002) L438: 
+L439: � 1^{o} Do montante de recursos que couber a cada Estado, a Uni�o entregar�, diretamente:      cite41†(Reda��o dada pela LCP n� 115, de 26.12.2002) L440: 
+L441: I - setenta e cinco por cento ao pr�prio Estado; e
+L442: II - vinte e cinco por cento aos respectivos Munic�pios, de acordo com os crit�rios previstos no par�grafo �nico do art. 158 da Constitui��o Federal.
+L443: 
+L444: ~~� 2� Para atender ao disposto no caput, os recursos do Tesouro Nacional ser�o provenientes:~~
+L445: 
+L446: ~~� 2^{o} Nos exerc�cios financeiros de 2000, 2001 e 2002 e a partir de 1^{o} de janeiro de 2003, os recursos do Tesouro Nacional ser�o provenientes:       cite17†(Reda��o dada pela LCP n� 102, de 11.7.2000) ~~
+L447: � 2� Para atender ao disposto no caput, os recursos do Tesouro Nacional ser�o provenientes:      cite42†(Reda��o dada pela LCP n� 115, de 26.12.2002) L448: I - da emiss�o de t�tulos de sua responsabilidade, ficando autorizada, desde j�, a inclus�o nas leis or�ament�rias anuais de estimativa de receita decorrente dessas emiss�es, bem como de dota��o at� os montantes anuais previstos no Anexo, n�o se aplicando neste caso, desde que atendidas as condi��es e os limites globais fixados pelo Senado Federal, quaisquer restri��es ao acr�scimo que acarretar� no endividamento da Uni�o;
+L449: 
+L450: II - de outras fontes de recursos.
+L451: ~~� 3� A entrega dos recursos a cada Unidade Federada, na forma e condi��es detalhadas no Anexo, especialmente no seu item 9, ser� satisfeita, primeiro, para efeito de pagamento ou compensa��o da d�vida da respectiva Unidade, inclusive de sua administra��o indireta, vencida e n�o paga ou vincenda no m�s seguinte �quele em que for efetivada a entrega, junto ao Tesouro Nacional e aos demais entes da administra��o federal. O saldo remanescente, se houver, ser� creditado em moeda corrente. ~~
+L452: ~~� 3^{o} No per�odo compreendido entre a data de entrada em vigor desta Lei Complementar e 31 de dezembro de 2002, a entrega dos recursos a cada unidade federada, na forma e condi��es detalhadas no Anexo, especialmente no seu item 5, ser� satisfeita, primeiro, para efeito de pagamento ou compensa��o da d�vida da respectiva unidade, inclusive de sua administra��o indireta, vencida e n�o paga ou vincenda no m�s seguinte �quele em que for efetivada a entrega junto ao Tesouro Nacional e aos demais entes da administra��o federal.
+L453: O saldo remanescente, se houver, ser� creditado em moeda corrente.      cite17†(Reda��o dada pela LCP n� 102, de 11.7.2000) ~~
+L454: � 3^{o} A entrega dos recursos a cada unidade federada, na forma e condi��es detalhadas no Anexo, especialmente no seu item 3, ser� satisfeita, primeiro, para efeito de pagamento ou compensa��o da d�vida da respectiva unidade, inclusive de sua administra��o indireta, vencida e n�o paga junto � Uni�o, bem como para o ressarcimento � Uni�o de despesas decorrentes de eventuais garantias honradas de opera��es de cr�dito externas.
+L455: O saldo remanescente, se houver, ser� creditado em moeda corrente.      cite43†(Reda��o dada pela LCP n� 115, de 26.12.2002) L456: ~~� 4� O prazo definido no caput poder� ser estendido at� o exerc�cio financeiro de 2006, inclusive, nas situa��es excepcionais previstas no subitem 2.1. do Anexo. ~~
+L457: ~~� 4^{o} A partir de 1^{o} de janeiro de 2003 a entrega dos recursos a cada unidade federada, na forma e condi��es detalhadas no cite44†Anexo � Lei Complementar n^{o} 87, de 13 de setembro de 1996 , especialmente no seu item 9, ser� satisfeita, primeiro, para efeito de pagamento ou compensa��o da d�vida da respectiva unidade, inclusive de sua administra��o indireta, vencida e n�o paga ou vincenda no m�s seguinte �quele em que for efetivada a entrega, junto ao Tesouro Nacional e aos demais entes da administra��o federal.
+L458: O saldo remanescente, se houver, ser� creditado em moeda corrente.      cite17†(Reda��o dada pela LCP n� 102, de 11.7.2000) ~~
+L459: � 4^{o} A entrega dos recursos a cada unidade federada, na forma e condi��es detalhadas no Anexo, subordina-se � exist�ncia de disponibilidades or�ament�rias consignadas a essa finalidade na respectiva Lei Or�ament�ria Anual da Uni�o, inclusive eventuais cr�ditos adicionais.      cite45†(Reda��o dada pela LCP n� 115, de 26.12.2002) L460: ~~� 4^{o}-A.
+L461: A partir de 1^{o} de janeiro de 2003 volta a vigorar a possibilidade de, at� o exerc�cio financeiro de 2006, a Uni�o entregar mensalmente recursos aos Estados e seus Munic�pios, obedecidos os limites, os crit�rios, os prazos e as demais condi��es fixados no cite44†Anexo � Lei Complementar n� 87, de 1996 , com base no produto da arrecada��o estadual, efetivamente realizada, do imposto sobre opera��es relativas � circula��o de mercadorias e sobre presta��es de servi�os de transporte interestadual e intermunicipal e de comunica��o, no per�odo julho de 1995 a junho de 1996, inclusive.     cite17†(Par�grafo inclu�do pela LCP n� 102, de 11.7.2000) ~~       cite46†(Par�grafo Revogado pela LCP n� 115, de 26.12.2002) L462: ~~� 5� Para efeito da apura��o de que trata o cite47†art. 4� da Lei Complementar n� 65, de 15 de abril de 1991, ser� considerado o valor das respectivas exporta��es de produtos industrializados, inclusive de semi-elaborados, n�o submetidas a incid�ncia do imposto sobre opera��es relativas � circula��o de mercadorias e sobre presta��es de servi�os de transporte interestadual e intermunicipal e de comunica��o em 31 de julho de 1996.~~
+L463: � 5^{o} Para efeito da apura��o de que trata o cite47†art. 4^{o} da Lei Complementar n^{o} 65, de 15 de abril de 1991 , ser� considerado o valor das respectivas exporta��es de produtos industrializados, inclusive de semi-elaborados, n�o submetidas � incid�ncia do imposto sobre opera��es relativas � circula��o de mercadorias e sobre presta��es de servi�os de transporte interestadual e intermunicipal e de comunica��o, em 31 de julho de 1996.     cite17†(Reda��o dada pela LCP n� 102, de 11.7.2000) L464: Art. 31-A. Em rela��o aos fatos geradores ocorridos de 1� de janeiro de 2029 a 31 de dezembro de 2032, as al�quotas do imposto ser�o reduzidas nas seguintes propor��es das al�quotas previstas nas legisla��es dos Estados ou do Distrito Federal, vigentes em 31 de dezembro de 2028:       cite5†(Inclu�do pela Lei Complementar n� 214, de 2025) cite48†Produ��o de efeitos L465: 
+--------------------------------------------------------------------------------
+L8981 (https://www.planalto.gov.br/ccivil_03/leis/l8981.htm)
+citeturn17view2 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"turn9view3","lineno":389}); Total lines: 1072
+L375:         Art. 42. A partir de 1� de janeiro de 1995, para efeito de determinar o lucro real, o lucro l�quido ajustado pelas adi��es e exclus�es previstas ou autorizadas pela legisla��o do Imposto de Renda, poder� ser reduzido em, no m�ximo, trinta por cento.                       cite43†(Vide Lei n� 9.065, de 1995 L376:         Par�grafo �nico. A parcela dos preju�zos fiscais apurados at� 31 de dezembro de 1994, n�o compensada em raz�o do disposto no caput deste artigo poder� ser utilizada nos anos-calend�rio subseq�entes.
+L377: 
+L378:         Art. 43. Poder�o ser registradas, como custo ou despesa operacional, as import�ncias necess�rias � forma��o de provis�o para cr�ditos de liquida��o duvidosa.                             cite44†(Vide Lei n� 9.430, de 1996) L379:         � 1� A import�ncia dedut�vel como provis�o para cr�ditos de liquida��o duvidosa ser� a necess�ria a tornar a provis�o suficiente para absorver as perdas que provavelmente ocorrer�o no recebimento dos cr�ditos existentes ao fim de cada per�odo de apura��o do lucro real.                      cite44†(Vide Lei n� 9.430, de 1996) L380:         � 2� O montante dos cr�ditos referidos no par�grafo anterior abrange exclusivamente os cr�ditos oriundos da explora��o da atividade econ�mica da pessoa jur�dica, decorrentes da venda de bens nas opera��es de conta pr�pria, dos servi�os prestados e das opera��es de conta alheia.                       cite44†(Vide Lei n� 9.430, de 1996) L381: 
+L382:         � 3� Do montante dos cr�ditos referidos no par�grafo anterior dever�o ser exclu�dos:                         cite44†(Vide Lei n� 9.430, de 1996) L383:         a) os provenientes de vendas com reserva de dom�nio, de aliena��o fiduci�ria em garantia, ou de opera��es com garantia real;                    cite44†(Vide Lei n� 9.430, de 1996) L384: 
+L385:         b) os cr�ditos com pessoa jur�dica de direito p�blico ou empresa sob seu controle, empresa p�blica, sociedade de economia mista ou sua subsidi�ria;                        cite45†(Vide Lei n� 9.065, de 1995) cite44†(Vide Lei n� 9.430, de 1996) L386:         c) os cr�ditos com pessoas jur�dicas coligadas, interligadas, controladoras e controladas ou associadas por qualquer forma;                     cite44†(Vide Lei n� 9.430, de 1996) L387: 
+L388:         d) os cr�ditos com administrador, s�cio ou acionista, titular ou com seu c�njuge ou parente at� o terceiro grau, inclusive os afins;                         cite44†(Vide Lei n� 9.430, de 1996) L389:         e) a parcela dos cr�ditos correspondentes �s receitas que n�o tenham transitado por conta de resultado;                        cite44†(Vide Lei n� 9.430, de 1996) L390: 
+L391:         f) o valor dos cr�ditos adquiridos com coobriga��o;                         cite44†(Vide Lei n� 9.430, de 1996) L392: 
+L393:         g) o valor dos cr�ditos cedidos sem coobriga��o;                            cite44†(Vide Lei n� 9.430, de 1996) L394:         h) o valor correspondente ao bem arrendado, no caso de pessoas jur�dicas que operam com arrendamento mercantil;                       cite44†(Vide Lei n� 9.430, de 1996) L395: 
+L396:         i) o valor dos cr�ditos e direitos junto a institui��es financeiras, demais institui��es autorizadas a funcionar pelo Banco Central do Brasil e a sociedades e fundos de investimentos.                     cite44†(Vide Lei n� 9.430, de 1996) L397:         � 4� Para efeito de determina��o do saldo adequado da provis�o, aplicar-se-�, sobre o montante dos cr�ditos a que se refere este artigo, o percentual obtido pela rela��o entre a soma das perdas efetivamente ocorridas nos �ltimos tr�s anos-calend�rio, relativas aos cr�ditos decorrentes do exerc�cio da atividade econ�mica, e a soma dos cr�ditos da mesma esp�cie existentes no in�cio dos anos-calend�rio correspondentes, observando-se que:                      cite44†(Vide Lei n� 9.430, de 1996) L398:         a) para efeito da rela��o estabelecida neste par�grafo, n�o poder�o ser computadas as perdas relativas a cr�ditos constitu�dos no pr�prio ano-calend�rio;                       cite44†(Vide Lei n� 9.430, de 1996) L399: 
+L400:         b) o valor das perdas, relativas a cr�ditos sujeitos � atualiza��o monet�ria, ser� o constante do saldo no in�cio do ano-calend�rio considerado.                         cite44†(Vide Lei n� 9.430, de 1996) L401:         � 5� Al�m da percentagem a que se refere o � 4�, a provis�o poder� ser acrescida:                         cite44†(Vide Lei n� 9.430, de 1996) L402: 
+L403:         a) da diferen�a entre o montante do cr�dito habilitado e a proposta de liquida��o pelo concordat�rio, nos casos de concordata, desde o momento em que esta for requerida                    ;cite44†(Vide Lei n� 9.430, de 1996) L404:         b) de at� cinq�enta por cento do cr�dito habilitado, nos casos de fal�ncia do devedor, desde o momento de sua decreta��o.                         cite44†(Vide Lei n� 9.430, de 1996) L405: 
+L406:         � 6� Nos casos de concordata ou fal�ncia do devedor, n�o ser�o admitidos como perdas os cr�ditos que n�o forem habilitados, ou que tiverem a sua habilita��o denegada.                        cite44†(Vide Lei n� 9.430, de 1996) L407:         � 7� Os preju�zos realizados no recebimento de cr�ditos ser�o obrigatoriamente debitados � provis�o referida neste artigo e o eventual excesso verificado ser� debitado a despesas operacionais.                        cite44†(Vide Lei n� 9.430, de 1996) L408:         ~~� 8� O d�bito dos preju�zos a que se refere o par�grafo anterior, quando em valor inferior a 500,00 Ufirs por devedor, poder� ser efetuado, ap�s decorrido um ano de seu vencimento, independentemente de se terem esgotado os recursos para sua cobran�a.~~
+L409: 
+L410:         ~~� 9� No caso de cr�ditos cujo valor seja superior ao limite previsto no par�grafo anterior, o d�bito dos preju�zos somente ser� dedut�vel quando houverem sido esgotados os recursos para sua cobran�a.~~
+L411: ~~� 8� O d�bito dos preju�zos a que se refere o par�grafo anterior poder� ser efetuado, independentemente de se terem esgotados os recursos para sua cobran�a, ap�s o decurso de:                              cite18†(Reda��o dada pela Medida Provis�ria n� 998, de 1995) ~~
+L412: 
+L413: ~~a) um ano de seu vencimento, se em valor inferior a 5.000 Ufir, por devedor;                      cite18†(Inclu�do pela Medida Provis�ria n� 998, de 1995) ~~
+L414: ~~b) dois anos de seu vencimento, se superior ao limite referido na al�nea a, n�o podendo exceder a 25% do lucro real, antes de computada essa dedu��o.                          cite18†(Inclu�do pela Medida Provis�ria n� 998, de 1995) ~~
+L415: ~~� 9� Os preju�zos debitados em prazos inferiores, conforme o caso, aos estabelecidos no par�grafo anterior, somente ser�o dedut�veis quando houverem sido esgotados os recursos para sua cobran�a.                     cite18†(Reda��o dada pela Medida Provis�ria n� 998, de 1995) ~~
+L416:         � 8� O d�bito dos preju�zos a que se refere o par�grafo anterior poder� ser efetuado, independentemente de se terem esgotados os recursos para sua cobran�a, ap�s o decurso de: cite19†(Reda��o dada  pela Lei n� 9.065, de 1995) cite44†(Vide Lei n� 9.430, de 1996) L417: 
+L418:         a) um ano de seu vencimento, se em valor inferior a 5.000 UFIR, por devedor;                       cite19†(Inclu�do pela Lei n� 9.065, de 1995) cite44†(Vide Lei n� 9.430, de 1996) L419:         b) dois anos de seu vencimento, se superior ao limite referido na al�nea a, n�o podendo exceder a vinte e cinco por cento do lucro real, antes de computada essa dedu��o.                    cite19†(Inclu�do pela Lei n� 9.065, de 1995) cite44†(Vide Lei n� 9.430, de 1996) L420:         � 9� Os preju�zos debitados em prazos inferiores, conforme o caso, aos estabelecidos no par�grafo anterior, somente ser�o dedut�veis quando houverem sido esgotados os recursos para sua cobran�a.                     cite19†(Reda��o dada  pela Lei n� 9.065, de 1995) cite44†(Vide Lei n� 9.430, de 1996) L421: 
+L422:         � 10. Consideram-se esgotados os recursos de cobran�a quando o credor valer-se de todos os meios legais � sua disposi��o.                   cite44†(Vide Lei n� 9.430, de 1996) L423: ~~ � 11. Os d�bitos a que se refere a al�nea b do � 8� n�o alcan�am os cr�ditos referidos nas al�neas a, b, c, d, e e h do � 3�.                            cite18†(Reda��o dada pela Medida Provis�ria n� 998, de 1995) ~~
+L424: 
+L425:         � 11. Os d�bitos a que se refere a al�nea b do � 8� n�o alcan�am os cr�ditos referidos nas al�neas a, b, c, d, e e h do � 3�.                         cite19†(Inclu�do pela Lei n� 9.065, de 1995) cite44†(Vide Lei n� 9.430, de 1996) L426: 
+L427: SE��O IV
+

@@ -13,6 +13,7 @@ from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
 from auditoria.api import router
+from auditoria.assessment_api import router as assessment_router
 from auditoria.config import Settings
 from auditoria.db import connect
 from auditoria.queue import consume
@@ -45,6 +46,7 @@ def create_app(settings: Settings | None = None, run_queue: bool = True) -> Fast
         allow_headers=["Authorization", "Content-Type", "X-Organization-Id"],
     )
     app.include_router(router)
+    app.include_router(assessment_router)
 
     @app.exception_handler(ValueError)
     async def invalid(request: Request, exc: ValueError):

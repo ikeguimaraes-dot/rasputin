@@ -1,0 +1,13 @@
+{
+  "simples_anexo_i": [
+    {"number":1,"limit":"180000","rate":"4","deduction":"0","shares":{"IRPJ":"5.5","CSLL":"3.5","COFINS":"12.74","PIS":"2.76","CPP":"41.5","ICMS":"34"}},
+    {"number":2,"limit":"360000","rate":"7.3","deduction":"5940","shares":{"IRPJ":"5.5","CSLL":"3.5","COFINS":"12.74","PIS":"2.76","CPP":"41.5","ICMS":"34"}},
+    {"number":3,"limit":"720000","rate":"9.5","deduction":"13860","shares":{"IRPJ":"5.5","CSLL":"3.5","COFINS":"12.74","PIS":"2.76","CPP":"42","ICMS":"33.5"}},
+    {"number":4,"limit":"1800000","rate":"10.7","deduction":"22500","shares":{"IRPJ":"5.5","CSLL":"3.5","COFINS":"12.74","PIS":"2.76","CPP":"42","ICMS":"33.5"}},
+    {"number":5,"limit":"3600000","rate":"14.3","deduction":"87300","shares":{"IRPJ":"5.5","CSLL":"3.5","COFINS":"12.74","PIS":"2.76","CPP":"42","ICMS":"33.5"}},
+    {"number":6,"limit":"4800000","rate":"19","deduction":"378000","shares":{"IRPJ":"13.5","CSLL":"10","COFINS":"28.27","PIS":"6.13","CPP":"42.1","ICMS":"0"}}
+  ],
+  "income": {"irpj":"0.15","additional_irpj":"0.10","additional_monthly_threshold":"20000","csll":"0.09","loss_limit":"0.30","presumption_irpj":"0.08","presumption_csll":"0.12","presumption_services":"0.32","uplift":"0.10","quarter_revenue_threshold":"1250000","csll_uplift_from":"2026-04-01"},
+  "contributions": {"pis_cumulative":"0.0065","pis_noncumulative":"0.0165","cofins_cumulative":"0.03","cofins_noncumulative":"0.076"},
+  "icms_sp": {"rate":"0.04","eligible_st_entry_deduction":"0.039"}
+}

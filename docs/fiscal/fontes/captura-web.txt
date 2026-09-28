@@ -1,0 +1,173 @@
+Lcp 123 (https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp123.htm)
+citeturn13view0 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp123.htm","lineno":1983}); Total lines: 2419
+L1971: De 2.520.000,01 a 2.700.000,00  | 10,32%  | 0,48%  | 0,48%  | 1,43%  | 0,34%  | 4,08%  | 3,51%
+L1972: De 2.700.000,01 a 2.880.000,00  | 11,23%  | 0,52%  | 0,52%  | 1,56%  | 0,37%  | 4,44%  | 3,82%
+L1973: De 2.880.000,01 a 3.060.000,00  | 11,32%  | 0,52%  | 0,52%  | 1,57%  | 0,37%  | 4,49%  | 3,85%
+L1974: De 3.060.000,01 a 3.240.000,00  | 11,42%  | 0,53%  | 0,53%  | 1,58%  | 0,38%  | 4,52%  | 3,88%
+L1975: De 3.240.000,01 a 3.420.000,00  | 11,51%  | 0,53%  | 0,53%  | 1,60%  | 0,38%  | 4,56%  | 3,91%
+L1976: De 3.420.000,01 a 3.600.000,00  | 11,61%  | 0,54%  | 0,54%  | 1,60%  | 0,38%  | 4,60%  | 3,95%
+L1977: ANEXO I DA LEI COMPLEMENTAR N^{o} 123, DE 14 DE DEZEMBRO DE 2006
+L1978: 
+L1979: cite133†(Reda��o dada pela Lei Complementar n� 155, de 2016) cite24†Produ��o de efeito L1980: 
+L1981: cite134†(Vide Lei Complementar n� 214, de 2025) cite8†Produ��o de efeitos L1982: 
+L1983: (Vig�ncia: 01/01/2018)
+L1984: 
+L1985: Al�quotas e Partilha do Simples Nacional � Com�rcio
+L1986: Receita Bruta em 12 Meses (em R$)  | Al�quota  | Valor a Deduzir (em R$)
+L1987: 1^{a} Faixa  | At� 180.000,00  | 4,00%  | -
+L1988: 2^{a} Faixa  | De 180.000,01 a 360.000,00  | 7,30%  | 5.940,00
+L1989: 3^{a} Faixa  | De 360.000,01 a 720.000,00  | 9,50%  | 13.860,00
+L1990: 4^{a} Faixa  | De 720.000,01 a 1.800.000,00  | 10,70%  | 22.500,00
+L1991: 5^{a} Faixa  | De 1.800.000,01 a 3.600.000,00  | 14,30%  | 87.300,00
+L1992: 6^{a} Faixa  | De 3.600.000,01 a 4.800.000,00  | 19,00%  | 378.000,00
+L1993: Faixas  | Percentual de Reparti��o dos Tributos
+L1994:    | IRPJ  | CSLL  | Cofins  | PIS/Pasep  | CPP  | ICMS
+L1995: 1^{a} Faixa  | 5,50%  | 3,50%  | 12,74%  | 2,76%  | 41,50%  | 34,00%
+L1996: 2^{a} Faixa  | 5,50%  | 3,50%  | 12,74%  | 2,76%  | 41,50%  | 34,00%
+L1997: 3^{a} Faixa  | 5,50%  | 3,50%  | 12,74%  | 2,76%  | 42,00%  | 33,50%
+L1998: 4^{a} Faixa  | 5,50%  | 3,50%  | 12,74%  | 2,76%  | 42,00%  | 33,50%
+L1999: 5^{a} Faixa  | 5,50%  | 3,50%  | 12,74%  | 2,76%  | 42,00%  | 33,50%
+L2000: 6^{a} Faixa  | 13,50%  | 10,00%  | 28,27%  | 6,13%  | 42,10%  | -
+L2001: ~~ ANEXO II DA LEI COMPLEMENTAR N^{o} 123, DE 14 DE DEZEMBRO DE 2006~~
+L2002: 
+L2003: (vig�ncia: 01/01/2012)
+L2004: # ~~ Al�quotas e Partilha do Simples Nacional � Ind�stria ~~
+--------------------------------------------------------------------------------
+L9249 (https://www.planalto.gov.br/ccivil_03/leis/l9249.htm)
+citeturn13view1 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.planalto.gov.br/ccivil_03/leis/l9249.htm","lineno":145}); Total lines: 327
+L137:         IV - das despesas com alimenta��o de s�cios, acionistas e administradores;
+L138: 
+L139:         V - das contribui��es n�o compuls�rias, exceto as destinadas a custear seguros e planos de sa�de, e benef�cios complementares assemelhados aos da previd�ncia social, institu�dos em favor dos empregados e dirigentes da pessoa jur�dica;
+L140: 
+L141:         VI - das doa��es, exceto as referidas no � 2�;
+L142: 
+L143:         VII - das despesas com brindes.
+L144:         VIII - de despesas de deprecia��o, amortiza��o e exaust�o geradas por bem objeto de arrendamento mercantil pela arrendat�ria, na hip�tese em que esta reconhe�a contabilmente o encargo.                          cite26†(Inclu�do pela Lei n� 12.973, de 2014) cite27†(Vig�ncia) L145: 
+L146:         � 1� Admitir-se-�o como dedut�veis as despesas com alimenta��o fornecida pela pessoa jur�dica, indistintamente, a todos os seus empregados.
+L147: 
+L148:         � 2� Poder�o ser deduzidas as seguintes doa��es:
+L149:         I - as de que trata a cite55†Lei n� 8.313, de 23 de dezembro de 1991 ;
+L150: 
+L151:       II - as efetuadas �s institui��es de ensino e pesquisa cuja cria��o tenha sido autorizada por lei federal e que preencham os requisitos dos cite56†incisos I e II do art. 213 da Constitui��o Federal , at� o limite de um e meio por cento do lucro operacional, antes de computada a sua dedu��o e a de que trata o inciso seguinte;
+L152:         III - as doa��es, at� o limite de dois por cento do lucro operacional da pessoa jur�dica, antes de computada a sua dedu��o, efetuadas a entidades civis, legalmente constitu�das no Brasil, sem fins lucrativos, que prestem servi�os gratuitos em benef�cio de empregados da pessoa jur�dica doadora, e respectivos dependentes, ou em benef�cio da comunidade onde atuem, observadas as seguintes regras:
+L153:         a) as doa��es, quando em dinheiro, ser�o feitas mediante cr�dito em conta corrente banc�ria diretamente em nome da entidade benefici�ria;
+--------------------------------------------------------------------------------
+L8981 (https://www.planalto.gov.br/ccivil_03/leis/l8981.htm)
+citeturn13view2 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.planalto.gov.br/ccivil_03/leis/l8981.htm","lineno":505}); Total lines: 1072
+L497:          IV - 0,05 (cinco cent�simos) do valor do patrim�nio l�quido constante do �ltimo balan�o patrimonial conhecido, atualizado monetariamente;
+L498: 
+L499:          V - 0,4 (quatro d�cimos) do valor das compras de mercadorias efetuadas no m�s;
+L500: 
+L501:           VI - 0,4 (quatro d�cimos) da soma, em cada m�s, dos valores da folha de pagamento dos empregados e das compras de mat�rias-primas, produtos intermedi�rios e materiais de embalagem;
+L502: 
+L503:         VII - 0,8 (oito d�cimos) da soma dos valores devidos no m�s a empregados;
+L504:         VIII - 0,9 (nove d�cimos) do valor mensal do aluguel devido.
+L505: 
+L506:         � 1� As alternativas previstas nos incisos V, VI e VII, a crit�rio da autoridade lan�adora, poder�o ter sua aplica��o limitada, respectivamente, �s atividades comerciais, industriais e de presta��o de servi�os e, no caso de empresas com atividade mista, ser adotados isoladamente em cada atividade.
+L507:         � 2� Para os efeitos da aplica��o do disposto no inciso I, quando o lucro real for decorrente de per�odo-base anual, o valor que servir� de base ao arbitramento ser� proporcional ao n�mero de meses do per�odo-base considerado.
+L508:         � 3� Para c�lculo da atualiza��o monet�ria a que se referem os incisos deste artigo, ser�o adotados os �ndices utilizados para fins de corre��o monet�ria das demonstra��es financeiras, tomando-se como termo inicial a data do encerramento do per�odo-base utilizado, e, como termo final, o m�s a que se referir o arbitramento.
+L509:         � 4� Nas alternativas previstas nos incisos V e VI do caput, as compras ser�o consideradas pelos valores totais das opera��es, devendo ser inclu�dos os valores decorrentes do ajuste a valor presente de que trata o cite34†inciso III do art. 184 da Lei n� 6.404, de 15 de dezembro de 1976 .         cite31†(Inclu�do pela Lei n� 12.973, de 2014) cite32†(Vig�ncia) L510: 
+L511:         ~~Art. 52. Ser�o acrescidos ao lucro arbitrado: ~~          cite35†(Revogado pela Lei n� 9.430, de 1996) L512:         ~~I - o ganho de capital, demais receitas e os resultados positivos decorrentes das receitas n�o compreendidas no art. 48 desta lei;      ~~                  cite35†(Revogado pela Lei n� 9.430, de 1996) L513: 
+L514:         ~~II - as parcelas dos valores controlados na parte "B" do Livro de Apura��o do Lucro Real (Lalur), que deveriam ter sido adicionadas ao lucro real.~~                          cite35†(Revogado pela Lei n� 9.430, de 1996) --------------------------------------------------------------------------------
+L10637 (https://www.planalto.gov.br/ccivil_03/leis/2002/l10637.htm)
+citeturn13view3 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.planalto.gov.br/ccivil_03/leis/2002/l10637.htm","lineno":59}); Total lines: 732
+L49: XII - relativas ao valor do imposto que deixar de ser pago em virtude das isen��es e redu��es de que tratam as cite31†al�neas �a�, �b�, �c� e cite34†�e� do � 1� do art. 19 do Decreto-Lei n� 1.598, de 26 de dezembro de 1977; cite35†(Reda��o dada pela Lei n� 14.592, de 2023) L50: 
+L51: ~~ XIII - relativas ao pr�mio na emiss�o de deb�ntures.                     cite10†(Inclu�do pela Lei n� 12.973, de 2014) cite11†(Vig�ncia) ~~
+L52: ~~ XIII - relativas ao pr�mio na emiss�o de deb�ntures; e         cite32†(Reda��o dada pela Medida Provis�ria n� 1.159, de 2023) ~~      cite33†Vig�ncia encerrada L53: 
+L54: ~~ XIII - relativas ao pr�mio na emiss�o de deb�ntures.                     cite10†(Inclu�do pela Lei n� 12.973, de 2014) cite11†(Vig�ncia) ~~
+L55: 
+L56: XIII - relativas ao pr�mio na emiss�o de deb�ntures; e       cite35†(Reda��o dada pela Lei n� 14.592, de 2023) L57: ~~ XIV - referentes ao valor do ICMS que tenha incidido sobre a opera��o.        cite32†(Inclu�do pela Medida Provis�ria n� 1.159, de 2023) ~~        cite33†Vig�ncia encerrada L58: 
+L59: XIV - relativas ao valor do ICMS que tenha incidido sobre a opera��o.      cite35†(Inclu�do pela Lei n� 14.592, de 2023) L60: Art. 2^{o} Para determina��o do valor da contribui��o para o PIS/Pasep aplicar-se-�, sobre a base de c�lculo apurada conforme o disposto no art. 1^{o}, a al�quota de 1,65% (um inteiro e sessenta e cinco cent�simos por cento).  cite5†Produ��o de efeito cite36†(Vide Medida Provis�ria n� 497, de 2010) cite12†(Vide Lei Complementar n� 214, de 2025) cite9†Produ��o de efeitos L61: � 1^{o} Excetua-se do disposto no caput a receita bruta auferida pelos produtores ou importadores, que devem aplicar as al�quotas previstas:             cite37†(Inclu�do pela Lei n� 10.865, de 2004) cite36†(Vide Medida Provis�ria n� 497, de 2010) L62: ~~I - nos cite38†incisos I a III do art. 4� da Lei n� 9.718, de 27 de novembro de 1998 , e altera��es posteriores, no caso de venda de gasolinas, exceto gasolina de avia��o, �leo diesel e g�s liquefeito de petr�leo (GLP) derivado de petr�leo e g�s natural;                 cite37†(Inclu�do pela Lei n� 10.865, de 2004) ~~
+L63: I - nos cite38†incisos I a III do art. 4^{o} da Lei n^{o} 9.718, de 27 de novembro de 1998 , e altera��es posteriores, no caso de venda de gasolinas e suas correntes, exceto gasolina de avia��o, �leo diesel e suas correntes e g�s liquefeito de petr�leo - GLP derivado de petr�leo e de g�s natural;                 cite39†(Reda��o dada pela Lei n� 10.925, de 2004) cite40†(Vide Lei n� 10.925, de 2004) --------------------------------------------------------------------------------
+L10833 (https://www.planalto.gov.br/ccivil_03/leis/2003/l10.833.htm)
+citeturn13view4 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.planalto.gov.br/ccivil_03/leis/2003/l10.833.htm","lineno":40}); Total lines: 1612
+L39: b) revers�es de provis�es e recupera��es de cr�ditos baixados como perda que n�o representem ingresso de novas receitas, o resultado positivo da avalia��o de investimentos pelo valor do patrim�nio l�quido e os lucros e dividendos derivados de participa��es societ�rias, que tenham sido computados como receita;              cite10†(Reda��o dada pela Lei n� 12.973, de 2014) cite11†(Vig�ncia) L40: ~~VI - decorrentes de transfer�ncia onerosa, a outros contribuintes do Imposto sobre Opera��es relativas � Circula��o de Mercadorias e sobre Presta��es de Servi�os de Transporte Interestadual e Intermunicipal e de Comunica��o - ICMS, de cr�ditos de ICMS originados de opera��es de exporta��o, conforme o disposto no cite23†inciso II do � 1^{o} do art. 25 da Lei Complementar n ~~ cite23†~~�~~~~ 87, de 13 de setembro de 1996~~ ~~.              cite24†(Inclu�do pela Medida Provis�ria n� 451, de 2008). ~~
+L41: VI - decorrentes de transfer�ncia onerosa a outros contribuintes do Imposto sobre Opera��es relativas � Circula��o de Mercadorias e sobre Presta��es de Servi�os de Transporte Interestadual e Intermunicipal e de Comunica��o - ICMS de cr�ditos de ICMS originados de opera��es de exporta��o, conforme o disposto no cite23†inciso II do � 1� do art. 25 da Lei Complementar no 87, de 13 de setembro de 1996. cite25†(Inclu�do pela Lei n� 11.945, de 2009). cite26†(Produ��o de efeito). L42: VII - financeiras decorrentes do ajuste a valor presente de que trata o cite14†inciso VIII do caput do art. 183 da Lei n� 6.404, de 15 de dezembro de 1976 , referentes a receitas exclu�das da base de c�lculo da Cofins;               cite10†(Inclu�do pela Lei n� 12.973, de 2014) cite11†(Vig�ncia) L43: 
+L44: VIII - relativas aos ganhos decorrentes de avalia��o do ativo e passivo com base no valor justo;             cite10†(Inclu�do pela Lei n� 12.973, de 2014) cite11†(Vig�ncia) --------------------------------------------------------------------------------
+Internal Error ()
+citeturn13view5 [wordlim: 200] Source: open({"ref_id":"https://www.planalto.gov.br/ccivil_03/leis/l9718.htm","lineno":35}); Total lines: 1
+--------------------------------------------------------------------------------
+2158-35 (https://www.planalto.gov.br/ccivil_03/mpv/2158-35.htm)
+citeturn13view6 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.planalto.gov.br/ccivil_03/mpv/2158-35.htm","lineno":90}); Total lines: 842
+L79: > > "cite22†� 1^{o} O disposto neste artigo estende-se:
+L80: >>
+L81: >> I - aos casos em que a declara��o de constitucionalidade tenha sido proferida pelo Supremo Tribunal Federal, em recurso extraordin�rio;
+L82: >>
+L83: >> II - a contribuinte ou respons�vel favorecido por decis�o judicial definitiva em mat�ria tribut�ria, proferida sob qualquer fundamento, em qualquer grau de jurisdi��o;
+L84: >>
+L85: >> III - aos processos judiciais ajuizados at� 31 de dezembro de 1998, exceto os relativos � execu��o da D�vida Ativa da Uni�o.
+L86: >>
+L87: >> � 2^{o}  O pagamento na forma do caput deste artigo aplica-se � exa��o relativa a fato gerador:
+L88: >>
+L89: >> I - ocorrido a partir da data da publica��o do primeiro Ac�rd�o do Tribunal Pleno do Supremo Tribunal Federal, na hip�tese do inciso I do � 1^{o};
+L90: >>
+L91: >> II - ocorrido a partir da data da publica��o da decis�o judicial, na hip�tese do inciso II do � 1^{o};
+L92: >>
+L93: >> III - alcan�ado pelo pedido, na hip�tese do inciso III do � 1^{o}.
+L94: >>
+L95: >> � 3^{o}  O pagamento referido neste artigo:
+L96: >>
+L97: >> I - importa em confiss�o irretrat�vel da d�vida;
+L98: >>
+L99: >> II - constitui confiss�o extrajudicial, nos termos dos arts. 348, 353 e 354 do C�digo de Processo Civil;
+L100: >>
+L101: >> III - poder� ser parcelado em at� seis parcelas iguais, mensais e sucessivas, vencendo-se a primeira no mesmo prazo estabelecido no caput para o pagamento integral e as demais no �ltimo dia �til dos meses subseq�entes;
+L102: >>
+L103: >> IV - relativamente aos tributos e contribui��es administrados pela Secretaria da Receita Federal, poder� ser efetuado em quota �nica, at� o �ltimo dia �til do m�s de julho de 1999.
+L104: >>
+L105: >> � 4^{o}  As presta��es do parcelamento referido no inciso III do � 3^{o} ser�o acrescidas de juros equivalentes � taxa referencial do Sistema Especial de Liquida��o e de Cust�dia - SELIC, para t�tulos federais, acumulada mensalmente, calculados a partir do m�s de vencimento da primeira parcela at� o m�s anterior ao pagamento e de um por cento no m�s do pagamento.
+L106: >>
+L107: >> � 5^{o}  Na hip�tese do inciso IV do � 3^{o}, os juros a que se refere o � 4^{o} ser�o calculados a partir do m�s de fevereiro de 1999.
+--------------------------------------------------------------------------------
+Lcp 224 (https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp224.htm)
+citeturn13view7 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp224.htm","lineno":136}); Total lines: 310
+L125: 4. nos cite41†arts. 55 e cite42†56 da Lei n� 12.350, de 20 de dezembro de 2010; L126: 
+L127: 5. nos cite43†arts. 5� e cite44†6� da Lei n� 12.599, de 23 de mar�o 2012; L128: 
+L129: 6. no cite45†art. 15 da Lei n� 12.794, de 2 de abril de 2013; L130: 
+L131: 7. no cite46†art. 31 da Lei n� 12.865, de 9 de outubro de 2013; L132: 
+L133: 8. no cite47†art. 2�-A da Lei n� 14.592, de 30 de maio de 2023; L134: 
+L135: e) redu��o a 0 (zero) das al�quotas da Contribui��o para o PIS/Pasep e da Cofins, inclusive na importa��o, prevista no cite48†art. 1� da Lei n� 10.925, de 23 de julho de 2004 ; e
+L136: f) redu��o das al�quotas da Contribui��o para o PIS/Pasep e da Cofins prevista no cite49†art. 2� da Lei n� 10.925, de 23 de julho de 2004. L137: 
+L138: � 3� Para fins do disposto nesta Lei Complementar, considera-se sistema padr�o de tributa��o:
+L139: 
+L140: I - para o IRPJ e a CSLL, as normas que disciplinam a tributa��o pelo lucro real, sem aplica��o de descontos ou benef�cios tribut�rios;
+L141: II - para o IPI, as normas que estabelecem a aplica��o das al�quotas constantes da Tabela de Incid�ncia do Imposto sobre Produtos Industrializados (Tipi), aprovada pelo cite50†Decreto n� 11.158, de 29 de julho de 2022 , desconsideradas redu��es de qualquer natureza previstas nas Notas Complementares da Tipi;
+L142: 
+L143: III - para a Contribui��o para o PIS/Pasep e a Cofins, as normas que estabelecem a aplica��o sobre a receita das seguintes al�quotas, respectivamente:
+L144: a) 0,65% (sessenta e cinco cent�simos por cento) e 3% (tr�s por cento), no regime de apura��o cumulativa; ou
+L145: 
+L146: b) 1,65% (um inteiro e sessenta e cinco cent�simos por cento) e 7,6% (sete inteiros e seis d�cimos por cento), no regime de apura��o n�o cumulativa;
+L147: 
+L148: IV - para a Contribui��o para o PIS/Pasep-Importa��o e a Cofins-Importa��o, as normas que estabelecem a aplica��o sobre a base de c�lculo prevista no cite51†art. 7� da Lei n� 10.865, de 30 de abril de 2004, das seguintes al�quotas, respectivamente:
+L149: a) 1,65% (um inteiro e sessenta e cinco cent�simos por cento) e 7,6% (sete inteiros e seis d�cimos por cento), no caso de importa��o de servi�os; ou
+L150: 
+L151: b) 2,1% (dois inteiros e um d�cimo por cento) e 9,65% (nove inteiros e sessenta e cinco cent�simos por cento), no caso de importa��o de bens;
+L152: 
+L153: V - para o II, as normas que estabelecem a aplica��o das al�quotas constantes da Tarifa Externa Comum (TEC) ou de al�quotas alteradas com fundamento no cite52†� 1� do art. 153 da Constitui��o Federal ; e
+--------------------------------------------------------------------------------
+legislacao.fazenda.sp.gov.br (https://legislacao.fazenda.sp.gov.br/Paginas/dec51597.aspx)
+citeturn13view8 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://legislacao.fazenda.sp.gov.br/Paginas/dec51597.aspx","lineno":162}); Total lines: 272
+L162: Artigo 1° - O contribuinte do ICMS que exercer atividade econômica de fornecimento de alimentação, tal como a de bar, restaurante, lanchonete, pastelaria, casa de chá, de suco, de doces e salgados, cafeteria ou sorveteria, bem como as empresas preparadoras de refeições coletivas, poderão apurar o imposto devido mensalmente mediante a aplicação do percentual de 4% (quatro por cento) sobre a receita bruta auferida no período, em substituição ao regime de apuração do ICMS previsto no artigo 47 da Lei n° 6.374, de 1° de março de 1989 (Convênio ICMS 190/17). (Redação dada ao "caput" do artigo pelo Decreto cite14†69.314 , de 16-01-2025; DOE 17-01-2025; E​m vigor na data de sua publicação, retroagindo seus efeitos a 1º de janeiro de 2025)​
+L163: Artigo 1° - O contribuinte do ICMS que exercer atividade econômica de fornecimento de alimentação, tal como a de bar, restaurante, lanchonete, pastelaria, casa de chá, de suco, de doces e salgados, cafeteria ou sorveteria, bem como as empresas preparadoras de refeições coletivas, poderão apurar o imposto devido mensalmente mediante a aplicação do percentual de 3,2% (três in​teiros e dois décimos por cento) sobre a receita bruta auferida no período, em substituição ao regime de apuração do ICMS previsto no artigo 47 da Lei n° 6.374, de 1° de março de 1989. (Redação dada ao "caput" do artigo pelo Decreto cite12†66.391 , de 28-12-2021; DOE 29-12-2021; em vigor em 1º de janeiro de 2022)
+--------------------------------------------------------------------------------
+Contribuição Social sobre o Lucro Líquido CSLL — Receita Federal (https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/CSLL)
+citeturn13view9 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/CSLL","lineno":380}); Total lines: 1018
+L354:       * cite338†Guia de Edição de Serviços do Portal Gov.br L355:     * cite339†Canais do Executivo Federal L356:     * cite340†Dados da Administração Pública Federal L357:       * cite341†Dados Abertos L358:       * cite342†Painel Estatístico de Pessoal L359:       * cite343†Painel de Compras da Administração Pública Federal†paineldecompras.economia.gov.br L360:       * cite344†Acesso à Informação L361:     * cite345†Empresas e Negócios L362: Links Úteis
+L363: 
+L364:   * cite323†Galeria de Aplicativos L365:   * cite346†Participe L366: 
+L367:   * cite323†Galeria de Aplicativos L368:   * cite346†Participe L369: 
+L370: Redes sociais
+L371: 
+L372:   * cite347†Facebook†www.facebook.com L373:   * cite348†Instagram†www.instagram.com L374:   * cite349†Linkedin†linkedin.com L375:   * cite350†Twitter†www.twitter.com L376:   * cite351†YouTube†www.youtube.com L377: 
+L378: Você está aqui: cite6†Página Inicial cite12†Assuntos cite123†Mais Orientações Tributárias cite140†Tributos Contribuição Social sobre o Lucro Líquido CSLL
+L379: 
+L380: Info
+L381: # Contribuição Social sobre o Lucro Líquido CSLL
+L382: 
+L383: Compartilhe: cite352†Compartilhe por Facebook†www.facebook.com cite353†Compartilhe por Twitter†twitter.com cite354†Compartilhe por LinkedIn†www.linkedin.com cite355†Compartilhe por WhatsApp†api.whatsapp.com cite293†link para Copiar para área de transferência L384: 
+L385: Publicado em 10/07/2015 11h42 Atualizado em 21/08/2023 23h02
+L386: Estão sujeitas ao pagamento da CSLL as pessoas jurídicas e as pessoas físicas a elas equiparadas, domiciliadas no País. A alíquota da CSLL é de 9% (nove por cento) para as pessoas jurídicas em geral, e de 15% (quinze por cento), no caso das pessoas jurídicas consideradas instituições financeiras, de seguros privados e de capitalização. A apuração da CSLL deve acompanhar a forma de tributação do lucro adotada para o IRPJ.
+L387: Aplicam-se à CSLL no que couberem, as disposições da legislação do imposto sobre a renda referentes à administração, ao lançamento, à consulta, à cobrança, às penalidades, às garantias e ao processo administrativo, mantidas a base de cálculo e as alíquotas previstas na legislação da referida contribuição ( cite356†Lei nº 7.689, de 1988, art. 6º†www.planalto.gov.br , e cite357†Lei nº 8.981, de 1995, art. 57†www.planalto.gov.br ).
+L388: 
+L389: Atenção :
+

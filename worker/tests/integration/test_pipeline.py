@@ -64,6 +64,38 @@ def setup_client(http, actor, regime="real"):
     return r.json()["id"]
 
 
+def test_period_assessment_sources_persistence_download_and_isolation(runtime):
+    from auditoria.assessment import MODULES
+
+    settings, http, actor, objects = runtime
+    client = setup_client(http, actor, "real")
+    values = {f["key"]: True if f["kind"] == "bool" else "0" for f in MODULES["real"]["fields"]}
+    values.update(lucro_irpj="100000", lucro_csll="100000")
+    body = {"client_id": client, "module": "real", "period": "2026-09-01", "values": values}
+    r = http.get("/api/fiscal-catalog")
+    assert r.status_code == 200 and r.json()["hash"]
+    preview = http.post("/api/assessments/preview", json={**body, "values": {}})
+    assert preview.status_code == 200 and preview.json()["status"] == "incompleta"
+    first = http.post("/api/assessments", json=body)
+    assert first.status_code == 200, first.text
+    ident = first.json()["id"]
+    assert first.json()["result_payload"]["total_due"] == "28000.00"
+    assert http.post("/api/assessments", json=body).json()["id"] == ident
+    assert http.get("/api/assessments", params={"client_id": client}).json()[0]["id"] == ident
+    for kind, magic in [("pdf", b"%PDF"), ("xlsx", b"PK")]:
+        assert http.get(f"/api/assessments/{ident}/download/{kind}").status_code == 200
+        assert any(
+            data.startswith(magic)
+            for (bucket, path), data in objects.items()
+            if path.endswith(kind)
+        )
+    actor.org = str(uuid4())
+    assert http.get("/api/assessments/" + ident).status_code == 404
+    assert http.get(f"/api/assessments/{ident}/download/pdf").status_code == 404
+    assert http.post("/api/assessments", json=body).status_code == 404
+    assert http.get("/api/assessments", params={"client_id": client}).json() == []
+
+
 def test_upload_to_reports_and_reissue_immutable(runtime):
     settings, http, actor, objects = runtime
     ident = setup_client(http, actor)

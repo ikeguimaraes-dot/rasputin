@@ -4,7 +4,9 @@ import { Plus, Upload, Check, X } from "lucide-react";
 import type { Call, Rule } from "@/lib/types";
 import { Button, Empty, Modal, Notice, Status } from "./ui";
 import { RuleEditor } from "./rule-editor";
+import { OfficialSources, type Catalog } from "./assessments";
 export function Rules({ call, admin }: { call: Call; admin: boolean }) {
+  const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [rules, setRules] = useState<Rule[]>([]),
     [seed, setSeed] = useState<
       {
@@ -21,6 +23,7 @@ export function Rules({ call, admin }: { call: Call; admin: boolean }) {
     [message, setMessage] = useState("");
   async function load() {
     try {
+      setCatalog(await call<Catalog>("/fiscal-catalog"));
       const [r, s] = await Promise.all([
         call<Rule[]>("/rules"),
         call<typeof seed>("/seed"),
@@ -66,7 +69,7 @@ export function Rules({ call, admin }: { call: Call; admin: boolean }) {
           <p className="eyebrow">Conhecimento fiscal</p>
           <h1>Base de regras</h1>
           <p className="subtitle">
-            Fontes, vigências e aprovação humana antes de cada aplicação.
+            Parâmetros oficiais de apuração e regras documentais do escritório.
           </p>
         </div>
         {admin && (
@@ -83,6 +86,7 @@ export function Rules({ call, admin }: { call: Call; admin: boolean }) {
       </Notice>
       {error && <Notice error>{error}</Notice>}
       {message && <Notice>{message}</Notice>}
+      {catalog && <OfficialSources catalog={catalog} />}
       <div className="card">
         <div className="card-head">
           <h2>
@@ -93,8 +97,8 @@ export function Rules({ call, admin }: { call: Call; admin: boolean }) {
         </div>
         {!rules.length ? (
           <Empty
-            title="Sua base começa com regras verificadas"
-            text="Importe a planilha de referência e transforme as linhas validadas em propostas executáveis."
+            title="Nenhuma regra documental personalizada"
+            text="Os parâmetros oficiais acima já estão disponíveis em Apuração de impostos. Acrescente regras de produto e operação conforme o enquadramento dos clientes."
           />
         ) : (
           rules.map((r) => (

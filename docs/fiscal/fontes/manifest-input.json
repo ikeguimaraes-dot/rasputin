@@ -1,0 +1,62 @@
+[
+  {
+    "id": "simples",
+    "title": "LC 123/2006 — art. 18 e Anexo I",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp123.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei"
+  },
+  {
+    "id": "renda",
+    "title": "Lei 9.249/1995 — arts. 3, 15 e 20",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/l9249.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei"
+  },
+  {
+    "id": "perdas",
+    "title": "Lei 8.981/1995 — arts. 42 e 58",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/l8981.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei"
+  },
+  {
+    "id": "pis",
+    "title": "Lei 10.637/2002 — arts. 2 e 3",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/2002/l10637.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei"
+  },
+  {
+    "id": "cofins",
+    "title": "Lei 10.833/2003 — arts. 2 e 3",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/2003/l10.833.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei"
+  },
+  {
+    "id": "cumulativo",
+    "title": "Lei 9.718/1998 — arts. 2, 3 e 8",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/l9718.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei"
+  },
+  {
+    "id": "pis_cumulativo",
+    "title": "MP 2.158-35/2001 — art. 8",
+    "url": "https://www.planalto.gov.br/ccivil_03/mpv/2158-35.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei"
+  },
+  {
+    "id": "lc224",
+    "title": "LC 224/2025 — art. 4",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp224.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei"
+  },
+  {
+    "id": "sp_rest",
+    "title": "Decreto SP 51.597/2007",
+    "url": "https://legislacao.fazenda.sp.gov.br/Paginas/dec51597.aspx",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei"
+  },
+  {
+    "id": "csll",
+    "title": "Receita Federal — CSLL",
+    "url": "https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/CSLL",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei"
+  }
+]

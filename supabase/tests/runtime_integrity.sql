@@ -43,6 +43,20 @@ end $$;
 insert into storage.objects(bucket_id,name) values
  ('uploads','11111111-1111-1111-1111-111111111111/cliente/arquivo.xml'),
  ('uploads','22222222-2222-2222-2222-222222222222/cliente/arquivo.xml');
+insert into fiscal_assessments(organizacao_id,cliente_id,module,period,
+ input_snapshot,catalog_snapshot,result_payload,sha256,criado_por) values
+ ('11111111-1111-1111-1111-111111111111','c1111111-1111-1111-1111-111111111111',
+  'real','2026-09-01','{}','{}','{}','test-assessment','aaaaaaaa-1111-1111-1111-111111111111');
+do $$ begin
+ begin update fiscal_assessments set sha256='changed';
+ raise exception 'FALHA: apuração alterável';
+ exception when raise_exception then
+ if sqlerrm <> 'Registro publicado imutável' then raise; end if; end;
+ begin delete from fiscal_assessments;
+ raise exception 'FALHA: apuração removível';
+ exception when raise_exception then
+ if sqlerrm <> 'Registro publicado imutável' then raise; end if; end;
+end $$;
 set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"aaaaaaaa-1111-1111-1111-111111111111"}',true);
 do $$ begin
@@ -51,6 +65,18 @@ do $$ begin
  raise exception 'FALHA: usuário forjou job'; exception when insufficient_privilege then null; end;
  begin update fiscal_rules set definition='{}'; raise exception 'FALHA: usuário alterou regra';
  exception when insufficient_privilege then null; end;
+end $$;
+do $$ begin
+ if (select count(*) from fiscal_assessments)<>1 then
+ raise exception 'FALHA: apuração própria invisível'; end if;
+ begin insert into fiscal_assessments(organizacao_id) values(null);
+ raise exception 'FALHA: usuário forjou apuração';
+ exception when insufficient_privilege then null; end;
+end $$;
+select set_config('request.jwt.claims','{"sub":"bbbbbbbb-1111-1111-1111-111111111111"}',true);
+do $$ begin
+ if exists(select 1 from fiscal_assessments) then
+ raise exception 'FALHA: apuração exposta a terceiro'; end if;
 end $$;
 reset role;
 -- Remover um autor deve preservar o resultado publicado, sem permitir edição direta.

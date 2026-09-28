@@ -1,0 +1,323 @@
+PERGUNTAS E RESPOSTAS (https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/perguntas-e-respostas/beneficios-fiscais/perguntas-e-respostas-reducao-dos-incentivos-e-beneficios-tributarios-v3-final.pdf)
+citeturn14search12 [wordlim: 200] Published: 6 months ago; PERGUNTAS E RESPOSTAS ... No caso da CSLL, para o ano de 2026, como o acréscimo será aplicado a partir do segundo trimestre, o limite anual será de R$ 3.750.000,00 (três milhões, setecentos e cinquenta mil) reais, o equivalente a ¾ (três quartos) do limite anual. ... Considerando o limite proporcional trimestral de R$ 1.250.000,00, este deverá ser distribuído conforme a participação de cada atividade na receita total do trimestre, resultando nos seguintes limites proporcionais: ... www.gov.br/receitafederal
+PERGUNTAS E RESPOSTAS
+
+REDUÇÃO DOS INCENTIVOS E BENEFÍCIOS TRIBUTÁRIOS – V3  
+Receita Federal
+
+12. O acréscimo do percentual de presunção do lucro presumido (ou resultado presumido) aplica-se ao IRPJ e à CSLL?
+
+Sim, pois ambos os tributos são alcançados pela medida.
+
+No entanto, o acréscimo do percentual de presunção do lucro deverá ser aplicado a partir do primeiro trimestre de 2026 para o IRPJ e a partir do segundo trimestre de 2026 para a CSLL.
+
+13. Qual é o limite anual aplicável no lucro presumido em relação à CSLL para o ano de 2026?
+
+No caso da CSLL, para o ano de 2026, como o acréscimo será aplicado a partir do segundo trimestre, o limite anual será de R$ 3.750.000,00 (três milhões, setecentos e cinquenta mil) reais, o equivalente a ¾ (três quartos) do limite anual.
+
+14. Como deve ser calculada a redução no caso de contribuintes com mais de uma atividade no trimestre sujeitas a percentuais de presunção distintos?
+
+A pessoa jurídica que exerça mais de uma atividade, sujeitas a diferentes percentuais de presunção, deverá observar, em cada trimestre, a proporção da receita bruta de cada atividade em relação à receita bruta total do período.
+
+Essa proporção será utilizada para definir o limite proporcional da receita bruta a que se aplica o percentual de presunção normal, bem como a parcela excedente sujeita ao percentual acrescido de 10%.
+
+Exemplo:
+
+Uma empresa optante pelo lucro presumido, que exerça atividades de comércio e de prestação de serviços, aufere, no primeiro trimestre, receita bruta total de R$ 1.800.000,00, sendo:
+
+R$ 1.440.000,00 decorrentes da venda de mercadorias; e
+
+R$ 360.000,00 decorrentes da prestação de serviços.
+
+Considerando o limite proporcional trimestral de R$ 1.250.000,00, este deverá ser distribuído conforme a participação de cada atividade na receita total do trimestre, resultando nos seguintes limites proporcionais:
+
+Atividade comercial: R$ 1.000.000,00;
+
+Prestação de serviços: R$ 250.000,00.
+
+Dessa forma, o lucro presumido será calculado da seguinte maneira:
+
+o 8% sobre R$ 1.000.000,00;  
+o 8,8% sobre a parcela excedente da receita comercial (R$ 440.000,00);  
+o 32% sobre R$ 250.000,00;  
+o 35,2% sobre a parcela excedente da receita de serviços (R$ 110.000,00).
+
+11  
+www.gov.br/receitafederal--------------------------------------------------------------------------------
+PERGUNTAS E RESPOSTAS (https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/perguntas-e-respostas/beneficios-fiscais/perguntas-e-respostas-reducao-dos-incentivos-e-beneficios-tributarios.pdf)
+citeturn14search13 [wordlim: 200] Published: 8 months ago; PERGUNTAS E RESPOSTAS ... - aplica-se o percentual normal de presunção do IRPJ e da CSLL até o limite de R$ 1.250.000,00; e ... No entanto, o acréscimo do percentual de presunção do lucro deverá ser aplicado a partir do primeiro trimestre de 2026 para o IRPJ e a partir do segundo trimestre de 2026 para a CSLL. ... No caso da CSLL, como o acréscimo será aplicado a partir do segundo trimestre, o limite anual será de R$ 3.750.000,00 (três milhões, setecentos e cinquenta mil) reais, o equivalente a ¾ (três quartos) do limite anual. ... www.gov.br/receitafederal
+PERGUNTAS E RESPOSTAS
+
+REDUÇÃO DOS INCENTIVOS E BENEFÍCIOS TRIBUTÁRIOS
+
+Aspectos Específicos da Lei Complementar nº 224, de 2025, e da Legislação sobre a Matéria
+
+**11. No lucro presumido, como deve ser implementada a redução de 10%?**
+
+No regime do lucro presumido, o acréscimo de 10% incide exclusivamente sobre os percentuais de presunção aplicáveis à parcela da receita bruta total que exceder R$ 5.000.000,00 no ano-calendário.
+
+Esse limite anual deve ser observado da seguinte forma:
+
+- Proporcionalmente a cada período de apuração ao longo do ano, sendo admitido ajuste nos períodos subsequentes; e
+- Proporcionalmente às receitas de cada atividade, quando houver mais de uma.
+
+Assim, no caso de apuração trimestral, deve ser considerado o limite proporcional de R$ 1.250.000,00 por trimestre. Sobre a receita bruta trimestral:
+
+- aplica-se o percentual normal de presunção do IRPJ e da CSLL até o limite de R$ 1.250.000,00; e
+- aplica-se o percentual de presunção acrescido em 10% sobre a parcela da receita bruta que exceder esse limite.
+
+**Exemplo:**
+Uma empresa comercial optante pelo lucro presumido aufere, no primeiro trimestre, receita bruta de R$ 1.500.000,00.
+
+- **IRPJ:**
+  - 8% sobre R$ 1.250.000,00;
+  - 8,8% sobre a parcela excedente de R$ 250.000,00.
+- **CSLL:**
+  - 12% sobre R$ 1.250.000,00;
+  - 13,2% sobre a parcela excedente de R$ 250.000,00.
+
+**12. O acréscimo do percentual de presunção do lucro presumido aplica-se ao IRPJ e à CSLL?**
+
+Sim, pois ambos os tributos são alcançados pela medida.
+
+No entanto, o acréscimo do percentual de presunção do lucro deverá ser aplicado a partir do primeiro trimestre de 2026 para o IRPJ e a partir do segundo trimestre de 2026 para a CSLL.
+
+**13. Qual é o limite anual aplicável no lucro presumido em relação à CSLL?**
+
+No caso da CSLL, como o acréscimo será aplicado a partir do segundo trimestre, o limite anual será de R$ 3.750.000,00 (três milhões, setecentos e cinquenta mil) reais, o equivalente a ¾ (três quartos) do limite anual.
+
+**14. Como deve ser calculada a redução no caso de contribuintes com mais de uma atividade no trimestre sujeitas a percentuais de presunção distintos?**
+
+A pessoa jurídica que exerça mais de uma atividade, sujeitas a diferentes percentuais de presunção, deverá observar, em cada trimestre, a proporção da receita bruta de cada atividade em relação à receita bruta total do período.
+
+8
+
+www.gov.br/receitafederal--------------------------------------------------------------------------------
+Tabelas Práticas - Integracontab (https://www.integracontab.com.br/site/tabelas-praticas/1567)
+citeturn14search0 [wordlim: 200] Crawled: last month; De acordo com o Perguntas e Respostas - Questão de nº 13, no caso da CSLL, para o ano de 2026, como o acréscimo será aplicado a partir do segundo trimestre, o limite anual será de R$ 3.750.000,00 (três milhões, setecentos e cinquenta mil) reais, o equivalente a ¾ (três quartos) do limite anual. ... Considerando que a empresa apresente um faturamento de R$ 1.500.000,00 em um trimestre, como o limite anual de R$ 5 milhões equivale a R$ 1.250.000,00 por trimestre, o imposto sobre os primeiros R$ 1.250.000,00 continua sendo calculado com base nos percentuais de presunção tradicionais. ... Perguntas e Resposta LC 224 2025
+
+a) O limite proporcionalmente a cada período de apuração no ano, permitido o ajuste nos períodos seguintes referentes ao mesmo ano-calendário; e
+b) O acréscimo proporcionalmente às receitas de cada uma das atividades.
+
+De acordo com o Perguntas e Respostas - Questão de nº 13, no caso da CSLL, para o ano de 2026, como o acréscimo será aplicado a partir do segundo trimestre, o limite anual será de R$ 3.750.000,00 (três milhões, setecentos e cinquenta mil) reais, o equivalente a ¾ (três quartos) do limite anual. 
+Nos termos do parágrafo 5º do artigo 4º da LC 224/2025, é que a alíquota majorada não incide sobre todo o faturamento da empresa, mas apenas sobre a parcela que exceder o limite proporcional estabelecido pela Lei.
+
+Considerando que a empresa apresente um faturamento de R$ 1.500.000,00 em um trimestre, como o limite anual de R$ 5 milhões equivale a R$ 1.250.000,00 por trimestre, o imposto sobre os primeiros R$ 1.250.000,00 continua sendo calculado com base nos percentuais de presunção tradicionais. --------------------------------------------------------------------------------
+Perguntas e Respostas Redução Dos Incentivos e Benefícios Tributários | PDF | Estatuto | Impostos (https://pt.scribd.com/document/1056104693/Perguntas-e-Respostas-Reducao-Dos-Incentivos-e-Beneficios-Tributarios)
+citeturn14search1 [wordlim: 200] Crawled: 2 months ago; 10 [Link]/receitafederalPERGUNTAS E RESPOSTAS ... trimestre de 2026 para o IRPJ e a partir do segundo trimestre de 2026 para a CSLL. ... Qual é o limite anual aplicável no lucro presumido em relação à CSLL para o ano de 2026? ... limite anual será de R$ 3.750.000,00 (três milhões, setecentos e cinquenta mil) reais, o equivalente a ¾ ... De forma resumida: (R$ 1.000.000,00 × 8%) + (R$ 440.000,00 × 8,8%) + (R$ 250.000,00 × 32%) + (R$ ... desenvolvimento e produção de petróleo e gás natural no Brasil, não está sujeito à redução, pois ele não
+entram no cômputo do limite previsto no § 5º do art. 4º da Lei Complementar nº 224, de 2025.
+
+As receitas computadas de forma integral na base de cálculo do IRPJ e da CSSL (tais como as receitas
+financeiras e os ganhos de capital) não entram no cômputo desse limite.
+
+10 [Link]/receitafederal
+PERGUNTAS E RESPOSTAS
+
+## REDUÇÃO DOS INCENTIVOS E BENEFÍCIOS TRIBUTÁRIOS – V4
+
+ATUALIZADO EM 30 DE ABRIL DE 2026
+
+12. O acréscimo do percentual de presunção do lucro presumido (ou resultado presumido) aplica-se
+ao IRPJ e à CSLL?
+
+## Sim, pois ambos os tributos são alcançados pela medida.
+
+No entanto, o acréscimo do percentual de presunção do lucro deverá ser aplicado a partir do primeiro
+trimestre de 2026 para o IRPJ e a partir do segundo trimestre de 2026 para a CSLL.
+
+13. Qual é o limite anual aplicável no lucro presumido em relação à CSLL para o ano de 2026?
+
+No caso da CSLL, para o ano de 2026, como o acréscimo será aplicado a partir do segundo trimestre, o
+limite anual será de R$ 3.750.000,00 (três milhões, setecentos e cinquenta mil) reais, o equivalente a ¾
+--------------------------------------------------------------------------------
+A RFB publicou, em 27 de março de 2026, a versão 3 do documento "Perguntas e Respostas — Redução dos Incentivos e Benefícios Tributários", que esclarece a aplicação da Lei Complementar nº 224/2025.… | Guilherme Barbosa (https://pt.linkedin.com/posts/guilherme-barbosa-87a45a187_a-rfb-publicou-em-27-de-mar%C3%A7o-de-2026-a-activity-7445414731718479872-W97D)
+citeturn14search2 [wordlim: 200] Crawled: 3 weeks ago; A RFB publicou, em 27 de março de 2026, a versão 3 do documento "Perguntas e Respostas — Redução dos Incentivos e Benefícios Tributários", que esclarece a aplicação da Lei Complementar nº 224/2025. ... No lucro presumido, o acréscimo de 10% incide exclusivamente sobre a parcela da receita bruta que exceder R$ 1.250.000,00 por trimestre, com vigência a partir do primeiro trimestre de 2026 para o IRPJ e do segundo trimestre para a CSLL, cujo limite anual proporcional é de R$ 3.750.000,00 para o ano de 2026.
+Nessas operações, a empresa emissora deve utilizar o CST "06 — Operação Tributável (alíquota zero)" no campo de Código de Situação Tributária do Grupo PIS e do Grupo Cofins da NF-e, e informar no campo de informações adicionais de interesse do Fisco que a operação está sujeita ao disposto na LC 224/2025. O sistema ainda classifica a operação como de alíquota zero, mas o campo de informações adicionais sinaliza a mudança de regime, o que permite o correto controle e a futura fiscalização das operações em transição. O P&R também consolida alguns esclarecimentos que já haviam sido introduzidos nas versões anteriores e que merecem atenção. No lucro presumido, o acréscimo de 10% incide exclusivamente sobre a parcela da receita bruta que exceder R$ 1.250.000,00 por trimestre, com vigência a partir do primeiro trimestre de 2026 para o IRPJ e do segundo trimestre para a CSLL, cujo limite anual proporcional é de R$ 3.750.000,00 para o ano de 2026. O REIDI está formalmente dentro do escopo da redução, mas não sofre corte quando o projeto de investimento estava aprovado e em execução até 31 de dezembro de 2025. IRRF e IOF permanecem integralmente fora do escopo, independentemente da natureza do benefício. Em relação à contribuição substitutiva do produtor rural, a Receita Federal confirmou a incidência da redução linear, o que resulta na prática em majoração das alíquotas aplicáveis ao produtor rural pessoa física e jurídica a partir de 1º de abril de 2026. A proximidade do marco de 1º de abril de 2026 (data de entrada em vigor da redução para PIS/Cofins, IPI e contribuições previdenciárias) torna o acompanhamento das atualizações do P&R particularmente relevante para contribuintes que ainda precisam ajustar suas obrigações acessórias e sistemas de emissão de documentos fiscais.--------------------------------------------------------------------------------
+Vigência Instrução Normativa RFB nº 2.306/2026 | Contabilidade Facilitada (https://forum.contabilidadefacilitada.com/categorias/setor-fiscal/vigencia-instrucao-normativa-rfb-n-2-306-2026-mobynmq5)
+citeturn14search3 [wordlim: 200] Published: 5 months ago; Crawled: last month; Melhor Resposta ... Pelo material de Perguntas e Respostas da Receita Federal, no lucro presumido o acréscimo de 10% não incide sobre toda a receita, mas apenas sobre a parcela que exceder o limite anual de R$ 5.000.000,00, observado proporcionalmente por período de apuração.Na apuração trimestral, o limite proporcional é de R$ 1.250.000,00 por trimestre. ... Para a CSLL, especificamente em 2026, como a aplicação começa apenas no 2º trimestre, o limite anual proporcional fica em R$ 3.750.000,00, equivalente a 3/4 do limite anual.
+
+# Vigência Instrução Normativa RFB nº 2.306/2026
+
+GA
+
+✍️
+
+Gilvan Soares de Alencar
+
+✍️ 678 pts
+
+Por gentileza, se possível dizimar a minha dúvida: A vigência da mojoração da presunção, impacta o IRPJ a partir do 1º trimestre/2026 e a CSLL a partir do 2º trimestre/2026?
+
+1
+
+3 respostas 257 visualizações 23/04/26, 20:55
+
+## Respostas da Comunidade (3)
+
+KC
+
+⭐
+
+KARITA ALVES CORREIA
+
+⭐ 1.064 pts
+
+Melhor Resposta
+
+Sim, está correta de acordo com a Lei Complementar 224/2025. A majoração de 10% nos percentuais de presunção do Lucro Presumido para IRPJ e CSLL tem vigência distinta em 2026:
+IRPJ: Impacta a partir do 1º trimestre/2026 (1º de janeiro).
+CSLL: Impacta a partir do 2º trimestre/2026 (1º de abril), devido à anterioridade nonagesimal.
+
+0
+
+23/04/26, 21:23
+
+GA
+
+✍️
+
+Gilvan Soares de Alencar
+
+✍️ 678 pts
+
+Olá Karita! Obrigado pela ajuda e que Deus te abençoe grandemente!
+
+1
+
+24/04/26, 02:01
+
+G
+
+🌱
+
+GAR6
+
+🌱 25 pts
+
+Além da vigência distinta entre IRPJ e CSLL, vale observar a regra de proporcionalidade do limite. Pelo material de Perguntas e Respostas da Receita Federal, no lucro presumido o acréscimo de 10% não incide sobre toda a receita, mas apenas sobre a parcela que exceder o limite anual de R$ 5.000.000,00, observado proporcionalmente por período de apuração. Na apuração trimestral, o limite proporcional é de R$ 1.250.000,00 por trimestre. Havendo mais de uma atividade, esse limite também deve ser proporcionalizado conforme a participação de cada receita na receita bruta total do trimestre. Para a CSLL, especificamente em 2026, como a aplicação começa apenas no 2º trimestre, o limite anual proporcional fica em R$ 3.750.000,00, equivalente a 3/4 do limite anual.
+Referência utilizada:
+Receita Federal — Perguntas e Respostas: Redução dos Incentivos e Benefícios Tributários – V3, itens 11, 12, 13 e 14, páginas 10 e 11.--------------------------------------------------------------------------------
+Perguntas e Respostas Presumido (https://cefis.com.br/questoes/tag/presumido)
+citeturn14search4 [wordlim: 200] Crawled: 2 days ago; VER RESPOSTA COMPLETA ... Com a LC nº 224/25 e a IN RFB nº 2.306/2026, o critério passou a ser trimestr... ... ## Perguntas do certificado ... A pergunta 9 (Qual é o percentual de presunção para a Contribuição Social sobre o Lucro Líquido?) ... Sim, a majoração da alíquota de presunção alcança somente a parcela da Receit... ... O limite seria R$ 1.250.000,00 por trimestre, pra CSLL em 2026 esse limite seria proporcional aos 3 trimestre somente?No valor de R$ 3.750.000,00?
+
+lucro presumido Perguntado em 10/03/2026
+
+#### Resposta
+
+* * *
+
+VER RESPOSTA COMPLETA
+
+Bom dia Jeferson, Obrigado pelo feedback, iremos analisar e se constatar a inconsistência...
+
+## Questão de prática
+
+* * *
+
+Na questão da prática, ele colocou o percentual de presunção sobre o faturamento total! Não seria somente do excedente a R$ 5 Milhões ano ou R$ 1.250.000,00 no trimestre?
+
+lucro presumido Perguntado em 26/03/2026
+
+#### Resposta
+
+* * *
+
+VER RESPOSTA COMPLETA
+
+Bruno,
+
+Sim, a majoração da alíquota de presunção alcança somente a parcela da Receit...
+
+## CSLL A PARTIR DO SEGUNDO TRIMESTRE DE 2026...
+
+* * *
+
+O limite seria R$ 1.250.000,00 por trimestre, pra CSLL em 2026 esse limite seria proporcional aos 3 trimestre somente? No valor de R$ 3.750.000,00? Como fica pra fazer isso na prática?
+
+lucro presumido Perguntado em 31/03/2026
+
+#### Resposta
+
+* * *
+
+VER RESPOSTA COMPLETA
+
+Yuri,
+
+Na prática, o limite de R$ 1.250.000,00 é aplicado por trimestre de forma isol...
+
+--------------------------------------------------------------------------------
+Receita Federal esclarece a majoração dos percentuais de presunção no Lucro Presumido | ZNA (https://zna.adv.br/noticias/2026/03/02/receita-federal-esclarece-a-majoracao-dos-percentuais-de-presuncao-no-lucro-presumido/)
+citeturn14search5 [wordlim: 200] Published: 7 months ago; Crawled: today; Conforme informado anteriormente, a Receita Federal do Brasil publicou novo conjunto de Perguntas e Respostas sobre a redução dos benefícios fiscais prevista na Lei Complementar nº 224/2025. ... O exemplo da Receita demonstra essa lógica de forma clara ao distribuir o limite de R$ 1.250.000,00 entre atividades comerciais e de serviços, aplicando a presunção normal até o limite proporcional e, depois, o percentual majorado sobre o excedente: ... Já para a CSLL, o acréscimo é válido a partir do 2º trimestre de 2026, o que reduz proporcionalmente o limite anual para R$ 3.750.000,00 (3/4 do limite).
+
+Notícias
+
+02.03.2026
+
+# Receita Federal esclarece a majoração dos percentuais de presunção no Lucro Presumido
+
+Conforme informado anteriormente, a Receita Federal do Brasil publicou novo conjunto de Perguntas e Respostas sobre a redução dos benefícios fiscais prevista na Lei Complementar nº 224/2025. Neste informativo, daremos foco aos esclarecimentos voltados ao acréscimo de 10% nos percentuais de presunção do Lucro Presumido, detalhando de forma objetiva como o novo cálculo deverá ser aplicado.
+
+A LC 224/2025 determinou que, no Lucro Presumido, haverá um acréscimo de 10% sobre os percentuais de presunção do IRPJ e da CSLL, exclusivamente sobre a parcela da receita bruta que exceder R$ 5 milhões no ano-calendário. Para períodos trimestrais, o limite deve ser proporcionalizado para R$ 1.250.000,00 por trimestre. 
+
+Assim, até esse limite aplica‑se o percentual normal de presunção. Sobre a receita que ultrapassar o teto trimestral, incide o percentual majorado (por exemplo: 8% passa a 8,8%; 32% passa a 35,2%, e assim por diante).
+
+Considerando o limite proporcional trimestral de R$ 1.250.000,00, este deverá ser distribuído conforme a participação de cada atividade na receita total do trimestre, resultando nos seguintes limites proporcionais:
+
+Atividade comercial: R$ 1.000.000,00;
+
+Prestação de serviços: R$ 250.000,00.
+
+Dessa forma, o lucro presumido será calculado da seguinte maneira:
+
+·          8% sobre R$ 1.000.000,00;
+
+·         8,8% sobre a parcela excedente da receita comercial (R$ 440.000,00);
+
+·          32% sobre R$ 250.000,00;
+
+·         35,2% sobre a parcela excedente da receita de serviços (R$ 110.000,00).
+
+Na prática, o acréscimo de 10% torna o cálculo do lucro presumido mais complexo, pois passa a exigir o acompanhamento do limite trimestral proporcionalizado e a separação das receitas submetidas à presunção. 
+
+Ponto de atenção: embora o acréscimo alcance ambos os tributos, sua aplicação não é simultânea. Para o IRPJ, o acréscimo aplicável a partir do 1º trimestre de 2026. Já para a CSLL, o acréscimo é válido a partir do 2º trimestre de 2026, o que reduz proporcionalmente o limite anual para R$ 3.750.000,00 (3/4 do limite).
+
+A equipe tributária da ZNA está à disposição para esclarecimentos adicionais.
+
+Caroline Medeiros Schwalm Wölfle
+
+Advogada ZNA--------------------------------------------------------------------------------
+01-Lucro presumido CSLL (24p) | PDF | Imposto de Renda | Receita (https://pt.scribd.com/document/1076108153/01-Lucro-presumido-CSLL-24p)
+citeturn14search6 [wordlim: 200] Published: 8 months ago; Crawled: last month; Tendo em vista que, no ano-calendário de 2026, a majoração da base de cálculo da CSLL ... será de R$ 3.750.000,00, equivalente a ¾ do limite anual de R$ 5.000.000,00 (Perguntas eRespostas sobre a Redução dos Incentivos e Benefícios Tributários, Questão nº 13). ... 2.306/2026 , art. 1º ) ... receita bruta, com os seus respectivos valores decorrentes do ajuste a valor presente, e demais valores
+excedente do último trimestre será limitada à diferença entre a parcela da receita bruta acumulada
+do ano-calendário que exceder o limite anual e o somatório das parcelas excedentes dos trimestres
+anteriores ao último trimestre do mesmo ano-calendário.
+Nota
+Tendo em vista que, no ano-calendário de 2026, a majoração da base de cálculo da CSLL
+devida com base no lucro presumido somente se aplica a partir do 2º trimestre, o limite anual
+será de R$ 3.750.000,00, equivalente a ¾ do limite anual de R$ 5.000.000,00 (Perguntas e
+Respostas sobre a Redução dos Incentivos e Benefícios Tributários, Questão nº 13).
+(Instrução Normativa RFB nº 2.305/2025 , art. 15 , § 5º, incluído pela Instrução Normativa RFB nº
+2.306/2026 , art. 1º )
+.
+4.2.3 Compensação ou restituição do IRPJ e CSLL pagos a maior
+Caso o IRPJ e a CSLL devidos, recalculados conforme indicado letras "a" e "b" do subtópico 7.2.2 seja
+superior ao imposto e à contribuição devidos apurados no último trimestre do ano-calendário, a parcela
+--------------------------------------------------------------------------------
+#blocom #apuracaofiscal #creditopresumido #beneficiofiscal #obrigacoesacessorias #notafiscaleletronica #sped #gestaotributaria | Pammela H. Rezende Borges (https://pt.linkedin.com/posts/pammelaborges_blocom-apuracaofiscal-creditopresumido-activity-7444764955582603264-wUsb)
+citeturn14search7 [wordlim: 200] Crawled: 4 days ago; A RFB publicou, em 27 de março de 2026, a versão 3 do documento "Perguntas e Respostas — Redução dos Incentivos e Benefícios Tributários", que esclarece a aplicação da Lei Complementar nº 224/2025. ... A versão 3 traz como principal novidade a resposta 34.1, que esclarece o tratamento fiscal nas operações que, antes da vigência da LC 224/2025, eram tributadas à alíquota zero pelo PIS/Cofins e que agora passam a ter incidência parcial. ... No lucro presumido, o acréscimo de 10% incide exclusivamente sobre a parcela da receita bruta que exceder R$ 1.250.000,00 por trimestre, com vigência a partir do primeiro trimestre de 2026 para o IRPJ e do segundo trimestre para a CSLL, cujo limite anual proporcional é de R$ 3.750.000,00 para o ano de 2026.
+A versão 3 traz como principal novidade a resposta 34.1, que esclarece o tratamento fiscal nas operações que, antes da vigência da LC 224/2025, eram tributadas à alíquota zero pelo PIS/Cofins e que agora passam a ter incidência parcial. Nessas operações, a empresa emissora deve utilizar o CST "06 — Operação Tributável (alíquota zero)" no campo de Código de Situação Tributária do Grupo PIS e do Grupo Cofins da NF-e, e informar no campo de informações adicionais de interesse do Fisco que a operação está sujeita ao disposto na LC 224/2025. O sistema ainda classifica a operação como de alíquota zero, mas o campo de informações adicionais sinaliza a mudança de regime, o que permite o correto controle e a futura fiscalização das operações em transição. O P&R também consolida alguns esclarecimentos que já haviam sido introduzidos nas versões anteriores e que merecem atenção. No lucro presumido, o acréscimo de 10% incide exclusivamente sobre a parcela da receita bruta que exceder R$ 1.250.000,00 por trimestre, com vigência a partir do primeiro trimestre de 2026 para o IRPJ e do segundo trimestre para a CSLL, cujo limite anual proporcional é de R$ 3.750.000,00 para o ano de 2026. O REIDI está formalmente dentro do escopo da redução, mas não sofre corte quando o projeto de investimento estava aprovado e em execução até 31 de dezembro de 2025. IRRF e IOF permanecem integralmente fora do escopo, independentemente da natureza do benefício. Em relação à contribuição substitutiva do produtor rural, a Receita Federal confirmou a incidência da redução linear, o que resulta na prática em majoração das alíquotas aplicáveis ao produtor rural pessoa física e jurídica a partir de 1º de abril de 2026. A proximidade do marco de 1º de abril de 2026 (data de entrada em vigor da redução para PIS/Cofins, IPI e contribuições previdenciárias) torna o acompanhamento das atualizações do P&R particularmente relevante para contribuintes que ainda precisam ajustar suas obrigações acessórias e sistemas de emissão de documentos fiscais.
+
+--------------------------------------------------------------------------------
+Percentual de presunção do Lucro Presumido em 2026 | WJR (https://wjrcontabilidade.com.br/blog/lucro-presumido/percentuais-de-presuncao-do-lucro-presumido/)
+citeturn14search8 [wordlim: 200] Crawled: yesterday; A lei manda ratear o limite por período, com ajuste nos seguintes, e a Receita fixou esse valor no Perguntas e Respostas. ... 14, I, "a"), com limite anual de R$ 3.750.000,00 para a CSLL em 2026. ... A base do IRPJ fica em R$ 1.250.000 x 8% = R$ 100.000, mais R$ 250.000 x 8,8% = R$ 22.000, total de R$ 122.000.
+--------------------------------------------------------------------------------
+Lucro Presumido 2026: o que mudou no IRPJ e na CSLL com a LC 224/2025 (https://smartshift.com.br/blog/lucro-presumido-2026-majoracao-10)
+citeturn14search9 [wordlim: 200] Crawled: today; Em 2026, no caso específico da CSLL, como a Receita entende que a aplicação começa apenas no 2º trimestre, o FAQ oficial passou a tratar, para fins daquele ano, um limite anual equivalente a R$ 3.750.000,00 na dinâmica da CSLL. ... Base presumida de IRPJ: (8% × 1.250.000) + (8,8% × 250.000) = R$ 122.000 ... Aumento trimestral total a partir do 2º trimestre de 2026: R$ 770,00.
+--------------------------------------------------------------------------------
+Redução de benefícios fiscais em 2026: o que muda e como se preparar | Coutinho & Villa (https://coutinhoevillaadv.com/blog/reducao-beneficios-fiscais-2026-lc-224)
+citeturn14search10 [wordlim: 200] Published: 8 months ago; Crawled: 3 days ago; # Redução de benefícios fiscais em 2026: o que muda e como se preparar agora ... Com a regulamentação (Decreto nº 12.808/2025, Portaria MF nº 3.278/2025 e IN RFB nº 2.305/2025) e o guia de Perguntas e Respostas divulgado pela Receita Federal, ficou evidente que o impacto pode ser mais imediato e mais abrangente do que muitos contribuintes estimavam. ... Assim, na apuração trimestral, o limite é de R$ 1.250.000,00 por trimestre. ... Para CSLL, o limite anual proporcional indicado pela RFB é de R$ 3.750.000,00.
+--------------------------------------------------------------------------------
+Perguntas e Respostas Lucro (https://cefis.com.br/questoes/tag/lucro)
+citeturn14search11 [wordlim: 200] Crawled: yesterday; Empresas do Lucro Presumido e Simples Nacional, estão dispensadas de escrituração caso façam o lucro pelo método de presunção? ... a partir de Janeiro/2026 valores superiores a R$ 50.000,00 referente a distribuição de lucros serão tributados. ... A distribuição de lucros no Brasil envolve prin... ... Sim, a obrigatoriedade de declarar na Reinf independe do valor.&nb... ... Obrigada pela resposta dos sócios sem participação. ... Professor, nos exemplos do calculo na planilha em nenhum momento vi o limitador do trimestre de R$ 1.250.000,00, não teria que considerar apenas o que exceder esses valores no trimestre?
+

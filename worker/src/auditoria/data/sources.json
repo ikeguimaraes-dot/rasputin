@@ -1,0 +1,128 @@
+[
+  {
+    "id": "simples",
+    "title": "LC 123/2006 — art. 18 e Anexo I",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp123.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei",
+    "retrieved_at": "2026-09-28T23:29:55.450188+00:00",
+    "sha256": "0e8c7e4e0c2acaa1121aad96e89a1216939283dc4232387438a703a80baa0686",
+    "capture_file": "docs/fiscal/fontes/captura-web.txt"
+  },
+  {
+    "id": "renda",
+    "title": "Lei 9.249/1995 — arts. 3, 15 e 20",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/l9249.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei",
+    "retrieved_at": "2026-09-28T23:29:55.450459+00:00",
+    "sha256": "0e8c7e4e0c2acaa1121aad96e89a1216939283dc4232387438a703a80baa0686",
+    "capture_file": "docs/fiscal/fontes/captura-web.txt"
+  },
+  {
+    "id": "perdas",
+    "title": "Lei 8.981/1995 — arts. 42 e 58",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/l8981.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei",
+    "retrieved_at": "2026-09-28T23:29:55.450494+00:00",
+    "sha256": "0e8c7e4e0c2acaa1121aad96e89a1216939283dc4232387438a703a80baa0686",
+    "capture_file": "docs/fiscal/fontes/captura-web.txt"
+  },
+  {
+    "id": "pis",
+    "title": "Lei 10.637/2002 — arts. 2 e 3",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/2002/l10637.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei",
+    "retrieved_at": "2026-09-28T23:29:55.450522+00:00",
+    "sha256": "0e8c7e4e0c2acaa1121aad96e89a1216939283dc4232387438a703a80baa0686",
+    "capture_file": "docs/fiscal/fontes/captura-web.txt"
+  },
+  {
+    "id": "cofins",
+    "title": "Lei 10.833/2003 — arts. 2 e 3",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/2003/l10.833.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei",
+    "retrieved_at": "2026-09-28T23:29:55.450548+00:00",
+    "sha256": "0e8c7e4e0c2acaa1121aad96e89a1216939283dc4232387438a703a80baa0686",
+    "capture_file": "docs/fiscal/fontes/captura-web.txt"
+  },
+  {
+    "id": "cumulativo",
+    "title": "Lei 9.718/1998 — arts. 2, 3 e 8",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/l9718.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei",
+    "retrieved_at": "2026-09-28T23:29:55.450574+00:00",
+    "sha256": "0e8c7e4e0c2acaa1121aad96e89a1216939283dc4232387438a703a80baa0686",
+    "capture_file": "docs/fiscal/fontes/captura-web.txt"
+  },
+  {
+    "id": "pis_cumulativo",
+    "title": "MP 2.158-35/2001 — art. 8",
+    "url": "https://www.planalto.gov.br/ccivil_03/mpv/2158-35.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei",
+    "retrieved_at": "2026-09-28T23:29:55.450599+00:00",
+    "sha256": "0e8c7e4e0c2acaa1121aad96e89a1216939283dc4232387438a703a80baa0686",
+    "capture_file": "docs/fiscal/fontes/captura-web.txt"
+  },
+  {
+    "id": "lc224",
+    "title": "LC 224/2025 — art. 4",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp224.htm",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei",
+    "retrieved_at": "2026-09-28T23:29:55.450624+00:00",
+    "sha256": "0e8c7e4e0c2acaa1121aad96e89a1216939283dc4232387438a703a80baa0686",
+    "capture_file": "docs/fiscal/fontes/captura-web.txt"
+  },
+  {
+    "id": "sp_rest",
+    "title": "Decreto SP 51.597/2007",
+    "url": "https://legislacao.fazenda.sp.gov.br/Paginas/dec51597.aspx",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei",
+    "retrieved_at": "2026-09-28T23:29:55.450649+00:00",
+    "sha256": "0e8c7e4e0c2acaa1121aad96e89a1216939283dc4232387438a703a80baa0686",
+    "capture_file": "docs/fiscal/fontes/captura-web.txt"
+  },
+  {
+    "id": "csll",
+    "title": "Receita Federal — CSLL",
+    "url": "https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/CSLL",
+    "capture_kind": "extrato de consulta web; não é cópia integral da lei",
+    "retrieved_at": "2026-09-28T23:29:55.450673+00:00",
+    "sha256": "0e8c7e4e0c2acaa1121aad96e89a1216939283dc4232387438a703a80baa0686",
+    "capture_file": "docs/fiscal/fontes/captura-web.txt"
+  },
+  {
+    "id": "in2306",
+    "title": "Receita Federal — redução de benefícios tributários 2026",
+    "url": "https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/perguntas-e-respostas/beneficios-fiscais/perguntas-e-respostas-reducao-dos-incentivos-e-beneficios-tributarios.pdf/@@download/file",
+    "retrieved_at": "2026-09-28T23:29:55.450698+00:00",
+    "sha256": "2246251d615e542bd51754f75b5a222af73b9164ca20fb1a371141f06a3e05e0",
+    "capture_kind": "extrato de busca oficial; não é cópia integral",
+    "capture_file": "docs/fiscal/fontes/presumido-2026.txt"
+  },
+  {
+    "id": "ncm",
+    "title": "NCM — Resolução Gecex nº 926/2026",
+    "url": "https://portalunico.siscomex.gov.br/classif/api/publico/nomenclatura/download/json",
+    "sha256": "a9aa78fd675c00cdd909fa2b01b5f312f86ff5ac96563f9f1a1eba2c40bcafe9",
+    "retrieved_at": "2026-09-28T23:37:06.473772+00:00",
+    "capture_kind": "Tabela JSON integral; vigente em 28/09/2026",
+    "capture_file": "docs/fiscal/fontes/ncm-original.json.gz"
+  },
+  {
+    "id": "icms_geral",
+    "title": "LC 87/1996 — arts. 19 a 25",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp87.htm",
+    "retrieved_at": "2026-09-28T23:39:37.375235+00:00",
+    "sha256": "bae63105070592bbcbdb92d5c33802389fa358e893fc59833c978814337b6094",
+    "capture_kind": "Extrato de consulta oficial; não é cópia integral",
+    "capture_file": "docs/fiscal/fontes/apuracao-anual-icms.txt"
+  },
+  {
+    "id": "renda_anual",
+    "title": "Lei 9.430/1996 — arts. 1 a 4",
+    "url": "https://www.planalto.gov.br/ccivil_03/leis/l9430.htm",
+    "retrieved_at": "2026-09-28T23:39:37.375305+00:00",
+    "sha256": "bae63105070592bbcbdb92d5c33802389fa358e893fc59833c978814337b6094",
+    "capture_kind": "Extrato de consulta oficial; não é cópia integral",
+    "capture_file": "docs/fiscal/fontes/apuracao-anual-icms.txt"
+  }
+]

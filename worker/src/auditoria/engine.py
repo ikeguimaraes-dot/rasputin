@@ -11,7 +11,9 @@ CODES = ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "R02", "
 D = Decimal
 
 
-def _evaluate(documents: list[Document], profiles: list[Profile], rules: list[Rule]) -> Result:
+def _evaluate(
+    documents: list[Document], profiles: list[Profile], rules: list[Rule], official=None
+) -> Result:
     findings, skipped = [], []
     products = defaultdict(list)
     coverage = Counter()
@@ -21,7 +23,17 @@ def _evaluate(documents: list[Document], profiles: list[Profile], rules: list[Ru
             {"code": code, "document": doc.key or doc.number, "source": item.source, "reason": why}
         )
 
-    def add(code, doc, item, message, severity="revisar", rule=None, expected=None, impact=None):
+    def add(
+        code,
+        doc,
+        item,
+        message,
+        severity="revisar",
+        rule=None,
+        expected=None,
+        impact=None,
+        source=None,
+    ):
         evidence = {
             "document": doc.key or doc.number,
             "issued": doc.issued.isoformat(),
@@ -42,6 +54,9 @@ def _evaluate(documents: list[Document], profiles: list[Profile], rules: list[Ru
             finding.rule_id = rule.id
             finding.legal_basis = rule.legal_basis
             finding.source_url = rule.source_url
+        elif source:
+            finding.legal_basis = source["title"]
+            finding.source_url = source["url"]
         finding.id = digest(finding.model_dump(mode="json"))
         findings.append(finding)
 
@@ -61,6 +76,23 @@ def _evaluate(documents: list[Document], profiles: list[Profile], rules: list[Ru
                 products[item.code].append((doc, item))
             else:
                 skip("C01", doc, item, "Código do produto ausente")
+            if official:
+                from auditoria.official import check_ncm
+
+                state, explanation = check_ncm(item.ncm, doc.issued, official)
+                if state == "skip":
+                    skip("R01", doc, item, explanation)
+                else:
+                    coverage["R01"] += 1
+                    if state == "error":
+                        add(
+                            "R01",
+                            doc,
+                            item,
+                            explanation,
+                            "revisar",
+                            source=next(s for s in official["sources"] if s["id"] == "ncm"),
+                        )
             if item.ncm in ("00000000", "99999999"):
                 add("C06", doc, item, "NCM coringa: revisar a classificação do produto.", "erro")
             if not item.ncm:
@@ -180,6 +212,55 @@ def _evaluate(documents: list[Document], profiles: list[Profile], rules: list[Ru
                     )
                 ]
                 if not matches:
+                    if (
+                        code == "R05"
+                        and official
+                        and official["valid_from"] <= doc.issued.isoformat() <= official["valid_to"]
+                        and profile.regime_federal != "simples"
+                        and profile.regime_pis_cofins in ("cumulativo", "nao_cumulativo")
+                    ):
+                        checked = False
+                        for name in ("pis", "cofins"):
+                            tax = getattr(item, name)
+                            if tax.cst != "01" or tax.rate is None:
+                                skip(
+                                    code,
+                                    doc,
+                                    item,
+                                    f"{name.upper()}: catálogo geral exige CST 01 e alíquota",
+                                )
+                                continue
+                            checked = True
+                            suffix = (
+                                "cumulative"
+                                if profile.regime_pis_cofins == "cumulativo"
+                                else "noncumulative"
+                            )
+                            rate = (
+                                D(official["parameters"]["contributions"][name + "_" + suffix])
+                                * 100
+                            )
+                            coverage[code] += 1
+                            if abs(tax.rate - rate) > D(".0001"):
+                                source_id = (
+                                    ("pis_cumulativo" if name == "pis" else "cumulativo")
+                                    if suffix == "cumulative"
+                                    else name
+                                )
+                                add(
+                                    code,
+                                    doc,
+                                    item,
+                                    f"{name.upper()}: CST 01 com alíquota divergente "
+                                    "do regime declarado.",
+                                    "risco",
+                                    expected={name + "_rate": str(rate)},
+                                    source=next(
+                                        s for s in official["sources"] if s["id"] == source_id
+                                    ),
+                                )
+                        if checked:
+                            continue
                     skip(code, doc, item, "Sem regra aprovada aplicável ao contexto e à data")
                     continue
                 rank = max((r.priority, len(r.ncm_prefix), len(r.conditions)) for r in matches)
@@ -268,7 +349,12 @@ def _evaluate(documents: list[Document], profiles: list[Profile], rules: list[Ru
             }
         ),
         rules_hash=digest(
-            sorted([r.model_dump(mode="json") for r in rules], key=lambda r: r["id"])
+            {
+                "custom": sorted([r.model_dump(mode="json") for r in rules], key=lambda r: r["id"]),
+                "official": official,
+            }
+            if official
+            else sorted([r.model_dump(mode="json") for r in rules], key=lambda r: r["id"])
         ),
         findings=findings,
         skipped=skipped,
@@ -280,18 +366,22 @@ def _evaluate(documents: list[Document], profiles: list[Profile], rules: list[Ru
             "potential_impact": directions,
             "impact_notice": "Estimativa documental; não comprova imposto recolhido.",
             "regimes": sorted({p.regime_federal for p in profiles}),
+            "official_catalog_version": official["version"] if official else None,
             "limitations": [
                 "Simples: não calcula DAS sem RBT12, anexos e segregação de receitas.",
-                "Não apura IRPJ/CSLL, créditos ou saldo mensal a recolher.",
+                "Este relatório é documental. Use Apuração de impostos para "
+                "calcular por período com dados complementares.",
                 "Zero apontamentos não comprova conformidade quando há checagens não avaliadas.",
             ],
         },
     )
 
 
-def evaluate(documents: list[Document], profiles: list[Profile], rules: list[Rule]) -> Result:
+def evaluate(
+    documents: list[Document], profiles: list[Profile], rules: list[Rule], official=None
+) -> Result:
     # Não herdar precisão/arredondamento de outras operações no processo.
     with localcontext() as ctx:
         ctx.prec = 38
         ctx.rounding = ROUND_HALF_UP
-        return _evaluate(documents, profiles, rules)
+        return _evaluate(documents, profiles, rules, official)

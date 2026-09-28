@@ -16,6 +16,7 @@ import {
   UploadCloud,
   Activity,
   Settings2,
+  Calculator,
 } from "lucide-react";
 import { API, formatDate, regimes, supabaseClient } from "@/lib/client";
 import type { Analysis, Call, Client, Me, Upload } from "@/lib/types";
@@ -24,6 +25,7 @@ import { ClientForm } from "@/components/client-form";
 import { UploadForm } from "@/components/upload-form";
 import { AnalysisDetail } from "@/components/analysis-detail";
 import { Rules } from "@/components/rules";
+import { Assessments } from "@/components/assessments";
 
 function Brand() {
   return (
@@ -383,6 +385,11 @@ export default function Home() {
           { id: "clients", label: "Clientes", icon: Building2 },
           { id: "analyses", label: "Análises fiscais", icon: FileSearch },
           { id: "rules", label: "Base de regras", icon: BookOpen },
+          {
+            id: "assessments",
+            label: "Apuração de impostos",
+            icon: Calculator,
+          },
           { id: "settings", label: "Escritório", icon: Settings2 },
         ].map((n) => (
           <button
@@ -421,6 +428,7 @@ export default function Home() {
                   clients: "Clientes",
                   analyses: "Análises",
                   rules: "Base de regras",
+                  assessments: "Apuração de impostos",
                   settings: "Escritório",
                 } as Record<string, string>
               )[page]
@@ -447,6 +455,8 @@ export default function Home() {
         <main className="content">
           {page === "rules" ? (
             <Rules call={call} admin={me.role === "admin"} />
+          ) : page === "assessments" ? (
+            <Assessments call={call} clients={clients} />
           ) : page === "settings" ? (
             <Settings call={call} me={me} />
           ) : (

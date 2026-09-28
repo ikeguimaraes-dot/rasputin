@@ -6,6 +6,7 @@ export type Profile = {
   optante_regime_especial_rest: boolean;
   contribuinte_ipi: boolean;
   metodo_pis_cofins?: string | null;
+  regime_pis_cofins?: string | null;
 };
 export type Client = {
   id: string;

@@ -26,6 +26,7 @@ export function ClientForm({
       optante_regime_especial_rest: f.get("special") === "on",
       contribuinte_ipi: f.get("ipi") === "on",
       metodo_pis_cofins: f.get("method") || null,
+      regime_pis_cofins: f.get("contributions") || null,
     };
     try {
       if (client) await call(`/clients/${client.id}/profiles`, profile);
@@ -116,6 +117,15 @@ export function ClientForm({
         <label>
           Início da vigência
           <input name="date" type="date" required />
+        </label>
+        <label className="full">
+          Regime declarado de PIS/COFINS
+          <select name="contributions">
+            <option value="">Não informado</option>
+            <option value="cumulativo">Cumulativo</option>
+            <option value="nao_cumulativo">Não cumulativo</option>
+            <option value="misto">Misto — tratamento por operação</option>
+          </select>
         </label>
         <label className="full">
           Método declarado de base PIS/COFINS
