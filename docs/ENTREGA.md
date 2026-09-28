@@ -18,14 +18,16 @@ logo/cores/rodapé e auditoria. Documentação e configurações de deploy inclu
 - Build Next.js e TypeScript; navegação desktop/mobile sem erro JavaScript ou overflow horizontal.
 - `.env` e `.env.local` ignorados pelo Git; chave privilegiada não aparece no bundle do navegador.
 - Supabase remoto: endpoints Auth/Storage responderam; buckets `uploads` e `reports` criados privados.
+- Conexão Session pooler autenticada; quatro migrations aplicadas no banco remoto sem conflito
+  com as tabelas preexistentes. Testes de RLS e integridade executados com rollback e aprovados.
+- API local: `/health` e `/ready` responderam 200; `/api/me` sem login respondeu 401;
+  CORS da prévia local verificado. Inicialização com reload corrigida para evitar execução duplicada.
 
 ## Dependências externas ainda pendentes
 
-1. `DATABASE_URL` válida no `.env` para aplicar o schema remoto. A conexão disponível falhou;
-   não houve aplicação de migrations ao projeto real nem teste ponta a ponta naquele ambiente.
-2. Planilha fiscal original e validação de conteúdo pelo responsável fiscal. Não existem regras
+1. Planilha fiscal original e validação de conteúdo pelo responsável fiscal. Não existem regras
    tributárias de produção pré-aprovadas. O seed importado entra na área de revisão.
-3. Publicação de frontend/worker após a configuração real do banco. A prévia local da interface
+2. Publicação de frontend/worker. A prévia local da interface
    não constitui ambiente de produção operacional.
 
 ## Limites intencionais
@@ -37,3 +39,4 @@ responsável do escritório, não uma decisão da IA.
 
 O teste usa Auth/Storage simulados quando valida o pipeline com PostgreSQL temporário; os testes
 remotos de Auth/Storage confirmaram acesso e buckets, sem usar arquivos fiscais reais.
+O fluxo completo com usuário autenticado e relatório no Storage remoto ainda não foi validado.

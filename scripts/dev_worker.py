@@ -11,10 +11,11 @@ if Path("/opt/homebrew/lib/libgobject-2.0.dylib").exists():
     os.environ.setdefault("DYLD_FALLBACK_LIBRARY_PATH", "/opt/homebrew/lib")
 import uvicorn
 
-uvicorn.run(
-    "auditoria.main:app",
-    host="127.0.0.1",
-    port=8000,
-    reload=True,
-    reload_dirs=["worker/src"],
-)
+if __name__ == "__main__":
+    uvicorn.run(
+        "auditoria.main:app",
+        host="127.0.0.1",
+        port=8000,
+        reload=True,
+        reload_dirs=["worker/src"],
+    )

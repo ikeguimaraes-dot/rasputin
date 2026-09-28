@@ -20,11 +20,12 @@ Implementado e testado localmente:
 - Ingestão do seed original para área de revisão; aprovação explícita de regras executáveis.
 - IA opcional somente para sugerir mapeamento **a partir dos cabeçalhos**, sem enviar linhas de clientes.
 
-**Ainda não publicado em produção.** A API Supabase do projeto fornecido respondeu, mas a
-conexão PostgreSQL local não estava utilizável. Os buckets privados `uploads` e `reports` já foram
-criados e verificados no projeto informado. As migrations foram executadas e validadas em
-PostgreSQL WASM isolado. Não foram aplicadas ao projeto remoto. A planilha fiscal real e sua
-validação também estão pendentes; não há alíquotas de teste ativadas em produção.
+**Ainda não publicado em produção.** A conexão PostgreSQL pelo Session pooler foi validada,
+e as quatro migrations foram aplicadas ao Supabase remoto, preservando as tabelas existentes.
+Os testes transacionais de RLS e integridade passaram no banco real. Os buckets `uploads` e
+`reports` são privados. A API local respondeu em `/ready` com o banco remoto e exige login.
+A planilha de regras fiscais e sua validação continuam pendentes; não há alíquotas de teste
+ativadas em produção.
 
 ## Rodar localmente
 
