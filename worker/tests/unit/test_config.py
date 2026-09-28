@@ -19,7 +19,7 @@ def test_loads_required_values_and_applies_defaults():
     assert settings.database_url == "postgresql://u:p@h/db"
     assert settings.poll_interval_seconds == 2.0
     assert settings.job_max_attempts == 3
-    assert settings.anthropic_model == "claude-sonnet-5-5"
+    assert settings.anthropic_model == ""
 
 
 @pytest.mark.parametrize("missing", sorted(REQUIRED_ENV))

@@ -1,0 +1,7 @@
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe"><NFe><infNFe Id="NFe11111111111111111111111111111111111111111111">
+    <ide><mod>65</mod><serie>1</serie><nNF>123</nNF><dhEmi>2026-08-01T12:00:00-03:00</dhEmi><tpNF>1</tpNF><indFinal>1</indFinal></ide>
+    <emit><CNPJ>11111111000111</CNPJ></emit><dest><indIEDest>9</indIEDest></dest>
+    <det nItem="1"><prod><cProd>P1</cProd><xProd>Água sintética</xProd><NCM>22010000</NCM><CFOP>5102</CFOP><vProd>100.00</vProd></prod>
+    <imposto><ICMS><ICMS00><CST>00</CST><vBC>100</vBC><pICMS>18</pICMS><vICMS>18</vICMS></ICMS00></ICMS>
+    <IBSCBS><cClassTrib>000001</cClassTrib></IBSCBS></imposto></det></infNFe></NFe>
+    <protNFe><infProt><cStat>100</cStat></infProt></protNFe></nfeProc>

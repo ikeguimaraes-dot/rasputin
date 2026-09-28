@@ -12,8 +12,11 @@ dependencies = [
     "pandas>=2.2",
     "openpyxl>=3.1",
     "xlrd>=2.0.1",
-    "weasyprint>=62",
+    "weasyprint==70.0",
     "anthropic>=0.40",
+    "httpx>=0.28.1",
+    "python-multipart>=0.0.32",
+    "olefile>=0.47",
 ]
 
 [dependency-groups]
@@ -45,3 +48,9 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.Form"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/auditoria/reports.py" = ["E501"]  # template HTML/CSS

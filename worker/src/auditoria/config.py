@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+import math
 import os
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 
 DEFAULT_POLL_INTERVAL_SECONDS = 2.0
 DEFAULT_JOB_MAX_ATTEMPTS = 3
-DEFAULT_ANTHROPIC_MODEL = "claude-sonnet-5-5"
+DEFAULT_ANTHROPIC_MODEL = ""
 DEFAULT_LOG_LEVEL = "INFO"
 
 
@@ -28,7 +29,10 @@ def _number(env: Mapping[str, str], name: str, default: float, cast: type) -> fl
     if raw is None or raw.strip() == "":
         return default
     try:
-        return cast(raw)
+        value = cast(raw)
+        if not math.isfinite(value) or value <= 0:
+            raise ValueError("Valor deve ser positivo e finito")
+        return value
     except ValueError as exc:
         raise ConfigError(f"Valor inválido para {name}: {raw!r}") from exc
 
