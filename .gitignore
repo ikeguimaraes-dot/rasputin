@@ -29,3 +29,9 @@ supabase/.temp/
 .DS_Store
 .idea/
 .vscode/
+
+# Build e testes locais
+*.tsbuildinfo
+test-results/
+playwright-report/
+artifacts/
