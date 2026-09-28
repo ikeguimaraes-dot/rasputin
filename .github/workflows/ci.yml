@@ -1,19 +1,23 @@
 name: ci
-
 on:
   push:
     branches: [main]
   pull_request:
-
 jobs:
-  worker:
+  verify:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: worker
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-      - run: uv sync --python 3.12
-      - run: uv run ruff check .
-      - run: uv run pytest --cov
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: sudo apt-get update && sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b fonts-dejavu-core
+      - run: uv sync --project worker --python 3.12 --frozen
+      - run: npm ci --prefix apps/web
+      - run: uv run --project worker ruff check worker scripts
+      - run: uv run --project worker python scripts/test_integration.py
+      - run: npm run --prefix apps/web typecheck
+      - run: npm run --prefix apps/web build

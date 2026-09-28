@@ -1,31 +1,45 @@
-.PHONY: env dev test lint db-preflight db-list db-push db-test-rls
-
-RUN_SQL = uv run --project worker python scripts/run_sql.py
+.PHONY: env web-env dev web test test-integration test-db lint build db-preflight db-list db-push db-test-rls
+RUN = uv run --project worker
 
 env:
-	@test -f .env || (cp .env.example .env && echo ".env criado; preencha as chaves")
+	@test -f .env || cp .env.example .env
 
-# Worker local, direto com uv (sem Docker), contra o Supabase na nuvem.
+web-env:
+	$(RUN) python scripts/web_env.py
+
 dev:
-	cd worker && set -a && . ../.env && set +a && uv run uvicorn auditoria.main:app --reload --port 8000
+	$(RUN) python scripts/dev_worker.py
+
+web:
+	npm --prefix apps/web run dev
 
 test:
-	cd worker && uv run pytest --cov --cov-report=term-missing
+	cd worker && DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run pytest --cov --cov-report=term-missing
+
+test-db:
+	node apps/web/scripts/test-database.mjs
+
+test-integration:
+	$(RUN) python scripts/test_integration.py
 
 lint:
-	cd worker && uv run ruff check . ../scripts
+	$(RUN) ruff check worker scripts
+	npm --prefix apps/web run typecheck
 
-# Migrations vão para o banco apontado por DATABASE_URL no .env (nunca por link salvo),
-# então é impossível atingir outro projeto por engano.
+build:
+	npm --prefix apps/web run build
+
+# Preflight só para implantação inicial em banco ainda não inicializado.
 db-preflight:
-	$(RUN_SQL) supabase/preflight.sql
+	$(RUN) python scripts/run_sql.py supabase/preflight.sql
 
 db-list:
-	@set -a && . ./.env && set +a && supabase migration list --db-url "$$DATABASE_URL"
+	$(RUN) python scripts/db_cli.py list
 
-db-push: db-preflight
-	@set -a && . ./.env && set +a && supabase db push --db-url "$$DATABASE_URL"
+# O histórico de migrations do Supabase garante que apenas as novas sejam aplicadas.
+db-push:
+	$(RUN) python scripts/db_cli.py push
 
-# Só depois do db-push. Roda numa transação que termina em ROLLBACK.
 db-test-rls:
-	$(RUN_SQL) supabase/tests/rls_isolation.sql
+	$(RUN) python scripts/run_sql.py supabase/tests/rls_isolation.sql
+	$(RUN) python scripts/run_sql.py supabase/tests/runtime_integrity.sql

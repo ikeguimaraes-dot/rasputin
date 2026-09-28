@@ -1,0 +1,10 @@
+.git
+.env
+.env.*
+apps
+worker/.venv
+worker/.pytest_cache
+worker/.ruff_cache
+**/__pycache__
+fixtures_privadas
+artifacts

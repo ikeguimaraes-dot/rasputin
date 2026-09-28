@@ -48,12 +48,17 @@ def main(argv: list[str]) -> int:
     load_env_file(ENV_FILE)
     database_url = os.environ.get("DATABASE_URL", "").strip()
     if not database_url:
-        print("DATABASE_URL ausente: preencha o .env (veja .env.example).", file=sys.stderr)
+        print(
+            "DATABASE_URL ausente: preencha o .env (veja .env.example).",
+            file=sys.stderr,
+        )
         return 1
 
     try:
         with psycopg.connect(database_url, autocommit=True) as conn:
-            conn.add_notice_handler(lambda d: print(f"{d.severity}: {d.message_primary}"))
+            conn.add_notice_handler(
+                lambda d: print(f"{d.severity}: {d.message_primary}")
+            )
             print_results(conn.execute(sql_file.read_text()))
     except psycopg.Error as exc:
         print(f"ERRO: {exc}", file=sys.stderr)
