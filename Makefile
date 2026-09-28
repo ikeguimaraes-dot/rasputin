@@ -1,6 +1,6 @@
-SUPABASE_PROJECT_REF ?= iqgrvptrtphvbmvrqntm
+.PHONY: env dev test lint db-preflight db-list db-push db-test-rls
 
-.PHONY: env dev test lint db-link db-list db-push
+RUN_SQL = uv run --project worker python scripts/run_sql.py
 
 env:
 	@test -f .env || (cp .env.example .env && echo ".env criado; preencha as chaves")
@@ -13,14 +13,19 @@ test:
 	cd worker && uv run pytest --cov --cov-report=term-missing
 
 lint:
-	cd worker && uv run ruff check .
+	cd worker && uv run ruff check . ../scripts
 
-# Migrations no projeto Supabase remoto (exige `supabase login`).
-db-link:
-	supabase link --project-ref $(SUPABASE_PROJECT_REF)
+# Migrations vão para o banco apontado por DATABASE_URL no .env (nunca por link salvo),
+# então é impossível atingir outro projeto por engano.
+db-preflight:
+	$(RUN_SQL) supabase/preflight.sql
 
 db-list:
-	supabase migration list
+	@set -a && . ./.env && set +a && supabase migration list --db-url "$$DATABASE_URL"
 
-db-push:
-	supabase db push
+db-push: db-preflight
+	@set -a && . ./.env && set +a && supabase db push --db-url "$$DATABASE_URL"
+
+# Só depois do db-push. Roda numa transação que termina em ROLLBACK.
+db-test-rls:
+	$(RUN_SQL) supabase/tests/rls_isolation.sql

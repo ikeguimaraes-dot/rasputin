@@ -12,7 +12,7 @@ versão da base usada e avalia cada item pela vigência na data de emissão da n
 Fase 1 (MVP), em andamento. Ordem das etapas: M0 → M1 → M2 → **M5** → M3 → M4 → M6 → M7 → M8 → M9.
 
 - [x] M0 Fundação (esqueleto do worker, Dockerfile de deploy, CI)
-- [ ] M1 Schema e RLS
+- [~] M1 Schema e RLS (migrations escritas e com sintaxe validada; falta aplicar no banco)
 - [ ] M2 Modelo canônico
 - [ ] M5 Base de regras e importador do seed
 - [ ] M3 Ingestão XML
@@ -33,9 +33,10 @@ O `worker/Dockerfile` é usado apenas no deploy do Railway.
 
 ```bash
 make env        # cria .env a partir de .env.example; preencha as chaves do projeto Supabase
-make db-link    # vincula a CLI ao projeto remoto (uma vez)
-make db-list    # compara migrations locais x remotas
-make db-push    # aplica as migrations pendentes no projeto remoto
+make db-preflight  # aborta se algum nome de tabela já existir no banco (não altera nada)
+make db-push       # preflight + aplica as migrations no banco do DATABASE_URL do .env
+make db-test-rls   # testa o isolamento entre organizações (transação com rollback)
+make db-list       # compara migrations locais x remotas
 make dev        # worker em http://localhost:8000/health
 make test       # testes + cobertura
 make lint
