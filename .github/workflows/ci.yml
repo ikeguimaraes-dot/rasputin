@@ -6,6 +6,21 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: auditoria_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/auditoria_test
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
@@ -18,6 +33,6 @@ jobs:
       - run: uv sync --project worker --python 3.12 --frozen
       - run: npm ci --prefix apps/web
       - run: uv run --project worker ruff check worker scripts
-      - run: uv run --project worker python scripts/test_integration.py
+      - run: uv run --project worker python scripts/test_postgres.py
       - run: npm run --prefix apps/web typecheck
       - run: npm run --prefix apps/web build
