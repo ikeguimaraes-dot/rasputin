@@ -11,7 +11,7 @@ versão da base usada e avalia cada item pela vigência na data de emissão da n
 
 Fase 1 (MVP), em andamento. Ordem das etapas: M0 → M1 → M2 → **M5** → M3 → M4 → M6 → M7 → M8 → M9.
 
-- [x] M0 Fundação (esqueleto do worker, compose, CI)
+- [x] M0 Fundação (esqueleto do worker, Dockerfile de deploy, CI)
 - [ ] M1 Schema e RLS
 - [ ] M2 Modelo canônico
 - [ ] M5 Base de regras e importador do seed
@@ -24,17 +24,20 @@ Fase 1 (MVP), em andamento. Ordem das etapas: M0 → M1 → M2 → **M5** → M3
 
 ## Pré-requisitos
 
-Docker, [uv](https://docs.astral.sh/uv/), [Supabase CLI](https://supabase.com/docs/guides/cli),
-Node 20+ e pnpm (o frontend entra na M8).
+[uv](https://docs.astral.sh/uv/), [Supabase CLI](https://supabase.com/docs/guides/cli) (logado com
+`supabase login`), Node 20+ e pnpm (o frontend entra na M8). Não é preciso Docker: o
+desenvolvimento usa o projeto Supabase na nuvem e o worker roda direto com `uv`.
+O `worker/Dockerfile` é usado apenas no deploy do Railway.
 
 ## Como rodar localmente
 
 ```bash
-make env          # cria .env a partir de .env.example
-make db-start     # Supabase local (Postgres, Auth, Storage)
-supabase status   # copie a service_role key para SUPABASE_SERVICE_ROLE_KEY no .env
-make up           # worker em http://localhost:8000/health
-make test         # testes + cobertura
+make env        # cria .env a partir de .env.example; preencha as chaves do projeto Supabase
+make db-link    # vincula a CLI ao projeto remoto (uma vez)
+make db-list    # compara migrations locais x remotas
+make db-push    # aplica as migrations pendentes no projeto remoto
+make dev        # worker em http://localhost:8000/health
+make test       # testes + cobertura
 make lint
 ```
 
