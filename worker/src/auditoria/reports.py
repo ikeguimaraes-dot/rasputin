@@ -117,6 +117,76 @@ def xlsx_report(result: Result, context: dict) -> bytes:
                 ],
             ]
             ws.append([safe_cell(v) for v in row])
+    ws = wb.create_sheet("Por CFOP e categoria")
+    ws.append(
+        [
+            "CFOP",
+            "Natureza",
+            "Categoria declarada",
+            "ICMS alíquota %",
+            "Itens",
+            "Valor dos itens R$",
+            "ICMS informado R$",
+        ]
+    )
+    for row in result.summary.get("operations", []):
+        ws.append(
+            [safe_cell(row.get(k)) for k in ("cfop", "nature", "category")]
+            + [
+                float(row["icms_rate"]) if row["icms_rate"] is not None else None,
+                row["items"],
+                float(row["value"]) if row["value"] is not None else None,
+                float(row["icms_value"]) if row["icms_value"] is not None else None,
+            ]
+        )
+    ws = wb.create_sheet("Itens conferidos")
+    keys = (
+        "document",
+        "issued",
+        "code",
+        "description",
+        "ncm",
+        "cfop",
+        "nature",
+        "category",
+        "icms_cst",
+        "pis_cst",
+        "cofins_cst",
+        "icms_rate",
+        "value",
+        "icms_value",
+    )
+    ws.append(
+        [
+            "Nota",
+            "Data",
+            "Código",
+            "Descrição",
+            "NCM",
+            "CFOP",
+            "Natureza",
+            "Categoria declarada",
+            "CST ICMS",
+            "CST PIS",
+            "CST COFINS",
+            "ICMS alíquota %",
+            "Valor do item R$",
+            "ICMS informado R$",
+            "Arquivo",
+            "Aba",
+            "Linha",
+        ]
+    )
+    for row in result.summary.get("review_rows", []):
+        ws.append(
+            [
+                safe_cell(row.get(k))
+                if k not in ("icms_rate", "value", "icms_value")
+                else (float(row[k]) if row.get(k) is not None else None)
+                for k in keys
+            ]
+            + [safe_cell(row["source"].get(k)) for k in ("file", "sheet", "line")]
+        )
     ws = wb.create_sheet("Não avaliadas")
     ws.append(["Regra", "Documento", "Origem", "Motivo"])
     for skip in result.skipped:
@@ -200,6 +270,24 @@ def html_report(result: Result, context: dict, branding: dict | None = None) -> 
             + "".join(f'<p class="legal">{e(legal_text)}</p>' for legal_text in legal)
             + "</section>"
         )
+    operations = "".join(
+        "<tr>"
+        + "".join(
+            f"<td>{e(row.get(k))}</td>"
+            for k in ("cfop", "nature", "category", "icms_rate", "items", "value", "icms_value")
+        )
+        + "</tr>"
+        for row in result.summary.get("operations", [])
+    )
+    operation_table = (
+        (
+            "<h2>Conferência por CFOP, categoria e alíquota</h2><p>Categorias baseadas no cadastro informado; totais do arquivo, não apuração do mês.</p><table><thead><tr><th>CFOP</th><th>Natureza</th><th>Categoria</th><th>ICMS %</th><th>Itens</th><th>Valor R$</th><th>ICMS R$</th></tr></thead><tbody>"
+            + operations
+            + "</tbody></table>"
+        )
+        if operations
+        else ""
+    )
     cover = "".join(f"<p><strong>{e(k)}:</strong> {e(v)}</p>" for k, v in context.items())
     top = CounterCodes(result)
     potential = result.summary["potential_impact"]
@@ -222,6 +310,7 @@ def html_report(result: Result, context: dict, branding: dict | None = None) -> 
     <p>Por severidade: {e(result.summary["severity"])}</p><p>Principais ocorrências: {e(top)}</p>
     <p>Impactos potenciais: {e(impacts_text)}</p>
     {"".join(f"<p>{e(x)}</p>" for x in result.summary["limitations"])}</div>
+    {operation_table}
     {"".join(sections) or "<h2>Nenhuma divergência identificada nas checagens executadas.</h2>"}
     <p>{e(branding.get("rodape", ""))}</p></body></html>'''
 

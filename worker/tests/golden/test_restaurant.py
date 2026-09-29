@@ -104,7 +104,10 @@ def test_restaurant_scenario_with_b2b_negative_control():
         ),
     ]
     profile = Profile(
-        regime_federal="presumido", valid_from="2026-01-01", optante_regime_especial_rest=True
+        regime_federal="presumido",
+        valid_from="2026-01-01",
+        optante_regime_especial_rest=True,
+        contribuinte_ipi=False,
     )
     result = evaluate([document, b2b], [profile], rules)
     found = {(f.code, f.product) for f in result.findings}

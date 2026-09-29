@@ -118,3 +118,45 @@ def test_biff_sst_continue_unicode():
     cell = rec(0xFD, struct.pack("<HHHI", 0, 0, 0, 0))
     books, _ = recover(b"\0" * 512 + global_bof + sst + continuation + sheet + cell)
     assert books["Recuperada 1"][0][0] == "abçd"
+
+
+def test_biff_recovered_dates_respect_1904_and_do_not_convert_amounts():
+    def rec(k, p):
+        return struct.pack("<HH", k, len(p)) + p
+
+    global_bof = rec(0x809, struct.pack("<HH", 0x600, 0x5))
+    modes = rec(0x22, struct.pack("<H", 1))
+    formats = rec(0xE0, struct.pack("<HH", 0, 14)) + rec(0xE0, struct.pack("<HH", 0, 0))
+    sheet = rec(0x809, struct.pack("<HH", 0x600, 0x10))
+    cells = rec(0x203, struct.pack("<HHHd", 0, 0, 0, 1))
+    cells += rec(0x203, struct.pack("<HHHd", 0, 1, 1, 45000))
+    books, _ = recover(b"\0" * 512 + global_bof + modes + formats + sheet + cells)
+    row = books["Recuperada 1"][0]
+    assert row[0].date() == date(1904, 1, 2)
+    assert row[1] == 45000
+
+
+def test_conference_autodetection_signature_and_incomplete_row(monkeypatch):
+    from auditoria.ingestion import sheets
+
+    labels = [None] * 48
+    for col, value in sheets.CONFERENCE_LABELS.items():
+        labels[col] = value
+    groups = [None] * 48
+    for col, value in ((24, "ICMS"), (36, "IPI"), (40, "PIS"), (44, "COFINS")):
+        groups[col] = value
+    valid = [None] * 48
+    valid[0], valid[1], valid[2] = date(2026, 8, 1), 123, 5102
+    valid[5], valid[13], valid[19] = "11111111000111", "Produto sintético", 12
+    rows = [["Título"], ["Empresa sintética"], ["Período"], [], groups, labels, valid, valid[:19]]
+    monkeypatch.setattr(sheets, "workbook", lambda *_: ({"Recuperada 1": rows}, ["Parcial"], True))
+    p = sheets.preview(b"", "teste.xls")
+    assert p["header_rows"] == 6 and p["suggested_mapping"]["pis.cst"] == 40
+    rows[1] = ["Outra empresa sintética"]
+    assert sheets.preview(b"", "teste.xls")["signature"] == p["signature"]
+    result = sheets.ingest_sheet(b"", "teste.xls", p["suggested_mapping"], header_rows=6)
+    assert result.read == 1 and result.discarded == 1 and result.partial
+    assert result.documents[0].recipient_doc == "11111111000111"
+    assert result.documents[0].issuer_doc is None
+    assert result.documents[0].status == "desconhecida"
+    assert result.errors[0]["line"] == 8

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Download, RefreshCw, ExternalLink } from "lucide-react";
-import type { Analysis, Call } from "@/lib/types";
+import type { Analysis, Call, ReviewRow } from "@/lib/types";
 import { money } from "@/lib/client";
 import { Button, Notice, Status } from "./ui";
 export function AnalysisDetail({
@@ -12,6 +12,10 @@ export function AnalysisDetail({
   call: Call;
 }) {
   const [tab, setTab] = useState("findings"),
+    [cfop, setCfop] = useState(""),
+    [rate, setRate] = useState(""),
+    [category, setCategory] = useState(""),
+    [page, setPage] = useState(0),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   const result = analysis.result_payload;
@@ -45,7 +49,20 @@ export function AnalysisDetail({
         {analysis.erro || "A análise ainda está na fila de processamento."}
       </Notice>
     );
-  const groups = Object.groupBy(result.findings, (f) => f.product);
+  const rows = result.summary?.review_rows || [];
+  const matches = (r: ReviewRow) =>
+    (!cfop || r.cfop === cfop) &&
+    (!rate || r.icms_rate === rate) &&
+    (!category || r.category === category);
+  const filteredRows = rows.filter(matches);
+  const selected = new Set(filteredRows.map((r) => JSON.stringify(r.source)));
+  const findings =
+    cfop || rate || category
+      ? result.findings.filter((f) =>
+          f.evidence.some((ev) => selected.has(JSON.stringify(ev.item.source))),
+        )
+      : result.findings;
+  const groups = Object.groupBy(findings, (f) => f.product);
   return (
     <div>
       <div className="row">
@@ -68,13 +85,92 @@ export function AnalysisDetail({
         recolhido.
       </Notice>
       {error && <Notice error>{error}</Notice>}
+      {rows.length > 0 && (
+        <>
+          <div className="form-grid">
+            <label>
+              CFOP
+              <select
+                aria-label="CFOP"
+                value={cfop}
+                onChange={(e) => {
+                  setCfop(e.target.value);
+                  setPage(0);
+                }}
+              >
+                <option value="">Todos</option>
+                {[...new Set(rows.map((r) => r.cfop).filter(Boolean))]
+                  .sort()
+                  .map((v) => (
+                    <option key={v} value={v!}>
+                      {v}
+                    </option>
+                  ))}
+              </select>
+            </label>
+            <label>
+              Alíquota ICMS
+              <select
+                aria-label="Alíquota ICMS"
+                value={rate}
+                onChange={(e) => {
+                  setRate(e.target.value);
+                  setPage(0);
+                }}
+              >
+                <option value="">Todas</option>
+                {[
+                  ...new Set(
+                    rows.map((r) => r.icms_rate).filter((v) => v !== null),
+                  ),
+                ]
+                  .sort((a, b) => Number(a) - Number(b))
+                  .map((v) => (
+                    <option key={v} value={v!}>
+                      {v}%
+                    </option>
+                  ))}
+              </select>
+            </label>
+            <label>
+              Categoria declarada
+              <select
+                aria-label="Categoria declarada"
+                value={category}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                  setPage(0);
+                }}
+              >
+                <option value="">Todas</option>
+                {[...new Set(rows.map((r) => r.category))].sort().map((v) => (
+                  <option key={v}>{v}</option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <p className="subtitle">
+            {filteredRows.length} itens · {findings.length} apontamentos no
+            filtro. Categoria derivada do cadastro, sujeita a revisão. Totais
+            não representam apuração mensal.
+          </p>
+        </>
+      )}
       <div className="tabs">
+        {rows.length > 0 && (
+          <button
+            className={`tab ${tab === "items" ? "active" : ""}`}
+            onClick={() => setTab("items")}
+          >
+            Itens por CFOP{" "}
+            <span className="badge-count">{filteredRows.length}</span>
+          </button>
+        )}
         <button
           className={`tab ${tab === "findings" ? "active" : ""}`}
           onClick={() => setTab("findings")}
         >
-          Apontamentos{" "}
-          <span className="badge-count">{result.findings.length}</span>
+          Apontamentos <span className="badge-count">{findings.length}</span>
         </button>
         <button
           className={`tab ${tab === "skipped" ? "active" : ""}`}
@@ -84,7 +180,80 @@ export function AnalysisDetail({
           <span className="badge-count">{result.skipped.length}</span>
         </button>
       </div>
-      {tab === "findings" ? (
+      {tab === "items" ? (
+        <div className="card">
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nota / linha</th>
+                  <th>Produto / NCM</th>
+                  <th>CFOP / natureza</th>
+                  <th>Categoria</th>
+                  <th>ICMS CST / %</th>
+                  <th>PIS / COFINS CST</th>
+                  <th>Valor / ICMS R$</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredRows
+                  .slice(page * 100, (page + 1) * 100)
+                  .map((r, i) => (
+                    <tr key={i}>
+                      <td>
+                        {r.document || "—"}
+                        <br />
+                        Linha {String(r.source.line ?? "—")}
+                      </td>
+                      <td>
+                        {r.description}
+                        <br />
+                        {r.ncm || "—"}
+                      </td>
+                      <td>
+                        {r.cfop || "—"}
+                        <br />
+                        {r.nature}
+                      </td>
+                      <td>{r.category}</td>
+                      <td>
+                        {r.icms_cst ?? "—"} / {r.icms_rate ?? "—"}%
+                      </td>
+                      <td>
+                        {r.pis_cst ?? "—"} / {r.cofins_cst ?? "—"}
+                      </td>
+                      <td>
+                        {r.value === null ? "—" : money(r.value)}
+                        <br />
+                        {r.icms_value === null ? "—" : money(r.icms_value)}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="actions">
+            <Button
+              secondary
+              disabled={page === 0}
+              onClick={() => setPage(page - 1)}
+            >
+              Anterior
+            </Button>
+            <span>
+              Página {page + 1} de{" "}
+              {Math.max(1, Math.ceil(filteredRows.length / 100))}
+            </span>
+            <Button
+              secondary
+              disabled={(page + 1) * 100 >= filteredRows.length}
+              onClick={() => setPage(page + 1)}
+            >
+              Próxima
+            </Button>
+          </div>
+        </div>
+      ) : tab === "findings" ? (
         Object.entries(groups).map(([product, findings]) => (
           <div className="card" key={product}>
             <div className="card-head">
@@ -154,9 +323,9 @@ export function AnalysisDetail({
           )}
         </div>
       )}
-      {tab === "findings" && !result.findings.length && (
+      {tab === "findings" && !findings.length && (
         <Notice>
-          Nenhuma divergência nas checagens executadas. Consulte a aba “Não
+          Nenhum apontamento nos filtros selecionados. Consulte a aba “Não
           avaliadas” antes de concluir sobre a conformidade.
         </Notice>
       )}

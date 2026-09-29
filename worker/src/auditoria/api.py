@@ -249,7 +249,7 @@ async def upload(
             snapshot = {
                 "mapping": parsed,
                 "sheet": info["sheet"],
-                "header_rows": header_rows,
+                "header_rows": info["header_rows"],
                 "signature": info["signature"],
             }
             conn.execute(

@@ -33,10 +33,11 @@ export function UploadForm({
       const p = await call<Preview>("/uploads/preview", fd);
       setInfo(p);
       setSheet(p.sheet);
+      setHeaderRows(p.header_rows || h);
       const template = await call<{
         mapeamento: { mapping: Record<string, number> };
       } | null>("/templates/" + p.signature);
-      setMapping(template?.mapeamento.mapping || {});
+      setMapping(template?.mapeamento.mapping || p.suggested_mapping || {});
     } catch (e) {
       setError((e as Error).message);
     } finally {

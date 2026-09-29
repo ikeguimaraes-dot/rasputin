@@ -35,6 +35,8 @@ FIELDS = {
     "freight": "Frete",
     "insurance": "Seguro",
     "other": "Outras despesas",
+    "recipient_doc": "CPF/CNPJ destinatário",
+    "recipient_name": "Nome destinatário",
     "recipient_taxpayer": "Destinatário contribuinte",
     "recipient_uf": "UF destinatário",
     "final_consumer": "Consumidor final",
@@ -103,9 +105,79 @@ def workbook(data: bytes, filename: str):
     return books, warnings, partial
 
 
+# Exact signature of the accounting export; never infer fiscal status/model from it.
+CONFERENCE_LABELS = {
+    0: "Emissão",
+    1: "Nota",
+    2: "CFOP",
+    5: "CNPJ",
+    9: "Cód Prod",
+    11: "NCM",
+    12: "CEST",
+    13: "Descrição Prod",
+    19: "Valor Prod",
+    24: "CST",
+    25: "Base",
+    26: "Alqt",
+    27: "Valor",
+    40: "CST",
+    41: "Base",
+    42: "Alqt",
+    43: "Valor",
+    44: "CST",
+    45: "Base",
+    46: "Alqt",
+    47: "Valor",
+}
+CONFERENCE_MAPPING = {
+    "issued": 0,
+    "number": 1,
+    "cfop": 2,
+    "recipient_doc": 5,
+    "recipient_name": 6,
+    "recipient_uf": 8,
+    "code": 9,
+    "ncm": 11,
+    "cest": 12,
+    "description": 13,
+    "unit": 16,
+    "quantity": 17,
+    "unit_value": 18,
+    "value": 19,
+    "discount": 20,
+    "freight": 21,
+    "insurance": 22,
+    "other": 23,
+    **{
+        f"{tax}.{field}": start + offset
+        for tax, start in (("icms", 24), ("ipi", 36), ("pis", 40), ("cofins", 44))
+        for offset, field in enumerate(("cst", "base", "rate", "value"))
+    },
+    "st.base": 34,
+    "st.value": 35,
+}
+
+
+def conference_layout(rows):
+    for index, row in enumerate(rows[:10]):
+        if len(row) >= 48 and all(
+            str(row[c]).strip() == label for c, label in CONFERENCE_LABELS.items()
+        ):
+            groups = rows[index - 1] if index else []
+            if all(
+                len(groups) > c and str(groups[c]).strip() == label
+                for c, label in ((24, "ICMS"), (36, "IPI"), (40, "PIS"), (44, "COFINS"))
+            ):
+                return index + 1
+    return None
+
+
 def headers(rows, count: int):
     if not 1 <= count <= 10:
         raise ValueError("Cabeçalho deve ter entre 1 e 10 linhas")
+    if conference_layout(rows) == count:
+        # Titles, client names and period must not change a reusable column signature.
+        rows, count = rows[count - 2 : count], 2
     width = max((len(r) for r in rows[:count]), default=0)
     levels = []
     for index, row in enumerate(rows[:count]):
@@ -130,8 +202,14 @@ def preview(data, filename, sheet=None, header_rows=1):
     sheet = sheet or next(iter(books))
     if sheet not in books:
         raise ValueError("Aba não encontrada")
+    detected = conference_layout(books[sheet])
+    if detected and header_rows == 1:
+        header_rows = detected
     names, signature = headers(books[sheet], header_rows)
     return {
+        "header_rows": header_rows,
+        "layout": "conferencia_saidas_v1" if detected == header_rows else None,
+        "suggested_mapping": CONFERENCE_MAPPING if detected == header_rows else {},
         "sheets": list(books),
         "sheet": sheet,
         "headers": names,
@@ -191,6 +269,8 @@ def ingest_sheet(data, filename, mapping: dict, sheet=None, header_rows=1):
             continue
         try:
             values = {field: row[col] if col < len(row) else None for field, col in mapping.items()}
+            if string(values.get("description")) is None or decimal(values.get("value")) is None:
+                raise ValueError("Linha incompleta: descrição ou valor do produto ausente")
             raw_date = values["issued"]
             if isinstance(raw_date, datetime):
                 issued = raw_date.date()
@@ -239,6 +319,8 @@ def ingest_sheet(data, filename, mapping: dict, sheet=None, header_rows=1):
                 recipient_taxpayer=boolean(values.get("recipient_taxpayer")),
                 final_consumer=boolean(values.get("final_consumer")),
                 recipient_uf=string(values.get("recipient_uf")),
+                recipient_doc=string(values.get("recipient_doc")),
+                recipient_name=string(values.get("recipient_name")),
                 operation=string(values.get("operation")) or "desconhecida",
                 status=string(values.get("status")) or "desconhecida",
             )

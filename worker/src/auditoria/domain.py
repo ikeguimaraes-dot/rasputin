@@ -11,8 +11,8 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-ENGINE_VERSION = "1.1.0"
-PARSER_VERSION = "1.0.0"
+ENGINE_VERSION = "1.2.0"
+PARSER_VERSION = "1.1.0"
 Regime = Literal["simples", "presumido", "real"]
 
 
@@ -35,7 +35,7 @@ class Profile(Model):
     regime_federal: Regime
     cnae: str | None = None
     optante_regime_especial_rest: bool = False
-    contribuinte_ipi: bool = False
+    contribuinte_ipi: bool | None = None
     metodo_pis_cofins: Literal["com_exclusao_icms", "sem_exclusao_icms"] | None = None
     regime_pis_cofins: Literal["cumulativo", "nao_cumulativo", "misto"] | None = None
     valid_from: date

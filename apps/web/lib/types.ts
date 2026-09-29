@@ -4,7 +4,7 @@ export type Profile = {
   valid_from: string;
   valid_to?: string | null;
   optante_regime_especial_rest: boolean;
-  contribuinte_ipi: boolean;
+  contribuinte_ipi: boolean | null;
   metodo_pis_cofins?: string | null;
   regime_pis_cofins?: string | null;
 };
@@ -27,7 +27,29 @@ export type Upload = {
     warnings?: string[];
   };
 };
+export type ReviewRow = {
+  document: string | null;
+  issued: string;
+  code: string | null;
+  description: string;
+  ncm: string | null;
+  cfop: string | null;
+  nature: string;
+  category: string;
+  icms_rate: string | null;
+  icms_cst: string | null;
+  pis_cst: string | null;
+  cofins_cst: string | null;
+  value: string | null;
+  icms_value: string | null;
+  source: Record<string, unknown>;
+};
 export type Summary = {
+  review_rows?: ReviewRow[];
+  operations?: (Pick<
+    ReviewRow,
+    "cfop" | "nature" | "category" | "icms_rate" | "value" | "icms_value"
+  > & { items: number })[];
   findings: number;
   severity: Record<string, number>;
   skipped: number;
@@ -65,6 +87,7 @@ export type Analysis = {
   resumo?: Summary;
   erro?: string;
   result_payload?: {
+    summary?: Summary;
     findings: Finding[];
     skipped: { code: string; reason: string; source: unknown }[];
     rules_hash: string;
@@ -95,6 +118,9 @@ export type Me = {
   } | null;
 };
 export type Preview = {
+  header_rows?: number;
+  layout?: string | null;
+  suggested_mapping?: Record<string, number>;
   sheets: string[];
   sheet: string;
   headers: string[];

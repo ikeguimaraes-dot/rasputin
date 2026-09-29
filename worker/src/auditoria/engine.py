@@ -6,6 +6,7 @@ from collections import Counter, defaultdict
 from decimal import ROUND_HALF_UP, Decimal, localcontext
 
 from auditoria.domain import Document, Finding, Profile, Result, Rule, digest
+from auditoria.restaurant_review import POLICY, is_tip, operation_rows, operation_summary, review
 
 CODES = ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "R02", "R04", "R05"]
 D = Decimal
@@ -76,7 +77,8 @@ def _evaluate(
                 products[item.code].append((doc, item))
             else:
                 skip("C01", doc, item, "Código do produto ausente")
-            if official:
+            review(doc, item, profile, add, skip, coverage)
+            if official and not is_tip(item):
                 from auditoria.official import check_ncm
 
                 state, explanation = check_ncm(item.ncm, doc.issued, official)
@@ -94,13 +96,33 @@ def _evaluate(
                             source=next(s for s in official["sources"] if s["id"] == "ncm"),
                         )
             if item.ncm in ("00000000", "99999999"):
-                add("C06", doc, item, "NCM coringa: revisar a classificação do produto.", "erro")
+                add(
+                    "C06",
+                    doc,
+                    item,
+                    (
+                        "Gorjeta com NCM coringa: conferir o tratamento de valor acessório no "
+                        "documento, sem equiparar automaticamente a mercadoria."
+                    )
+                    if is_tip(item)
+                    else "NCM coringa: revisar a classificação do produto.",
+                    "revisar" if is_tip(item) else "erro",
+                )
             if not item.ncm:
                 skip("C06", doc, item, "NCM ausente")
             else:
                 coverage["C06"] += 1
             if item.cest == "0000000":
-                add("C05", doc, item, "CEST preenchido com zeros: revisar o cadastro.", "erro")
+                add(
+                    "C05",
+                    doc,
+                    item,
+                    (
+                        "CEST zerado na planilha: conferir se representa campo ausente ou "
+                        "código inválido no documento original."
+                    ),
+                    "revisar",
+                )
             icms = item.icms
             if icms.cst is not None:
                 coverage["C03"] += 1
@@ -110,8 +132,13 @@ def _evaluate(
                         doc,
                         item,
                         "CST de isenção/não tributação com valor de ICMS informado.",
+                        "erro",
                     )
-                if icms.cst == "00" and icms.rate == 0:
+                if (
+                    icms.cst == "00"
+                    and icms.rate == 0
+                    and item.cfop not in ("5405", "5919", "5927", "5929", "5949")
+                ):
                     add("C03", doc, item, "CST 00 com alíquota zero: revisar enquadramento.")
             else:
                 skip("C03", doc, item, "CST ICMS ausente ou operação com CSOSN")
@@ -137,8 +164,11 @@ def _evaluate(
                 for code in ("C02", "C05", "C07", "C08", "C09", "R02", "R04", "R05"):
                     skip(code, doc, item, "Perfil fiscal ausente ou vigências sobrepostas")
                 continue
-            coverage["C07"] += 1
-            if not profile.contribuinte_ipi and item.ipi.cst == "50":
+            if profile.contribuinte_ipi is None:
+                skip("C07", doc, item, "Condição de contribuinte de IPI não informada")
+            else:
+                coverage["C07"] += 1
+            if profile.contribuinte_ipi is False and item.ipi.cst == "50":
                 add("C07", doc, item, "IPI CST 50 com perfil declarado não contribuinte de IPI.")
             coverage["C08"] += 1
             if item.cfop in ("5927", "5949"):
@@ -352,13 +382,15 @@ def _evaluate(
             {
                 "custom": sorted([r.model_dump(mode="json") for r in rules], key=lambda r: r["id"]),
                 "official": official,
+                "document_review": POLICY,
             }
-            if official
-            else sorted([r.model_dump(mode="json") for r in rules], key=lambda r: r["id"])
         ),
         findings=findings,
         skipped=skipped,
         summary={
+            "document_review_policy": POLICY,
+            "operations": operation_summary(operation_rows(documents)),
+            "review_rows": operation_rows(documents),
             "findings": len(findings),
             "severity": dict(Counter(f.severity for f in findings)),
             "coverage": dict(coverage),
@@ -372,6 +404,11 @@ def _evaluate(
                 "Este relatório é documental. Use Apuração de impostos para "
                 "calcular por período com dados complementares.",
                 "Zero apontamentos não comprova conformidade quando há checagens não avaliadas.",
+                (
+                    "Categorias são derivadas do NCM/descrição declarados. Não certificam "
+                    "classificação ou direito a benefício; modelo fiscal ausente limita a "
+                    "revisão do destaque de ICMS."
+                ),
             ],
         },
     )

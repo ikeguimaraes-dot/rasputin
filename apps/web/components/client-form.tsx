@@ -24,7 +24,7 @@ export function ClientForm({
       regime_federal: f.get("regime"),
       valid_from: f.get("date"),
       optante_regime_especial_rest: f.get("special") === "on",
-      contribuinte_ipi: f.get("ipi") === "on",
+      contribuinte_ipi: f.get("ipi") === "" ? null : f.get("ipi") === "sim",
       metodo_pis_cofins: f.get("method") || null,
       regime_pis_cofins: f.get("contributions") || null,
     };
@@ -139,9 +139,13 @@ export function ClientForm({
           <input type="checkbox" name="special" />
           Optante de regime especial estadual de restaurante
         </label>
-        <label className="check full">
-          <input type="checkbox" name="ipi" />
+        <label className="full">
           Contribuinte de IPI
+          <select name="ipi">
+            <option value="">Não informado</option>
+            <option value="sim">Sim</option>
+            <option value="nao">Não</option>
+          </select>
         </label>
       </div>
       <Notice>

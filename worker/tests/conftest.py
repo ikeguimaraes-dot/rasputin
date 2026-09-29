@@ -7,7 +7,7 @@ from auditoria.domain import Document, Item, Profile, Rule, Tax
 
 @pytest.fixture
 def profile():
-    return Profile(regime_federal="presumido", valid_from=date(2026, 1, 1))
+    return Profile(regime_federal="presumido", valid_from=date(2026, 1, 1), contribuinte_ipi=False)
 
 
 @pytest.fixture

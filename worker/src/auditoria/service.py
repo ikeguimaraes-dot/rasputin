@@ -325,6 +325,18 @@ def run_analysis(conn, settings, job):
         [Rule(**r) for r in analysis["rules"]],
         snapshot.get("official_catalog"),
     )
+    # Preserve ingestion limitations in every downloadable report, not only the upload screen.
+    for upload in snapshot["uploads"]:
+        report = upload.get("ingestion_report") or {}
+        for warning in report.get("warnings", []):
+            notice = f"{upload['name']}: {warning}"
+            if notice not in result.summary["limitations"]:
+                result.summary["limitations"].append(notice)
+        if report.get("discarded"):
+            result.summary["limitations"].append(
+                f"{upload['name']}: {report['discarded']} linha(s) descartada(s); "
+                "consulte o relatório de ingestão para localizar os dados incompletos."
+            )
     partial = analysis["parcial"] or bool(result.skipped)
     context = {
         "Cliente": snapshot["customer"]["razao_social"],

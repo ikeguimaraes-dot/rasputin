@@ -6,6 +6,8 @@ import struct
 from io import BytesIO
 
 import olefile
+import xlrd
+from openpyxl.styles.numbers import is_date_format
 
 
 def rk(raw: int) -> float:
@@ -76,6 +78,28 @@ def recover(data: bytes):
             break
         records.append((ident, stream[pos : pos + size]))
         pos += size
+    # Preserve workbook date system and cell formats in the recovery path.
+    datemode, formats, xfs = 0, {}, []
+    for ident, payload in records:
+        if ident == 0x22 and len(payload) >= 2:
+            datemode = struct.unpack_from("<H", payload)[0]
+        elif ident == 0xE0 and len(payload) >= 4:
+            xfs.append(struct.unpack_from("<H", payload, 2)[0])
+        elif ident == 0x41E and len(payload) >= 5:
+            fmt, count, flags = struct.unpack_from("<HHB", payload)
+            width = 2 if flags & 1 else 1
+            formats[fmt] = payload[5 : 5 + count * width].decode(
+                "utf-16-le" if width == 2 else "latin1", errors="replace"
+            )
+
+    def numeric(value, xf):
+        fmt = xfs[xf] if xf < len(xfs) else None
+        if fmt is not None and (14 <= fmt <= 22 or is_date_format(formats.get(fmt, ""))):
+            if datemode not in (0, 1):
+                raise ValueError("Sistema de datas inválido")
+            return xlrd.xldate_as_datetime(value, datemode)
+        return value
+
     strings, expected_refs = [], 0
     for index, (ident, payload) in enumerate(records):
         if ident != 0xFC or len(payload) < 8:
@@ -117,13 +141,21 @@ def recover(data: bytes):
                     cells[row, col] = strings[s]
                     refs += 1
             elif ident == 0x203:
-                cells[row, col] = struct.unpack_from("<d", payload, 6)[0]
+                cells[row, col] = numeric(
+                    struct.unpack_from("<d", payload, 6)[0], struct.unpack_from("<H", payload, 4)[0]
+                )
             elif ident == 0x27E:
-                cells[row, col] = rk(struct.unpack_from("<I", payload, 6)[0])
+                cells[row, col] = numeric(
+                    rk(struct.unpack_from("<I", payload, 6)[0]),
+                    struct.unpack_from("<H", payload, 4)[0],
+                )
             elif ident == 0xBD:
                 last = struct.unpack_from("<H", payload, len(payload) - 2)[0]
                 for c in range(col, min(last, 255) + 1):
-                    cells[row, c] = rk(struct.unpack_from("<I", payload, 6 + (c - col) * 6)[0])
+                    cells[row, c] = numeric(
+                        rk(struct.unpack_from("<I", payload, 6 + (c - col) * 6)[0]),
+                        struct.unpack_from("<H", payload, 4 + (c - col) * 6)[0],
+                    )
         except (struct.error, ValueError):
             warnings.append("Célula truncada descartada.")
     if not any(sheets.values()):

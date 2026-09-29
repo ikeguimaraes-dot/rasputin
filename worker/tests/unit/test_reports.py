@@ -60,3 +60,14 @@ def test_pdf_product_sections_show_findings(document, profile):
     assert "NCM coringa" in html and "Produto sintético" in html
     assert "ocorrência(s)" in html
     assert pdf_report(result, {"Cliente": "Teste"}).startswith(b"%PDF")
+
+
+def test_operation_report_keeps_non_error_rows_and_missing_values(document, profile):
+    document.items[0].value = None
+    document.items[0].cfop = "5202"
+    result = evaluate([document], [profile], [])
+    book = openpyxl.load_workbook(BytesIO(xlsx_report(result, {})))
+    assert book["Itens conferidos"].max_row == 2
+    assert book["Itens conferidos"]["M2"].value is None
+    assert book["Por CFOP e categoria"]["B2"].value.startswith("Devolução")
+    assert "Conferência por CFOP" in html_report(result, {})
