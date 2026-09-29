@@ -99,7 +99,10 @@ def export(row, kind):
             [
                 [
                     "Conferência de bases",
-                    json.dumps(evidence.get("base_review", {}), ensure_ascii=False),
+                    f"{evidence['base_review']['missing_icms']} linhas sem excluir ICMS; "
+                    f"{evidence['base_review']['other_difference']} com outra divergência; "
+                    f"{evidence['base_review']['compatible']} compatíveis; "
+                    f"{evidence['base_review']['unassessed']} sem dados suficientes.",
                 ],
                 ["Hash documental", evidence["hash"]],
             ]
@@ -158,9 +161,13 @@ def export(row, kind):
     def e(x):
         return html.escape(str(x))
 
-    def table(rows):
+    def table(rows, style=""):
+        if not rows:
+            return ""
         return (
-            "<table>"
+            '<table class="'
+            + style
+            + '">'
             + "".join("<tr>" + "".join("<td>" + e(x) + "</td>" for x in r) + "</tr>" for r in rows)
             + "</table>"
         )
@@ -168,17 +175,24 @@ def export(row, kind):
     body = (
         '<html lang="pt-BR"><meta charset="utf-8"><style>@page{size:A4;margin:18mm}'
         "body{font:10pt "
-        "sans-serif;color:#173d35}table{width:100%;border-collapse:collapse;margin:12px 0}"
+        "sans-serif;color:#173d35}table{width:100%;table-layout:fixed;"
+        "border-collapse:collapse;margin:12px 0;font-size:8pt}"
+        ".context td:first-child{width:25%}.context{font-size:9pt}"
+        "tr{break-inside:avoid}h2{break-after:avoid}.draft{padding:10px;background:#fff4da}"
         "td{border:1px solid "
         "#ddd;padding:6px;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere}"
         "h1{font-size:20pt}</style><h1>"
         + e(result["title"])
         + "</h1>"
-        + table(context)
-        + table([headers] + values)
+        + (
+            "<p class='draft'><b>PRÉVIA NÃO FECHADA</b> — " + e(result.get("notice", "")) + "</p>"
+            if result["status"] == "rascunho"
+            else ""
+        )
+        + table(context, "context")
+        + (table([headers] + values) if values else "")
         + ("<h2>Débitos documentais parciais</h2>" + table(subtotals) if evidence else "")
-        + "<h2>Dados declarados</h2>"
-        + table(inputs)
+        + ("<h2>Dados declarados</h2>" + table(inputs) if inputs else "")
         + "<h2>Memória de cálculo</h2><pre>"
         + e(
             json.dumps(
