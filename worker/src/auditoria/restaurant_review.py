@@ -25,6 +25,10 @@ POLICY = {
             "title": "Portaria SRE 64/2025, art. 1º, II: revogação do Anexo X em 01/01/2026",
             "url": BASE + "Portaria-SRE-64-de-2025.aspx",
         },
+        "st_catalog": {
+            "title": "Portaria CAT 68/2019, art. 2º: exclusão da posição 2204 desde 01/02/2020",
+            "url": BASE + "Portaria-CAT-68-de-2019.aspx",
+        },
         "alcohol": {
             "title": (
                 "RC 24368/2021: bebidas alcoólicas excluídas do regime de alimentação; "
@@ -155,7 +159,7 @@ def review(doc, item, profile, add, skip, coverage):
                     "Vinho em CFOP 5405: posição 2204 excluída da ST paulista desde "
                     "01/02/2020. Conferir a classificação e a operação."
                 ),
-                "alcohol",
+                "st_catalog",
                 "risco",
             )
     if item.cfop == "5927" and icms.value is not None and icms.value != 0:
