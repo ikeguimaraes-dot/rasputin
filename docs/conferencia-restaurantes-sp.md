@@ -37,3 +37,7 @@ Não existe regra geral que zere ICMS em 5949, 5919 ou 5929. Devolução 5202 pe
 As fontes e a versão da política entram no hash do resultado. Documentos, perfis, catálogo e regras são preservados nas análises; reemissão utiliza os resultados salvos. A tela e os relatórios mostram itens por CFOP, natureza, categoria declarada e alíquota, inclusive itens sem apontamento. Não somar esses valores como faturamento mensal: há devoluções, baixas e documentos referentes a operações anteriores.
 
 Os testes são sintéticos. Planilhas de clientes e relatórios reais permanecem no armazenamento privado, fora do Git.
+
+## Base de PIS/COFINS por item (motor 1.2.1)
+
+Para o método declarado `com_exclusao_icms`, C09 compara separadamente PIS e COFINS de CST 01 ou 02 com: valor do produto − desconto + frete + seguro + outras despesas − ICMS destacado do próprio item. Nunca subtrai o ICMS total da nota de cada item. A comparação usa centavos, identifica especificamente a falta de exclusão e informa base encontrada, esperada, diferença e fórmula. Componentes ausentes e base calculada negativa ficam não avaliados. A diferença de base não é contabilizada como imposto pago indevidamente; outras exclusões e o documento original precisam ser conferidos. CST diferentes de 01/02 não recebem essa checagem.

@@ -188,22 +188,61 @@ def _evaluate(
                     expected_base = (
                         item.value - item.discount + item.freight + item.insurance + item.other
                     )
-                    if profile.metodo_pis_cofins == "com_exclusao_icms":
+                    operation_value = expected_base
+                    exclusion = profile.metodo_pis_cofins == "com_exclusao_icms"
+                    if exclusion:
                         expected_base -= icms.value
+                    expected_base = expected_base.quantize(D(".01"))
                     for name in ("pis", "cofins"):
                         tax = getattr(item, name)
                         if tax.cst in ("01", "02") and tax.base is not None:
+                            if expected_base < 0:
+                                skip(
+                                    "C09",
+                                    doc,
+                                    item,
+                                    f"{name.upper()}: base negativa; conferir componentes",
+                                )
+                                continue
                             coverage["C09"] += 1
-                            if abs(tax.base - expected_base) > D(".05"):
+                            difference = tax.base.quantize(D(".01")) - expected_base
+                            if difference != 0:
+                                missing_exclusion = (
+                                    exclusion
+                                    and icms.value > 0
+                                    and tax.base.quantize(D(".01"))
+                                    == operation_value.quantize(D(".01"))
+                                )
+                                formula = (
+                                    "valor do item - desconto + frete + seguro + outras despesas"
+                                )
+                                if exclusion:
+                                    formula += " - ICMS destacado do próprio item"
                                 add(
                                     "C09",
                                     doc,
                                     item,
                                     (
-                                        f"Base de {name.upper()} diverge do método declarado; "
-                                        "verificar outras exclusões."
+                                        f"{name.upper()} CST {tax.cst}: ICMS destacado do item "
+                                        "não foi descontado da base informada."
+                                        if missing_exclusion
+                                        else f"{name.upper()} CST {tax.cst}: base divergente "
+                                        "por item; conferir componentes e outras exclusões."
                                     ),
-                                    expected={f"{name}_base": str(expected_base)},
+                                    expected={
+                                        f"{name}_base": str(expected_base),
+                                        "base_informada": str(tax.base),
+                                        "valor_operacao_item": str(operation_value),
+                                        "icms_excluido_item": str(icms.value) if exclusion else "0",
+                                        "diferenca_base": str(difference),
+                                        "formula": formula,
+                                    },
+                                    source={
+                                        "title": "Exclusão do ICMS destacado por item (Tema 69)",
+                                        "url": "https://www.gov.br/pgfn/pt-br/cidadania-tributaria/por-assunto/pis-cofins-2/icms-e-tributos-na-base-de-calculo-pis-cofins-1",
+                                    }
+                                    if exclusion
+                                    else None,
                                 )
                         else:
                             skip("C09", doc, item, f"{name.upper()}: CST/base não comparável")

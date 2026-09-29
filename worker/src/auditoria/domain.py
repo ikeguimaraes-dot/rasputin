@@ -11,7 +11,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-ENGINE_VERSION = "1.2.0"
+ENGINE_VERSION = "1.2.1"
 PARSER_VERSION = "1.1.0"
 Regime = Literal["simples", "presumido", "real"]
 

@@ -211,3 +211,52 @@ def test_decimal_context_does_not_change_results(document, profile):
         ctx.prec = 8
         ctx.rounding = ROUND_DOWN
         assert evaluate([document], [profile], [approved_rule()]).model_dump_json() == expected
+
+
+@pytest.mark.parametrize("cst", ["01", "02"])
+def test_c09_excludes_own_item_icms_and_explains_difference(document, profile, cst):
+    profile.metodo_pis_cofins = "com_exclusao_icms"
+    item = document.items[0]
+    item.icms.value = Decimal("4")
+    item.pis.cst = item.cofins.cst = cst
+    item.pis.base = Decimal("96")
+    item.cofins.base = Decimal("100")
+    second = item.model_copy(deep=True)
+    second.n_item = 2
+    second.value = Decimal("200")
+    second.icms.value = Decimal("50")
+    second.pis.base = second.cofins.base = Decimal("150")
+    document.items.append(second)
+    checks = [f for f in evaluate([document], [profile], []).findings if f.code == "C09"]
+    assert len(checks) == 1
+    assert checks[0].expected["cofins_base"] == "96.00"
+    assert checks[0].expected["diferenca_base"] == "4.00"
+    assert "não foi descontado" in checks[0].message
+    assert checks[0].impact is None
+
+
+def test_c09_components_rounding_and_missing_are_not_zero(document, profile):
+    profile.metodo_pis_cofins = "com_exclusao_icms"
+    item = document.items[0]
+    item.discount, item.freight = Decimal("10"), Decimal("5")
+    item.insurance, item.other = Decimal("2"), Decimal("3")
+    item.icms.value = Decimal("4")
+    item.pis.base = item.cofins.base = Decimal("96")
+    assert not any(f.code == "C09" for f in evaluate([document], [profile], []).findings)
+    item.pis.base = Decimal("96.01")
+    assert sum(f.code == "C09" for f in evaluate([document], [profile], []).findings) == 1
+    item.icms.value = None
+    result = evaluate([document], [profile], [])
+    assert not any(f.code == "C09" for f in result.findings)
+    assert any(s["code"] == "C09" and "incompletos" in s["reason"] for s in result.skipped)
+
+
+def test_c09_does_not_apply_to_other_cst_or_negative_calculation(document, profile):
+    profile.metodo_pis_cofins = "com_exclusao_icms"
+    item = document.items[0]
+    item.pis.cst = item.cofins.cst = "06"
+    assert not any(f.code == "C09" for f in evaluate([document], [profile], []).findings)
+    item.pis.cst = "01"
+    item.icms.value = Decimal("101")
+    result = evaluate([document], [profile], [])
+    assert any(s["code"] == "C09" and "negativa" in s["reason"] for s in result.skipped)
