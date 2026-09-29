@@ -95,7 +95,10 @@ def test_concise_downloads_have_summary_and_one_row_per_item(document, profile):
     profile.metodo_pis_cofins = "com_exclusao_icms"
     result = report(document, profile)
     html = html_report(result, {})
-    assert "1 linhas sem descontar o ICMS da base" in html
+    from lxml.html import fromstring
+
+    text = " ".join(fromstring(html).itertext())
+    assert "1 linha sem descontar o ICMS da base" in text
     assert "R$ 82,00" in html
     book = load_workbook(BytesIO(xlsx_report(result, {})))
     assert book["Bases PIS COFINS"].max_row == 2

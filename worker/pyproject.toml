@@ -54,3 +54,5 @@ extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.Form"]
 
 [tool.ruff.lint.per-file-ignores]
 "src/auditoria/reports.py" = ["E501"]  # template HTML/CSS
+
+"src/auditoria/report_design.py" = ["E501"]  # template HTML/CSS

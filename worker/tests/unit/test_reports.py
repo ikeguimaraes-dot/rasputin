@@ -73,3 +73,30 @@ def test_operation_report_keeps_non_error_rows_and_missing_values(document, prof
     assert book["Itens conferidos"]["M2"].value is None
     assert book["Por CFOP e categoria"]["B2"].value.startswith("Devolução")
     assert "Operação de natureza específica" not in html_report(result, {})
+
+
+def test_client_report_preserves_every_row_across_table_sections(document, profile):
+    from lxml.html import fromstring
+
+    from auditoria.confirmed_report import publish
+
+    profile.metodo_pis_cofins = "com_exclusao_icms"
+    original = document.items[0]
+    document.items = [
+        original.model_copy(update={"n_item": i, "source": {"line": 100 + i}}) for i in range(1, 26)
+    ]
+    result = publish(
+        evaluate([document], [profile], []),
+        {
+            "documents": [document.model_dump(mode="json")],
+            "profiles": [profile.model_dump(mode="json")],
+        },
+    )
+    tree = fromstring(html_report(result, {"Cliente": "Cliente sintético"}))
+    rows = tree.xpath("//tbody/tr")
+    assert len(rows) == 25
+    assert [row.xpath("./td[1]")[0].text_content().split("Linha ")[1] for row in rows] == [
+        str(100 + i) for i in range(1, 26)
+    ]
+    assert "Encaminhamento ao responsável fiscal" in tree.text_content()
+    assert "25" in tree.text_content()

@@ -25,6 +25,7 @@ import { ClientForm } from "@/components/client-form";
 import { UploadForm } from "@/components/upload-form";
 import { AnalysisDetail } from "@/components/analysis-detail";
 import { Rules } from "@/components/rules";
+import { WorkspaceOverview } from "@/components/workspace-overview";
 import { Assessments } from "@/components/assessments";
 
 function Brand() {
@@ -83,13 +84,13 @@ function Auth({
             Clareza para decidir
           </p>
           <h1>
-            A conferência fiscal,
+            Um olhar atento.
             <br />
-            <em>com todos os detalhes.</em>
+            <em>Uma decisão clara.</em>
           </h1>
           <p>
-            Transforme documentos fiscais em apontamentos rastreáveis. Cada
-            análise conecta o produto, a evidência e a regra aplicada.
+            Conferências organizadas, diferenças explicadas e relatórios que seu
+            cliente entende. Sua rotina fiscal com mais clareza.
           </p>
           <div className="regime-list">
             {Object.values(regimes).map((r) => (
@@ -102,6 +103,14 @@ function Auth({
             ))}
           </div>
         </div>
+        <img
+          className="auth-mascot"
+          src="/brand/rasputin-mascot.png"
+          width="1024"
+          height="1536"
+          alt="Mascote Rasputin"
+          fetchPriority="high"
+        />
         <small style={{ color: "#8daa95" }}>
           Somente leitura. Seus documentos permanecem intactos.
         </small>
@@ -171,6 +180,7 @@ export default function Home() {
     [error, setError] = useState(""),
     [page, setPage] = useState("overview"),
     [clients, setClients] = useState<Client[]>([]),
+    [clientQuery, setClientQuery] = useState(""),
     [clientId, setClientId] = useState(""),
     [uploads, setUploads] = useState<Upload[]>([]),
     [analyses, setAnalyses] = useState<Analysis[]>([]),
@@ -395,6 +405,7 @@ export default function Home() {
           <button
             key={n.id}
             className={`nav ${page === n.id ? "active" : ""}`}
+            aria-current={page === n.id ? "page" : undefined}
             onClick={() => setPage(n.id)}
           >
             <n.icon size={18} />
@@ -471,12 +482,12 @@ export default function Home() {
                       ? "Seus clientes"
                       : page === "analyses"
                         ? "Análises fiscais"
-                        : "Clareza em cada análise."}
+                        : "Sua rotina fiscal, organizada."}
                   </h1>
                   <p className="subtitle">
                     {page === "clients"
                       ? "Organize os estabelecimentos e seus perfis fiscais."
-                      : "Documentos, evidências e regras. Tudo no mesmo lugar."}
+                      : "Escolha o cliente e acompanhe cada etapa da conferência."}
                   </p>
                 </div>
                 <Button
@@ -496,6 +507,15 @@ export default function Home() {
                 <div className="card">
                   <div className="card-head">
                     <h2>Estabelecimentos</h2>
+                    <label className="client-search">
+                      <span className="sr-only">Buscar cliente</span>
+                      <input
+                        aria-label="Buscar cliente"
+                        placeholder="Buscar por nome ou CNPJ…"
+                        value={clientQuery}
+                        onChange={(e) => setClientQuery(e.target.value)}
+                      />
+                    </label>
                     <small>{clients.length} cadastrados</small>
                   </div>
                   {!clients.length ? (
@@ -516,35 +536,55 @@ export default function Home() {
                           </tr>
                         </thead>
                         <tbody>
-                          {clients.map((c) => (
-                            <tr key={c.id}>
-                              <td>
-                                <div className="cell-title">
-                                  {c.razao_social}
-                                </div>
-                                <small>{c.profiles.length} vigência(s)</small>
-                              </td>
-                              <td>{c.cnpj}</td>
-                              <td>
-                                {regimes[
-                                  c.profiles.at(-1)?.regime_federal || ""
-                                ] || "—"}
-                              </td>
-                              <td>{c.profiles.at(-1)?.uf}</td>
-                              <td>
-                                <Button
-                                  secondary
-                                  onClick={() => {
-                                    setClientId(c.id);
-                                    setPage("overview");
-                                  }}
-                                >
-                                  Abrir
-                                  <ArrowUpRight />
-                                </Button>
+                          {!clients.some((c) =>
+                            `${c.razao_social} ${c.cnpj}`
+                              .toLocaleLowerCase("pt-BR")
+                              .includes(clientQuery.toLocaleLowerCase("pt-BR")),
+                          ) && (
+                            <tr>
+                              <td colSpan={5}>
+                                Nenhum cliente encontrado. Tente outro nome ou
+                                CNPJ.
                               </td>
                             </tr>
-                          ))}
+                          )}
+                          {clients
+                            .filter((c) =>
+                              `${c.razao_social} ${c.cnpj}`
+                                .toLocaleLowerCase("pt-BR")
+                                .includes(
+                                  clientQuery.toLocaleLowerCase("pt-BR"),
+                                ),
+                            )
+                            .map((c) => (
+                              <tr key={c.id}>
+                                <td>
+                                  <div className="cell-title">
+                                    {c.razao_social}
+                                  </div>
+                                  <small>{c.profiles.length} vigência(s)</small>
+                                </td>
+                                <td>{c.cnpj}</td>
+                                <td>
+                                  {regimes[
+                                    c.profiles.at(-1)?.regime_federal || ""
+                                  ] || "—"}
+                                </td>
+                                <td>{c.profiles.at(-1)?.uf}</td>
+                                <td>
+                                  <Button
+                                    secondary
+                                    onClick={() => {
+                                      setClientId(c.id);
+                                      setPage("overview");
+                                    }}
+                                  >
+                                    Abrir
+                                    <ArrowUpRight />
+                                  </Button>
+                                </td>
+                              </tr>
+                            ))}
                         </tbody>
                       </table>
                     </div>
@@ -552,7 +592,13 @@ export default function Home() {
                 </div>
               ) : (
                 <>
-                  <div className="toolbar" style={{ marginBottom: 24 }}>
+                  <div
+                    className="toolbar client-context"
+                    style={{ marginBottom: 24 }}
+                  >
+                    <span className="context-label">
+                      <Building2 size={17} /> CLIENTE EM ANÁLISE
+                    </span>
                     <select
                       aria-label="Cliente selecionado"
                       className="client-select"
@@ -585,6 +631,26 @@ export default function Home() {
                     )}
                   </div>
                   {page === "overview" && (
+                    <WorkspaceOverview
+                      client={client}
+                      uploads={uploads}
+                      latest={done[0]}
+                      onClient={() =>
+                        client ? setPage("clients") : setModal("client")
+                      }
+                      onUpload={() => setModal("upload")}
+                      onAnalysis={() => {
+                        setSelected(
+                          uploads
+                            .filter((u) => u.status === "processado")
+                            .map((u) => u.id),
+                        );
+                        setModal("analysis");
+                      }}
+                      onOpen={() => done[0] && void openAnalysis(done[0].id)}
+                    />
+                  )}
+                  {page === "overview" && (
                     <div className="stats">
                       {[
                         {
@@ -602,7 +668,7 @@ export default function Home() {
                         {
                           label: "Divergências · última análise",
                           value: findings,
-                          note: "Nas análises concluídas exibidas",
+                          note: "Itens distintos da última conferência",
                           icon: FileSearch,
                         },
                         {
@@ -935,11 +1001,15 @@ export default function Home() {
       )}
       {modal === "detail" && detail && (
         <Modal
-          title="Resultado da conferência"
+          title="Relatório de conferência"
           onClose={() => setModal("")}
           wide
         >
-          <AnalysisDetail analysis={detail} call={call} />
+          <AnalysisDetail
+            analysis={detail}
+            call={call}
+            clientName={client?.razao_social}
+          />
         </Modal>
       )}
     </div>

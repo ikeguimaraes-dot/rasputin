@@ -19,7 +19,8 @@ export function UploadForm({
     [sheet, setSheet] = useState(""),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [confirmed, setConfirmed] = useState(false);
+    [confirmed, setConfirmed] = useState(false),
+    [dragging, setDragging] = useState(false);
   const spreadsheet = file && /\.(xlsx?|csv)$/i.test(file.name);
   async function inspect(f: File, h: number, s: string) {
     setBusy(true);
@@ -43,6 +44,25 @@ export function UploadForm({
     } finally {
       setBusy(false);
     }
+  }
+  function choose(f?: File) {
+    if (!f || busy) return;
+    setError("");
+    if (!/\.(xml|zip|xlsx?|csv)$/i.test(f.name)) {
+      setError("Escolha uma planilha, XML ou ZIP de XMLs.");
+      return;
+    }
+    if (f.size > 30 * 1024 * 1024) {
+      setError("O arquivo deve ter no máximo 30 MB.");
+      return;
+    }
+    setFile(f);
+    setInfo(null);
+    setMapping({});
+    setConfirmed(false);
+    setHeaderRows(1);
+    setSheet("");
+    if (/\.(xlsx?|csv)$/i.test(f.name)) void inspect(f, 1, "");
   }
   async function suggest() {
     if (!info) return;
@@ -83,12 +103,24 @@ export function UploadForm({
   }
   return (
     <div>
-      <div className="drop">
+      <div
+        className={`drop ${dragging ? "dragging" : ""}`}
+        onDragOver={(e) => {
+          e.preventDefault();
+          if (!busy) setDragging(true);
+        }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragging(false);
+          choose(e.dataTransfer.files[0]);
+        }}
+      >
         <UploadCloud
           size={27}
           style={{ margin: "0 auto 10px", color: "#729264" }}
         />
-        <h3>Selecione os documentos fiscais</h3>
+        <h3>{file ? file.name : "Arraste seu arquivo para começar"}</h3>
         <p className="subtitle">
           XML, ZIP de XMLs, XLS, XLSX ou CSV · até 30 MB
         </p>
@@ -96,16 +128,15 @@ export function UploadForm({
           aria-label="Arquivo fiscal"
           type="file"
           accept=".xml,.zip,.xls,.xlsx,.csv"
-          onChange={(e) => {
-            const f = e.target.files?.[0];
-            if (!f) return;
-            setFile(f);
-            setInfo(null);
-            setMapping({});
-            if (/\.(xlsx?|csv)$/i.test(f.name)) void inspect(f, headerRows, "");
-          }}
+          disabled={busy}
+          onChange={(e) => choose(e.target.files?.[0])}
         />
       </div>
+      {busy && (
+        <p role="status" className="subtitle">
+          Preparando o arquivo. Aguarde a conclusão para continuar…
+        </p>
+      )}
       {spreadsheet && (
         <>
           <div className="form-grid" style={{ marginTop: 20 }}>

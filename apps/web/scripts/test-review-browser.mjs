@@ -8,6 +8,10 @@ try {
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(process.env.REVIEW_TEST_URL || "http://127.0.0.1:3101");
+  await page.screenshot({
+    path: "/private/tmp/rasputin-login-desktop.png",
+    fullPage: false,
+  });
   await page.evaluate(() =>
     localStorage.setItem(
       "sb-laodipuodgrpqykrupms-auth-token",
@@ -129,33 +133,48 @@ try {
       rules_hash: "synthetic",
     },
   };
+  analysis.resumo = {
+    findings: 1,
+    base_review: analysis.result_payload.summary.base_review,
+  };
+  let reissued = false;
+  await page.route("https://download.example.invalid/report.pdf", (route) =>
+    route.fulfill({
+      contentType: "application/pdf",
+      headers: { "Access-Control-Allow-Origin": "*" },
+      body: "%PDF-1.7\n%%EOF",
+    }),
+  );
   await page.route("**/api/**", async (route) => {
     const path = new URL(route.request().url()).pathname;
+    if (path === "/api/analyses/a1/reissue") reissued = true;
     const data =
-      path === "/api/me"
-        ? {
-            user_id: "synthetic",
-            role: "admin",
-            organization: {
-              id: "org1",
-              nome: "Escritório sintético",
-              branding: {},
-            },
-          }
-        : path === "/api/clients"
-          ? [
-              {
-                id: "c1",
-                razao_social: "Cliente sintético",
-                cnpj: "11111111000111",
-                profiles: [],
+      path === "/api/analyses/a1/download/pdf"
+        ? { url: "https://download.example.invalid/report.pdf" }
+        : path === "/api/me"
+          ? {
+              user_id: "synthetic",
+              role: "admin",
+              organization: {
+                id: "org1",
+                nome: "Escritório sintético",
+                branding: {},
               },
-            ]
-          : path === "/api/analyses"
-            ? [analysis]
-            : path === "/api/analyses/a1"
-              ? analysis
-              : [];
+            }
+          : path === "/api/clients"
+            ? [
+                {
+                  id: "c1",
+                  razao_social: "Cliente sintético",
+                  cnpj: "11111111000111",
+                  profiles: [],
+                },
+              ]
+            : path === "/api/analyses"
+              ? [analysis]
+              : path === "/api/analyses/a1"
+                ? analysis
+                : [];
     await route.fulfill({
       status: 200,
       headers: {
@@ -168,19 +187,49 @@ try {
   });
   await page.reload();
   await page
+    .getByRole("button", { name: "Abrir última conferência" })
+    .waitFor();
+  await page.locator(".mascot-stage img").evaluate((img) => img.decode());
+  await page.screenshot({
+    path: "/private/tmp/rasputin-dashboard-desktop.png",
+    fullPage: false,
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.screenshot({
+    path: "/private/tmp/rasputin-dashboard-mobile.png",
+    fullPage: false,
+  });
+  assert.equal(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth,
+    ),
+    false,
+  );
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page
     .getByRole("button", { name: "Ver resultado", exact: true })
     .click();
-  await page.getByText(/linhas sem descontar o ICMS da base/).waitFor();
+  await page.getByText(/linha[s]? sem descontar o ICMS da base/).waitFor();
+  await page.screenshot({
+    path: "/private/tmp/rasputin-report-desktop.png",
+    fullPage: false,
+  });
+  const downloaded = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Exportar PDF para cliente" }).click();
+  const file = await downloaded;
+  assert.equal(file.suggestedFilename(), "Rasputin-conferencia-2026-08-01.pdf");
+  assert.equal(reissued, false);
+  await page.getByRole("status").filter({ hasText: "PDF exportado" }).waitFor();
   assert.equal(await page.getByText("SUSPEITA INDEVIDA").count(), 0);
   assert.equal(
     await page.getByRole("button", { name: /Não avaliadas/ }).count(),
     0,
   );
-  await page.getByText("Ver as 1 linhas com divergência na base").click();
+  await page.getByText("Ver 1 linha com divergência na base").click();
   await page
     .getByRole("cell", { name: "ICMS não descontado", exact: true })
     .waitFor();
-  await page.getByText("Ver as 1 linhas com divergência na base").click();
+  await page.getByText("Ver 1 linha com divergência na base").click();
   await page.getByRole("button", { name: /Itens por CFOP/ }).click();
   assert.equal(
     await page.getByRole("dialog").locator("tbody tr:visible").count(),
@@ -202,9 +251,12 @@ try {
     1,
   );
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator(".modal-body").evaluate((el) => {
+    el.parentElement.scrollTop = 0;
+  });
   await page.screenshot({
     path: "/private/tmp/rasputin-review-mobile.png",
-    fullPage: true,
+    fullPage: false,
   });
   assert.equal(
     await page.evaluate(
@@ -212,9 +264,28 @@ try {
     ),
     false,
   );
+  await page.keyboard.press("Escape");
+  assert.equal(await page.getByRole("dialog").count(), 0);
+  await page.getByRole("button", { name: "Clientes", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Cadastrar cliente", exact: true })
+    .click();
+  await page.getByRole("dialog").waitFor();
+  await page.keyboard.press("Shift+Tab");
+  assert.equal(
+    await page.evaluate(
+      () => !!document.activeElement?.closest('[role="dialog"]'),
+    ),
+    true,
+  );
+  await page.screenshot({
+    path: "/private/tmp/rasputin-client-form-mobile.png",
+    fullPage: false,
+  });
+  await page.keyboard.press("Escape");
   assert.deepEqual(errors, []);
   console.log(
-    "PASS: CFOP, natureza, alíquota, itens sem apontamento e layout mobile.",
+    "PASS: novo painel, mascote, gráfico, relatório, exportação PDF, filtros, modal acessível e mobile.",
   );
 } finally {
   await browser.close();
