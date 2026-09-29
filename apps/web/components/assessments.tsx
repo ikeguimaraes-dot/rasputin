@@ -4,6 +4,7 @@ import { Calculator, Download, Save, BookOpen } from "lucide-react";
 import type { Call, Client } from "@/lib/types";
 import { money, regimes } from "@/lib/client";
 import { Button, Empty, Loading, Notice } from "./ui";
+import { AssessmentDocuments, type Evidence } from "./assessment-documents";
 
 type Source = {
   id: string;
@@ -70,8 +71,8 @@ export function OfficialSources({ catalog }: { catalog: Catalog }) {
       </div>
       <div className="card-body">
         <p className="subtitle">
-          Parâmetros de apuração disponíveis, sem importar planilha. Vigência de
-          uso: {catalog.valid_from} a {catalog.valid_to}. Cada cálculo guarda a
+          Parâmetros para o fechamento e a memória de cálculo. Vigência de uso:{" "}
+          {catalog.valid_from} a {catalog.valid_to}. Cada cálculo guarda a
           versão utilizada.
         </p>
         {catalog.sources.map((s) => (
@@ -102,7 +103,7 @@ export function Assessments({
 }) {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [clientId, setClientId] = useState(clients[0]?.id || "");
-  const [period, setPeriod] = useState("2026-09");
+  const [period, setPeriod] = useState(new Date().toISOString().slice(0, 7));
   const [module, setModule] = useState("");
   const [values, setValues] = useState<Record<string, string | boolean>>({});
   const [result, setResult] = useState<Result | null>(null);
@@ -110,6 +111,9 @@ export function Assessments({
   const [history, setHistory] = useState<Saved[]>([]);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [selected, setSelected] = useState<string[]>([]);
+  const [evidence, setEvidence] = useState<Evidence | null>(null);
+  const [complete, setComplete] = useState(false);
   const client = clients.find((c) => c.id === clientId);
   const profile = client?.profiles.find(
     (p) =>
@@ -136,10 +140,13 @@ export function Assessments({
   useEffect(() => {
     setModule("");
     setValues({});
+    setSelected([]);
+    setEvidence(null);
+    setComplete(false);
     setResult(null);
     setSavedId("");
   }, [clientId, period]);
-  async function calculate(save: boolean) {
+  async function calculate(save: boolean, draft = false) {
     setBusy(true);
     setError("");
     try {
@@ -156,6 +163,10 @@ export function Assessments({
         module,
         period: period + "-01",
         values: parsed,
+        upload_ids: selected,
+        evidence_hash: evidence?.hash,
+        documents_complete: complete,
+        draft,
       };
       if (save) {
         const row = await call<Saved>("/assessments", body);
@@ -197,11 +208,11 @@ export function Assessments({
     <>
       <div className="title-row">
         <div>
-          <p className="eyebrow">Regras oficiais e dados declarados</p>
+          <p className="eyebrow">Documentos, conferência e fechamento</p>
           <h1>Apuração de impostos</h1>
           <p className="subtitle">
-            Escolha o tributo e o período. Confira a memória e salve uma versão
-            imutável.
+            Consolide os documentos, complete os dados do período e salve a
+            memória da apuração.
           </p>
         </div>
         <Calculator />
@@ -217,6 +228,7 @@ export function Assessments({
                 <label>
                   Cliente
                   <select
+                    disabled={busy}
                     value={clientId}
                     onChange={(e) => setClientId(e.target.value)}
                   >
@@ -231,6 +243,7 @@ export function Assessments({
                   Competência / mês de encerramento
                   <input
                     aria-label="Competência de apuração"
+                    disabled={busy}
                     type="month"
                     min="2026-01"
                     max="2026-12"
@@ -241,9 +254,13 @@ export function Assessments({
                 <label className="full">
                   Módulo de apuração
                   <select
+                    disabled={busy}
                     value={module}
                     onChange={(e) => {
                       setModule(e.target.value);
+                      setSelected([]);
+                      setEvidence(null);
+                      setComplete(false);
                       setValues({});
                       reset();
                     }}
@@ -269,6 +286,36 @@ export function Assessments({
               </p>
               {spec && (
                 <>
+                  <AssessmentDocuments
+                    key={`${clientId}:${module}:${period}`}
+                    call={call}
+                    clientId={clientId}
+                    module={module}
+                    period={period}
+                    evidence={evidence}
+                    selected={selected}
+                    complete={complete}
+                    onSelected={(ids) => {
+                      setSelected(ids);
+                      setEvidence(null);
+                      setComplete(false);
+                      reset();
+                    }}
+                    onEvidence={(e) => {
+                      setEvidence(e);
+                      setComplete(false);
+                      reset();
+                    }}
+                    onComplete={(v) => {
+                      setComplete(v);
+                      reset();
+                    }}
+                    onApply={(v) => {
+                      setValues((old) => ({ ...old, ...v }));
+                      reset();
+                    }}
+                  />
+                  <h2>2. Complementos e fechamento</h2>
                   <Notice>
                     {spec.scope}{" "}
                     {spec.period === "trimestral" &&
@@ -332,9 +379,19 @@ export function Assessments({
                       ))}
                   </div>
                   <div className="actions">
-                    <Button disabled={busy} onClick={() => calculate(false)}>
+                    <Button
+                      disabled={busy || (!!selected.length && !evidence)}
+                      onClick={() => calculate(false)}
+                    >
                       <Calculator />
                       {busy ? "Calculando…" : "Calcular e conferir"}
+                    </Button>
+                    <Button
+                      secondary
+                      disabled={busy || (!!selected.length && !evidence)}
+                      onClick={() => calculate(true, true)}
+                    >
+                      <Save /> Salvar prévia e exportar
                     </Button>
                     {result?.status === "calculada" && !savedId && (
                       <Button disabled={busy} onClick={() => calculate(true)}>
@@ -353,7 +410,9 @@ export function Assessments({
                 <h2>{result.title}</h2>
                 <span className="badge">
                   {savedId
-                    ? "Versão salva"
+                    ? result.status === "rascunho"
+                      ? "Prévia salva · não fechada"
+                      : "Versão salva"
                     : result.status === "calculada"
                       ? "Prévia calculada"
                       : "Dados pendentes"}
@@ -417,7 +476,7 @@ export function Assessments({
                 ))}
                 <p className="subtitle">{result.notice}</p>
                 <details>
-                  <summary>Memória de cálculo</summary>
+                  <summary>Memória de cálculo e documentos de origem</summary>
                   <pre>{JSON.stringify(result.memory, null, 2)}</pre>
                 </details>
                 <details>
@@ -475,7 +534,11 @@ export function Assessments({
                       }}
                     >
                       {h.period.slice(0, 7)} · {h.result_payload.title} ·{" "}
-                      {money(h.result_payload.total_due || "0")}
+                      {h.result_payload.status === "rascunho"
+                        ? "Prévia não fechada"
+                        : h.result_payload.total_due
+                          ? money(h.result_payload.total_due)
+                          : "Dados pendentes"}
                     </button>
                   </div>
                 ))

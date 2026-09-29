@@ -39,22 +39,92 @@ def export(row, kind):
         ["Hash da apuração", row["sha256"]],
         ["Hash das regras", result["catalog_hash"]],
         ["Escopo", result["scope"]],
+        ["Situação", result["status"]],
     ]
     inputs = [[labels.get(k, k), str(v)] for k, v in source["values"].items()]
     sources = [
         [s["title"], s["url"], s["sha256"], s.get("capture_kind", "")] for s in result["sources"]
     ]
-    notes = [result["notice"], *result["warnings"]]
+    notes = [
+        result.get("notice", ""),
+        *result["warnings"],
+        *(m["label"] for m in result.get("missing", [])),
+    ]
+    evidence = result.get("memory", {}).get("documents", {})
+    document_rows = [
+        [
+            "Nota",
+            "Item",
+            "CFOP",
+            "Descrição",
+            "Operação",
+            "ICMS",
+            "Base esperada",
+            "Base PIS",
+            "Base COFINS",
+            "Situação",
+        ]
+    ] + [
+        [
+            r.get(k, "")
+            for k in (
+                "document",
+                "item",
+                "cfop",
+                "description",
+                "operation",
+                "icms",
+                "expected_base",
+                "pis_base",
+                "cofins_base",
+                "status",
+            )
+        ]
+        for r in evidence.get("rows", [])
+    ]
+    subtotals = [
+        ["Tributo", "Base recomposta", "Débito às alíquotas declaradas", "Itens", "Sem dados"]
+    ] + [
+        [
+            r["tax"],
+            r["base"] if r["items"] else "Não calculado",
+            r["gross"] if r["items"] else "Não calculado",
+            r["items"],
+            r["missing"],
+        ]
+        for r in evidence.get("recalculated", [])
+    ]
+    if evidence:
+        context.extend(
+            [
+                [
+                    "Conferência de bases",
+                    json.dumps(evidence.get("base_review", {}), ensure_ascii=False),
+                ],
+                ["Hash documental", evidence["hash"]],
+            ]
+        )
+        notes.extend(f"Origem: {u['name']} · SHA-256 {u['sha256']}" for u in evidence["uploads"])
+        notes.append(
+            "Débitos documentais usam as alíquotas declaradas, antes de créditos e retenções. "
+            "Não certificam enquadramento nem saldo a recolher."
+        )
     if kind == "xlsx":
         wb = Workbook()
         wb.remove(wb.active)
         for name, rows in [
             ("Apuração", context + [headers] + values),
             ("Dados declarados", inputs),
+            ("Conferência documental", document_rows),
+            ("Débitos documentais", subtotals),
             ("Fontes", [["Norma", "URL", "Hash da captura", "Tipo da captura"]] + sources),
             (
                 "Memória",
-                [[k, json.dumps(v, ensure_ascii=False)] for k, v in result["memory"].items()],
+                [
+                    [k, json.dumps(v, ensure_ascii=False)]
+                    for k, v in result["memory"].items()
+                    if k != "documents"
+                ],
             ),
             ("Observações", [[x] for x in notes]),
         ]:
@@ -72,6 +142,16 @@ def export(row, kind):
         out = BytesIO()
         wb.save(out)
         return out.getvalue(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    # PDF is the concise client report; Excel retains every assessed item.
+    document_rows = [document_rows[0]] + [
+        r for r in document_rows[1:] if r[-1] in ("missing_icms", "other_difference")
+    ]
+    status_labels = {
+        "missing_icms": "ICMS não excluído da base",
+        "other_difference": "Outra divergência de base",
+    }
+    for r in document_rows[1:]:
+        r[-1] = status_labels.get(r[-1], r[-1])
     from weasyprint import HTML
     from weasyprint.urls import URLFetcher
 
@@ -96,11 +176,20 @@ def export(row, kind):
         + "</h1>"
         + table(context)
         + table([headers] + values)
+        + ("<h2>Débitos documentais parciais</h2>" + table(subtotals) if evidence else "")
         + "<h2>Dados declarados</h2>"
         + table(inputs)
         + "<h2>Memória de cálculo</h2><pre>"
-        + e(json.dumps(result["memory"], ensure_ascii=False, indent=2))
-        + "</pre><h2>Fontes</h2>"
+        + e(
+            json.dumps(
+                {k: v for k, v in result["memory"].items() if k != "documents"},
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        + "</pre>"
+        + ("<h2>Conferência documental</h2>" + table(document_rows) if evidence else "")
+        + "<h2>Fontes</h2>"
         + table(sources)
         + "".join("<p>" + e(x) + "</p>" for x in notes)
         + "</html>"

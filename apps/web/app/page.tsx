@@ -27,6 +27,7 @@ import { AnalysisDetail } from "@/components/analysis-detail";
 import { Rules } from "@/components/rules";
 import { WorkspaceOverview } from "@/components/workspace-overview";
 import { Assessments } from "@/components/assessments";
+import { ProductCatalog } from "@/components/product-catalog";
 
 function Brand() {
   return (
@@ -394,6 +395,7 @@ export default function Home() {
           { id: "overview", label: "Visão geral", icon: LayoutDashboard },
           { id: "clients", label: "Clientes", icon: Building2 },
           { id: "analyses", label: "Análises fiscais", icon: FileSearch },
+          { id: "products", label: "Produtos e serviços", icon: FolderOpen },
           { id: "rules", label: "Base de regras", icon: BookOpen },
           {
             id: "assessments",
@@ -439,6 +441,7 @@ export default function Home() {
                   clients: "Clientes",
                   analyses: "Análises",
                   rules: "Base de regras",
+                  products: "Produtos e serviços",
                   assessments: "Apuração de impostos",
                   settings: "Escritório",
                 } as Record<string, string>
@@ -464,7 +467,13 @@ export default function Home() {
           </div>
         </header>
         <main className="content">
-          {page === "rules" ? (
+          {page === "products" ? (
+            <ProductCatalog
+              call={call}
+              clients={clients}
+              admin={me.role === "admin"}
+            />
+          ) : page === "rules" ? (
             <Rules call={call} admin={me.role === "admin"} />
           ) : page === "assessments" ? (
             <Assessments call={call} clients={clients} />

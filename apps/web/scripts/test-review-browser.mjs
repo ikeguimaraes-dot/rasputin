@@ -145,36 +145,117 @@ try {
       body: "%PDF-1.7\n%%EOF",
     }),
   );
+  const evidence = {
+    hash: "testhash",
+    documents: 1,
+    start: "2026-08-01",
+    end: "2026-08-31",
+    months: ["2026-08"],
+    suggestions: { base_pis_cum: "150.00" },
+    blockers: ["Arquivo parcialmente recuperado"],
+    warnings: [],
+    cfops: [
+      {
+        cfop: "5102",
+        description: "Venda",
+        items: 1,
+        amount: "200",
+        missing: 0,
+      },
+    ],
+    taxes: [{ tax: "ICMS", declared: "50", known: 1, missing: 0 }],
+    base_review: {
+      missing_icms: 1,
+      other_difference: 0,
+      compatible: 0,
+      unassessed: 0,
+    },
+    products: [],
+    rows: [],
+    recalculated: [
+      { tax: "PIS", base: "150", gross: "0.98", items: 1, missing: 0 },
+    ],
+  };
+  const catalog = {
+    version: "test",
+    valid_from: "2026-01-01",
+    valid_to: "2026-12-31",
+    sources: [],
+    modules: {
+      pis_cofins: {
+        title: "PIS e COFINS",
+        regimes: ["presumido"],
+        period: "mensal",
+        scope: "Conferência sintética",
+        fields: [{ key: "base_pis_cum", label: "Base PIS", kind: "money" }],
+      },
+    },
+  };
   await page.route("**/api/**", async (route) => {
     const path = new URL(route.request().url()).pathname;
     if (path === "/api/analyses/a1/reissue") reissued = true;
+    if (path === "/api/assessments") {
+      const post = route.request().postDataJSON();
+      if (post) assert.equal(post.evidence_hash, "testhash");
+    }
     const data =
-      path === "/api/analyses/a1/download/pdf"
-        ? { url: "https://download.example.invalid/report.pdf" }
-        : path === "/api/me"
-          ? {
-              user_id: "synthetic",
-              role: "admin",
-              organization: {
-                id: "org1",
-                nome: "Escritório sintético",
-                branding: {},
+      path === "/api/fiscal-catalog"
+        ? catalog
+        : path === "/api/uploads"
+          ? [
+              {
+                id: "u1",
+                nome: "Planilha sintética",
+                tipo: "xls",
+                criado_em: "2026-08-01",
+                status: "processado",
+                parcial: true,
               },
-            }
-          : path === "/api/clients"
-            ? [
-                {
-                  id: "c1",
-                  razao_social: "Cliente sintético",
-                  cnpj: "11111111000111",
-                  profiles: [],
-                },
-              ]
-            : path === "/api/analyses"
-              ? [analysis]
-              : path === "/api/analyses/a1"
-                ? analysis
-                : [];
+            ]
+          : path === "/api/assessments/documents"
+            ? evidence
+            : path === "/api/product-catalog/observed"
+              ? [
+                  {
+                    code: "P1",
+                    description: "Produto sintético",
+                    ncm: "19059090",
+                    cest: null,
+                    cfops: ["5102"],
+                  },
+                ]
+              : path === "/api/analyses/a1/download/pdf"
+                ? { url: "https://download.example.invalid/report.pdf" }
+                : path === "/api/me"
+                  ? {
+                      user_id: "synthetic",
+                      role: "admin",
+                      organization: {
+                        id: "org1",
+                        nome: "Escritório sintético",
+                        branding: {},
+                      },
+                    }
+                  : path === "/api/clients"
+                    ? [
+                        {
+                          id: "c1",
+                          razao_social: "Cliente sintético",
+                          cnpj: "11111111000111",
+                          profiles: [
+                            {
+                              regime_federal: "presumido",
+                              uf: "SP",
+                              valid_from: "2026-01-01",
+                            },
+                          ],
+                        },
+                      ]
+                    : path === "/api/analyses"
+                      ? [analysis]
+                      : path === "/api/analyses/a1"
+                        ? analysis
+                        : [];
     await route.fulfill({
       status: 200,
       headers: {
@@ -188,7 +269,14 @@ try {
   await page.reload();
   await page
     .getByRole("button", { name: "Abrir última conferência" })
-    .waitFor();
+    .waitFor()
+    .catch(async (e) => {
+      console.error(
+        errors,
+        (await page.locator("body").innerText()).slice(0, 2500),
+      );
+      throw e;
+    });
   await page.locator(".mascot-stage img").evaluate((img) => img.decode());
   await page.screenshot({
     path: "/private/tmp/rasputin-dashboard-desktop.png",
@@ -283,6 +371,49 @@ try {
     fullPage: false,
   });
   await page.keyboard.press("Escape");
+  await page
+    .getByRole("button", { name: "Apuração de impostos", exact: true })
+    .click();
+  await page.getByLabel("Competência de apuração").fill("2026-08");
+  await page.getByLabel("Módulo de apuração").selectOption("pis_cofins");
+  await page.getByLabel(/Planilha sintética/).check();
+  await page
+    .getByRole("button", { name: "Consolidar documentos", exact: true })
+    .click();
+  await page
+    .getByRole("heading", { name: "Débitos documentais recalculados" })
+    .waitFor();
+  await page
+    .getByRole("button", { name: "Usar bases identificadas no formulário" })
+    .click();
+  assert.equal(
+    await page.getByLabel("Base PIS", { exact: true }).inputValue(),
+    "150.00",
+  );
+  assert.equal(await page.getByLabel(/Conciliei as bases/).isDisabled(), true);
+  assert.equal(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth,
+    ),
+    false,
+  );
+  await page.screenshot({
+    path: "/private/tmp/rasputin-assessment-mobile.png",
+    fullPage: true,
+  });
+  await page
+    .getByRole("button", { name: "Produtos e serviços", exact: true })
+    .click();
+  await page.getByText(/Itens encontrados nos arquivos/).click();
+  await page.getByRole("button", { name: "Preparar cadastro" }).click();
+  assert.equal(
+    await page.getByLabel("Código interno", { exact: true }).inputValue(),
+    "P1",
+  );
+  assert.equal(
+    await page.getByLabel("NCM (8 dígitos)", { exact: true }).inputValue(),
+    "19059090",
+  );
   assert.deepEqual(errors, []);
   console.log(
     "PASS: novo painel, mascote, gráfico, relatório, exportação PDF, filtros, modal acessível e mobile.",

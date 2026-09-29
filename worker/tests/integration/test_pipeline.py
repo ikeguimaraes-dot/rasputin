@@ -287,3 +287,118 @@ def test_storage_transient_error_retries_without_duplicate_documents(runtime, mo
             conn.execute("select status from jobs where id=%s", (job["id"],)).fetchone()["status"]
             == "concluido"
         )
+
+
+def test_document_assessment_draft_provenance_and_catalog_isolation(runtime):
+    from datetime import date
+
+    from psycopg.types.json import Jsonb
+
+    from auditoria.domain import Document, Item, Tax
+
+    settings, http, actor, objects = runtime
+    client = setup_client(http, actor, "presumido")
+    doc = Document(
+        number="1438",
+        issued=date(2026, 8, 1),
+        operation="saida",
+        status="autorizada",
+        items=[
+            Item(
+                n_item=1,
+                code="ABC",
+                description="Produto",
+                ncm="19059090",
+                cfop="5102",
+                value="1992",
+                discount="0",
+                freight="0",
+                insurance="0",
+                other="0",
+                icms=Tax(value="498"),
+                pis=Tax(cst="01", rate="0.65", base="1992"),
+                cofins=Tax(cst="01", rate="3", base="1992"),
+            )
+        ],
+    )
+    with connect(settings) as conn:
+        conn.execute(
+            "update perfil_fiscal set metodo_pis_cofins='com_exclusao_icms', "
+            "regime_pis_cofins='cumulativo' where cliente_id=%s",
+            (client,),
+        )
+        uid = conn.execute(
+            "insert into uploads(organizacao_id,cliente_id,storage_path,nome,tipo,status,"
+            "parcial,canonical_payload) values(%s,%s,'test','arquivo','xml','processado',true,%s) "
+            "returning id",
+            (actor.org, client, Jsonb([doc.model_dump(mode="json")])),
+        ).fetchone()["id"]
+    body = {
+        "client_id": client,
+        "module": "pis_cofins",
+        "period": "2026-08-01",
+        "upload_ids": [str(uid)],
+    }
+    evidence = http.post("/api/assessments/documents", json=body)
+    assert evidence.status_code == 200, evidence.text
+    ev = evidence.json()
+    assert ev["base_review"]["missing_icms"] == 1 and ev["blockers"]
+    assert ev["suggestions"]["base_pis_cum"] == "1494.00"
+    stale = http.post("/api/assessments", json={**body, "draft": True, "evidence_hash": "old"})
+    assert stale.status_code == 422
+    final = http.post(
+        "/api/assessments", json={**body, "evidence_hash": ev["hash"], "documents_complete": True}
+    )
+    assert final.status_code == 422
+    draft = http.post("/api/assessments", json={**body, "draft": True, "evidence_hash": ev["hash"]})
+    assert draft.status_code == 200, draft.text
+    saved = draft.json()
+    assert saved["result_payload"]["status"] == "rascunho"
+    assert "total_due" not in saved["result_payload"]
+    assert saved["input_snapshot"]["document_evidence"]["hash"] == ev["hash"]
+    for kind in ("pdf", "xlsx"):
+        assert http.get(f"/api/assessments/{saved['id']}/download/{kind}").status_code == 200
+    observed = http.get("/api/product-catalog/observed", params={"client_id": client})
+    assert observed.status_code == 200 and observed.json()[0]["ncm"] == "19059090"
+    definition = {
+        "code": "ABC",
+        "description": "Produto",
+        "ncm": "19059090",
+        "valid_from": "2026-01-01",
+    }
+    pbody = {"client_id": client, "definition": definition}
+    first = http.post("/api/product-catalog", json=pbody)
+    assert first.status_code == 200, first.text
+    assert http.post("/api/product-catalog", json=pbody).json()["id"] == first.json()["id"]
+    bad = http.post(
+        "/api/product-catalog", json={**pbody, "definition": {**definition, "status": "validada"}}
+    )
+    assert bad.status_code == 422
+    version = http.post(
+        "/api/product-catalog",
+        json={
+            **pbody,
+            "definition": {
+                **definition,
+                "status": "validada",
+                "basis": "Características técnicas conferidas.",
+            },
+        },
+    )
+    assert version.status_code == 200
+    assert (
+        len(
+            http.get(
+                "/api/product-catalog/history", params={"client_id": client, "code": "ABC"}
+            ).json()
+        )
+        == 2
+    )
+    actor.role = "analista"
+    assert http.post("/api/product-catalog", json=pbody).status_code == 403
+    actor.org = str(uuid4())
+    assert http.post("/api/assessments/documents", json=body).status_code == 404
+    assert http.get("/api/product-catalog", params={"client_id": client}).status_code == 404
+    assert (
+        http.get("/api/product-catalog/observed", params={"client_id": client}).status_code == 404
+    )

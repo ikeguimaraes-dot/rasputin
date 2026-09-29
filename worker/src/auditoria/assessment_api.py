@@ -9,6 +9,7 @@ from psycopg.types.json import Jsonb
 from pydantic import Field
 
 from auditoria.assessment import MODULES, calculate, catalog
+from auditoria.assessment_documents import consolidate, period_bounds
 from auditoria.auth import Actor, identity, require_org
 from auditoria.db import audit, connect
 from auditoria.domain import Model, Profile, digest
@@ -23,6 +24,48 @@ class AssessmentInput(Model):
     module: str = Field(max_length=40)
     period: date
     values: dict = Field(default_factory=dict, max_length=80)
+    upload_ids: list[UUID] = Field(default_factory=list, max_length=200)
+    evidence_hash: str | None = Field(default=None, max_length=64)
+    documents_complete: bool = False
+    draft: bool = False
+
+
+def document_evidence(conn, actor, body, profile):
+    rows = conn.execute(
+        "select id,nome,sha256,parcial,status,canonical_payload from uploads "
+        "where organizacao_id=%s and cliente_id=%s and id=any(%s::uuid[]) order by id",
+        (actor.org, body.client_id, body.upload_ids),
+    ).fetchall()
+    if not rows or len(rows) != len(set(body.upload_ids)):
+        raise ValueError("Selecione arquivos deste cliente e organização")
+    if any(r["status"] != "processado" for r in rows):
+        raise ValueError("Aguarde o processamento dos arquivos")
+    return consolidate(rows, body.module, body.period, profile)
+
+
+@router.post("/assessments/documents")
+def documents(body: AssessmentInput, request: Request, actor: Actor = Depends(identity)):
+    require_org(actor)
+    with connect(request.app.state.settings) as conn:
+        owned = conn.execute(
+            "select id from clientes where id=%s and organizacao_id=%s",
+            (body.client_id, actor.org),
+        ).fetchone()
+        if not owned:
+            raise HTTPException(404, "Cliente não encontrado")
+        start, end = period_bounds(body.module, body.period)
+        profiles = conn.execute(
+            "select * from perfil_fiscal where cliente_id=%s and organizacao_id=%s "
+            "and valid_from<=%s and (valid_to is null or valid_to>=%s)",
+            (body.client_id, actor.org, start, end),
+        ).fetchall()
+        profile = Profile(**profile_data(profiles[0])) if len(profiles) == 1 else None
+        evidence = document_evidence(conn, actor, body, profile)
+        if profile is None:
+            evidence["warnings"].append(
+                "Cadastre um perfil válido durante todo o período para calcular bases."
+            )
+        return evidence
 
 
 @router.get("/fiscal-catalog")
@@ -55,11 +98,31 @@ def prepare(conn, actor, body):
         raise ValueError("Cadastre um perfil fiscal vigente durante todo o período da apuração")
     profile = Profile(**profile_data(rows[0]))
     result = calculate(body.module, body.period, body.values, profile)
+    evidence = None
+    if body.upload_ids:
+        evidence = document_evidence(conn, actor, body, profile)
+        if body.evidence_hash != evidence["hash"]:
+            raise ValueError("Os documentos ou o perfil mudaram. Consolide os arquivos novamente.")
+        result["memory"]["documents"] = evidence
+        result["warnings"].extend(evidence["warnings"])
+        blockers = list(evidence["blockers"])
+        if not body.documents_complete:
+            blockers.append(
+                "Confirme que as fontes cobrem todo o período e que as bases foram conciliadas."
+            )
+        if blockers:
+            result["status"] = "incompleta"
+            result["missing"].extend({"field": "documentos", "label": b} for b in blockers)
+            result.pop("total_due", None)
+            result["lines"] = []
+        result.setdefault("notice", "Consolidação documental vinculada à versão salva.")
     snapshot = {
         **body.model_dump(mode="json"),
         "client": {k: str(v) for k, v in client.items()},
         "profile": profile.model_dump(mode="json"),
     }
+    if evidence:
+        snapshot["document_evidence"] = evidence
     return snapshot, result
 
 
@@ -76,8 +139,13 @@ def save(body: AssessmentInput, request: Request, actor: Actor = Depends(identit
     require_org(actor)
     with connect(request.app.state.settings) as conn:
         snapshot, result = prepare(conn, actor, body)
-        if result["status"] != "calculada":
+        if result["status"] != "calculada" and not body.draft:
             raise HTTPException(422, "Preencha os dados indicados antes de salvar a apuração")
+        if body.draft:
+            result["status"] = "rascunho"
+            result["notice"] = (
+                "Prévia de trabalho. Não representa fechamento nem autorização de recolhimento."
+            )
         rules = catalog()
         sha = digest({"input": snapshot, "catalog": rules, "result": result})
         row = conn.execute(

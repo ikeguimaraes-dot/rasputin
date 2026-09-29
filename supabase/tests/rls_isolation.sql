@@ -17,6 +17,12 @@ insert into public.clientes (id, organizacao_id, cnpj, razao_social)
 values ('c0000000-0000-0000-0000-00000000000a', 'a0000000-0000-0000-0000-000000000001', '11111111000111', 'Cliente A'),
        ('c0000000-0000-0000-0000-00000000000b', 'b0000000-0000-0000-0000-000000000002', '22222222000122', 'Cliente B');
 
+insert into public.product_catalog_versions(organizacao_id,cliente_id,code,definition,sha256,criado_por)
+values ('a0000000-0000-0000-0000-000000000001','c0000000-0000-0000-0000-00000000000a',
+ 'P1','{}','a','aaaaaaaa-0000-0000-0000-00000000000a'),
+ ('b0000000-0000-0000-0000-000000000002','c0000000-0000-0000-0000-00000000000b',
+ 'P2','{}','b','bbbbbbbb-0000-0000-0000-00000000000b');
+
 -- A partir daqui, o usuário da Org A
 set local role authenticated;
 select set_config('request.jwt.claims',
@@ -24,6 +30,16 @@ select set_config('request.jwt.claims',
 
 do $$
 begin
+  if (select count(*) from public.product_catalog_versions) <> 1
+     or (select code from public.product_catalog_versions) <> 'P1' then
+    raise exception 'FALHA: catálogo de produto vazou entre organizações';
+  end if;
+  if has_table_privilege('authenticated','public.product_catalog_versions','INSERT')
+     or has_table_privilege('authenticated','public.product_catalog_versions','UPDATE')
+     or has_table_privilege('authenticated','public.product_catalog_versions','DELETE')
+     or has_table_privilege('anon','public.product_catalog_versions','SELECT') then
+    raise exception 'FALHA: privilégios indevidos no catálogo';
+  end if;
   if (select count(*) from public.clientes) <> 1
      or (select razao_social from public.clientes) <> 'Cliente A' then
     raise exception 'FALHA: usuário da Org A enxerga clientes de outra organização';
