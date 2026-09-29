@@ -6,6 +6,7 @@ from uuid import uuid4
 
 from psycopg.types.json import Jsonb
 
+from auditoria.confirmed_report import publish
 from auditoria.db import audit
 from auditoria.domain import Document, Profile, Result, Rule, digest
 from auditoria.engine import evaluate
@@ -325,6 +326,7 @@ def run_analysis(conn, settings, job):
         [Rule(**r) for r in analysis["rules"]],
         snapshot.get("official_catalog"),
     )
+    result = publish(result, snapshot)
     # Preserve ingestion limitations in every downloadable report, not only the upload screen.
     for upload in snapshot["uploads"]:
         report = upload.get("ingestion_report") or {}
@@ -419,7 +421,7 @@ def reissue(conn, settings, org, user, ident):
     ).fetchone()
     if not row:
         raise ValueError("Análise concluída não encontrada")
-    result = Result(**row["result_payload"])
+    result = publish(Result(**row["result_payload"]), row["input_snapshot"])
     # Reemissão usa findings preservados, nunca reavalia regras atuais.
     context = row["report_context"]
     storage = Storage(settings)

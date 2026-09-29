@@ -44,7 +44,29 @@ export type ReviewRow = {
   icms_value: string | null;
   source: Record<string, unknown>;
 };
+export type BaseReview = {
+  missing_icms: number;
+  other_difference: number;
+  compatible: number;
+  unassessed: number;
+  rows: {
+    document: string | null;
+    issued: string;
+    source: Record<string, unknown>;
+    description: string;
+    cfop: string | null;
+    kind: string;
+    operation_value: string;
+    icms: string;
+    expected_base: string;
+    pis_base: string | null;
+    cofins_base: string | null;
+    pis_cst: string | null;
+    cofins_cst: string | null;
+  }[];
+};
 export type Summary = {
+  base_review?: BaseReview;
   review_rows?: ReviewRow[];
   operations?: (Pick<
     ReviewRow,
@@ -72,6 +94,7 @@ export type Finding = {
     issued: string;
     item: {
       n_item: number;
+      icms?: { cst: string | null; value: string | null };
       ncm: string;
       cfop: string;
       source: Record<string, unknown>;

@@ -8,14 +8,18 @@ Lucro Presumido e Lucro Real**. Não emite, transmite nem corrige documentos do 
 
 Implementado:
 - Interface Next.js: autenticação Supabase, escritório, clientes/perfis, upload/mapeamento,
-  acompanhamento, resultados agrupados por produto, downloads, base/aprovação e atividades.
+  acompanhamento, resumo por linha com exemplos, downloads, base/aprovação e atividades.
 - API Python autenticada: valida usuário no Supabase Auth e organização no banco em cada chamada.
 - Fila PostgreSQL com `SKIP LOCKED`, deduplicação, tentativas, bloqueio por tarefa e recuperação.
 - XML/NFC-e e ZIP com limites; planilhas com cabeçalhos compostos e templates confirmados;
   recuperação conservadora BIFF8 para XLS danificado, sempre marcada parcial.
 - Motor C01–C09, R01 com tabela oficial de NCM e R02/R04/R05 por contexto. Ver [contrato fiscal](docs/fiscal/contrato.md).
 - Snapshots de entradas, perfil, layout, fontes de ingestão, regras e identidade do relatório.
-- PDF/XLSX, evidências, cobertura não avaliada, impactos **potenciais documentais**, reemissão.
+- PDF/XLSX com resumo da base de PIS/COFINS, uma linha por item divergente e reemissão.
+- Publicação conservadora: apenas contradição CST 40/41 × ICMS, diferença aritmética e
+  divergência de base contra o método declarado (C03/C04/C09). Suspeitas de NCM, descrição,
+  categoria, benefício e ST não viram ocorrências no relatório; dados ausentes não viram erro
+  nem aprovação. A classificação tributária completa continua fora dessa conclusão.
 - RLS, vínculos por organização/cliente, regras publicadas imutáveis e log de ações.
 - Ingestão do seed original para área de revisão; aprovação explícita de regras executáveis.
 - IA opcional somente para sugerir mapeamento **a partir dos cabeçalhos**, sem enviar linhas de clientes.
@@ -23,7 +27,7 @@ Implementado:
 **Publicado:** [interface](https://rasputin-auditoria.vercel.app) e
 [API](https://auditoria-api-production-f923.up.railway.app/ready).
 A conexão PostgreSQL pelo Session pooler foi validada,
-e as seis migrations foram aplicadas ao Supabase remoto, preservando as tabelas existentes.
+e as sete migrations foram aplicadas ao Supabase remoto, preservando as tabelas existentes.
 Os testes transacionais de RLS e integridade passaram no banco real. Os buckets `uploads` e
 `reports` são privados. A API local respondeu em `/ready` com o banco remoto e exige login.
 O catálogo oficial versionado acompanha o código: parâmetros de apuração de 2026, fontes legais

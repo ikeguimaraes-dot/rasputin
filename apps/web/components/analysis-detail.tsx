@@ -49,6 +49,20 @@ export function AnalysisDetail({
         {analysis.erro || "A análise ainda está na fila de processamento."}
       </Notice>
     );
+  const base = result.summary?.base_review;
+  const example = base?.rows[0];
+  const certain = result.findings.filter(
+    (f) =>
+      ["C04", "C09"].includes(f.code) ||
+      (f.code === "C03" &&
+        f.evidence.length > 0 &&
+        f.evidence.every(
+          (ev) =>
+            ["40", "41"].includes(ev.item.icms?.cst || "") &&
+            ev.item.icms?.value != null &&
+            Number(ev.item.icms.value) !== 0,
+        )),
+  );
   const rows = result.summary?.review_rows || [];
   const matches = (r: ReviewRow) =>
     (!cfop || r.cfop === cfop) &&
@@ -58,11 +72,14 @@ export function AnalysisDetail({
   const selected = new Set(filteredRows.map((r) => JSON.stringify(r.source)));
   const findings =
     cfop || rate || category
-      ? result.findings.filter((f) =>
+      ? certain.filter((f) =>
           f.evidence.some((ev) => selected.has(JSON.stringify(ev.item.source))),
         )
-      : result.findings;
-  const groups = Object.groupBy(findings, (f) => f.product);
+      : certain;
+  const groups = Object.groupBy(
+    findings.filter((f) => !base || f.code !== "C09"),
+    (f) => f.product,
+  );
   return (
     <div>
       <div className="row">
@@ -77,13 +94,109 @@ export function AnalysisDetail({
           PDF
         </Button>
       </div>
-      <Notice>
-        {analysis.parcial
-          ? "Análise parcial: há dados ou regras insuficientes para parte das checagens. "
-          : "Análise das checagens disponíveis. "}
-        Os impactos são estimativas documentais e não comprovam imposto
-        recolhido.
-      </Notice>
+      {base && (
+        <section className="card" style={{ padding: 24, marginTop: 20 }}>
+          <h3>Conferência da base de PIS e COFINS — CST 01 e 02</h3>
+          <ul>
+            <li>
+              <strong>{base.missing_icms}</strong> linhas sem descontar o ICMS
+              da base.
+            </li>
+            <li>
+              <strong>{base.other_difference}</strong> linha(s) com outra
+              divergência na composição da base.
+            </li>
+            <li>
+              <strong>{base.compatible}</strong> linhas compatíveis com a
+              fórmula.
+            </li>
+          </ul>
+          {example && (
+            <p>
+              <strong>Exemplo:</strong> nota {example.document}, linha{" "}
+              {String(example.source.line ?? "—")} — valor de{" "}
+              {money(example.operation_value)}, ICMS de {money(example.icms)}. A
+              base esperada é {money(example.expected_base)}, mas PIS informa{" "}
+              {example.pis_base === null
+                ? "base não informada"
+                : money(example.pis_base)}{" "}
+              e COFINS informa{" "}
+              {example.cofins_base === null
+                ? "base não informada"
+                : money(example.cofins_base)}
+              .
+            </p>
+          )}
+          <p className="subtitle">
+            Valor da operação = valor do item − desconto + frete + seguro +
+            outras despesas. Comparação conforme o método cadastrado. Cada linha
+            é contada uma vez.
+          </p>
+          {base.unassessed > 0 && (
+            <p>
+              {base.unassessed} linha(s) sem comparação completa; não contadas
+              como compatíveis ou como erro.
+            </p>
+          )}
+          {base.rows.length > 0 && (
+            <details>
+              <summary>
+                Ver as {base.rows.length} linhas com divergência na base
+              </summary>
+              <div className="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nota / linha</th>
+                      <th>Produto / CFOP</th>
+                      <th>Valor / ICMS</th>
+                      <th>Base esperada</th>
+                      <th>Base PIS / COFINS</th>
+                      <th>Resultado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {base.rows.map((r, i) => (
+                      <tr key={i}>
+                        <td>
+                          {r.document}
+                          <br />
+                          Linha {String(r.source.line ?? "—")}
+                        </td>
+                        <td>
+                          {r.description}
+                          <br />
+                          CFOP {r.cfop}
+                        </td>
+                        <td>
+                          {money(r.operation_value)}
+                          <br />
+                          {money(r.icms)}
+                        </td>
+                        <td>{money(r.expected_base)}</td>
+                        <td>
+                          {r.pis_base === null ? "—" : money(r.pis_base)}
+                          <br />
+                          {r.cofins_base === null ? "—" : money(r.cofins_base)}
+                        </td>
+                        <td>
+                          {r.kind === "missing_icms"
+                            ? "ICMS não descontado"
+                            : "Outra divergência de composição"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          )}
+        </section>
+      )}
+      <p className="subtitle">
+        Somente divergências verificáveis nos dados e na fórmula cadastrada. A
+        classificação fiscal dos demais produtos não foi concluída.
+      </p>
       {error && <Notice error>{error}</Notice>}
       {rows.length > 0 && (
         <>
@@ -150,9 +263,23 @@ export function AnalysisDetail({
             </label>
           </div>
           <p className="subtitle">
-            {filteredRows.length} itens · {findings.length} apontamentos no
-            filtro. Categoria derivada do cadastro, sujeita a revisão. Totais
-            não representam apuração mensal.
+            {filteredRows.length} itens ·{" "}
+            {
+              new Set(
+                findings.flatMap((f) =>
+                  f.evidence.map((ev) =>
+                    JSON.stringify([
+                      ev.document,
+                      ev.issued,
+                      ev.item.n_item,
+                      ev.item.source,
+                    ]),
+                  ),
+                ),
+              ).size
+            }{" "}
+            linhas com divergência no filtro. Categoria derivada do cadastro,
+            sujeita a revisão. Totais não representam apuração mensal.
           </p>
         </>
       )}
@@ -170,14 +297,10 @@ export function AnalysisDetail({
           className={`tab ${tab === "findings" ? "active" : ""}`}
           onClick={() => setTab("findings")}
         >
-          Apontamentos <span className="badge-count">{findings.length}</span>
-        </button>
-        <button
-          className={`tab ${tab === "skipped" ? "active" : ""}`}
-          onClick={() => setTab("skipped")}
-        >
-          Não avaliadas{" "}
-          <span className="badge-count">{result.skipped.length}</span>
+          Outras divergências{" "}
+          <span className="badge-count">
+            {findings.filter((f) => !base || f.code !== "C09").length}
+          </span>
         </button>
       </div>
       {tab === "items" ? (
@@ -298,35 +421,10 @@ export function AnalysisDetail({
             ))}
           </div>
         ))
-      ) : (
-        <div className="card">
-          <table>
-            <thead>
-              <tr>
-                <th>Regra</th>
-                <th>Motivo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {result.skipped.slice(0, 300).map((s, i) => (
-                <tr key={i}>
-                  <td>{s.code}</td>
-                  <td>{s.reason}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {result.skipped.length > 300 && (
-            <p className="card-body">
-              Mostrando 300 registros. Baixe o XLSX para a lista completa.
-            </p>
-          )}
-        </div>
-      )}
+      ) : null}
       {tab === "findings" && !findings.length && (
         <Notice>
-          Nenhum apontamento nos filtros selecionados. Consulte a aba “Não
-          avaliadas” antes de concluir sobre a conformidade.
+          Nenhuma divergência documental nos filtros selecionados.
         </Notice>
       )}
       <details>

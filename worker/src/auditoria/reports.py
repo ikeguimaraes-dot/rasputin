@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import html
 import re
-from collections import defaultdict
 from io import BytesIO
 
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 
-from auditoria.domain import Result, digest
+from auditoria.confirmed_report import brl, example, publish
+from auditoria.domain import Result
 
 FOOTER = "Relatório de conferência. Não substitui a validação do contador responsável."
 
@@ -22,6 +22,7 @@ def safe_cell(value):
 
 
 def xlsx_report(result: Result, context: dict) -> bytes:
+    result = publish(result)
     wb = Workbook()
     ws = wb.active
     ws.title = "Resumo"
@@ -32,6 +33,54 @@ def xlsx_report(result: Result, context: dict) -> bytes:
     ws.append(["Hash das regras", result.rules_hash])
     ws.append(["Limitação", result.summary["impact_notice"]])
     ws.append(["Rodapé", FOOTER])
+    base = result.summary.get("base_review")
+    if base:
+        ws.append(["Linhas sem descontar o ICMS da base", base["missing_icms"]])
+        ws.append(["Linhas com outra divergência na composição da base", base["other_difference"]])
+        ws.append(["Linhas compatíveis com a fórmula", base["compatible"]])
+        if base["rows"]:
+            ws.append(["Exemplo", safe_cell(example(base["rows"][0]))])
+        ws = wb.create_sheet("Bases PIS COFINS")
+        ws.append(
+            [
+                "Nota",
+                "Linha",
+                "Produto",
+                "CFOP",
+                "Resultado",
+                "Valor da operação R$",
+                "ICMS R$",
+                "Base esperada R$",
+                "Base PIS R$",
+                "Base COFINS R$",
+                "CST PIS",
+                "CST COFINS",
+                "Arquivo",
+                "Aba",
+            ]
+        )
+        for row in base["rows"]:
+            ws.append(
+                [
+                    safe_cell(row["document"]),
+                    row["source"].get("line"),
+                    safe_cell(row["description"]),
+                    row["cfop"],
+                    "ICMS não descontado"
+                    if row["kind"] == "missing_icms"
+                    else "Outra divergência de composição",
+                ]
+                + [
+                    float(row[k]) if row[k] is not None else None
+                    for k in ("operation_value", "icms", "expected_base", "pis_base", "cofins_base")
+                ]
+                + [
+                    row["pis_cst"],
+                    row["cofins_cst"],
+                    safe_cell(row["source"].get("file")),
+                    safe_cell(row["source"].get("sheet")),
+                ]
+            )
     ws = wb.create_sheet("Ocorrências")
     ws.append(
         [
@@ -73,6 +122,8 @@ def xlsx_report(result: Result, context: dict) -> bytes:
         ]
     )
     for f in result.findings:
+        if base and f.code == "C09":
+            continue
         for ev in f.evidence:
             item, source = ev["item"], ev["item"]["source"]
             row = [
@@ -187,12 +238,6 @@ def xlsx_report(result: Result, context: dict) -> bytes:
             ]
             + [safe_cell(row["source"].get(k)) for k in ("file", "sheet", "line")]
         )
-    ws = wb.create_sheet("Não avaliadas")
-    ws.append(["Regra", "Documento", "Origem", "Motivo"])
-    for skip in result.skipped:
-        ws.append(
-            [safe_cell(str(skip.get(k, ""))) for k in ("code", "document", "source", "reason")]
-        )
     for sheet in wb:
         sheet.freeze_panes = "A2"
         sheet.auto_filter.ref = sheet.dimensions
@@ -209,6 +254,8 @@ def xlsx_report(result: Result, context: dict) -> bytes:
 
 
 def html_report(result: Result, context: dict, branding: dict | None = None) -> str:
+    result = publish(result)
+
     def e(v):
         return html.escape(str(v if v is not None else "—"))
 
@@ -218,109 +265,58 @@ def html_report(result: Result, context: dict, branding: dict | None = None) -> 
         color = "#173D35"
     logo = branding.get("logo_data_url") or ""
     logo_html = (
-        f'<img alt="Logo do escritório" src="{e(logo)}" style="max-width:160px;max-height:70px">'
+        f'<img alt="Logo" src="{e(logo)}" style="max-width:160px;max-height:70px">'
         if logo.startswith(("data:image/png;base64,", "data:image/jpeg;base64,"))
         else ""
     )
-    groups = defaultdict(list)
-    for f in result.findings:
-        groups[f.product].append(f)
-    sections = []
-    for product, rows in sorted(groups.items()):
-        lines = []
-        consolidated = defaultdict(list)
-        for finding in rows:
-            it = finding.evidence[0]["item"]
-            key = digest(
-                {
-                    "code": finding.code,
-                    "message": finding.message,
-                    "expected": finding.expected,
-                    "current": {
-                        **{k: it.get(k) for k in ("ncm", "cfop", "cest")},
-                        **{
-                            tax: {k: it[tax].get(k) for k in ("cst", "csosn", "rate")}
-                            for tax in ("icms", "pis", "cofins")
-                        },
-                    },
-                }
-            )
-            consolidated[key].append(finding)
-        for grouped in consolidated.values():
-            f = grouped[0]
-            ev = f.evidence[0]
-            item = ev["item"]
-            lines.append(
-                f"<tr><td>{e(f.code)}<br>{e(f.severity)}</td><td>{e(f.message)}"
-                f"<br><small>{len(grouped)} ocorrência(s). Exemplo: nota {e(ev['document'])} · item {e(item['n_item'])}</small></td>"
-                f"<td>NCM {e(item['ncm'])}<br>CFOP {e(item['cfop'])}<br>"
-                f"ICMS CST {e(item['icms']['cst'])} / CSOSN {e(item['icms']['csosn'])}<br>"
-                f"PIS CST {e(item['pis']['cst'])} · COFINS CST {e(item['cofins']['cst'])}<br>"
-                f"CEST {e(item['cest'])} · ICMS {e(item['icms']['rate'])}%"
-                f"</td><td>{e(f.expected or 'Revisão do contador')}</td></tr>"
-            )
-        legal = sorted({f"{f.legal_basis} | {f.source_url or ''}" for f in rows})
-        sections.append(
-            f"<section><h2>{e(rows[0].description)} <small>({e(product)})</small></h2>"
-            f"<p>{len(rows)} apontamentos. Ocorrências detalhadas no anexo XLSX.</p>"
-            "<table><thead><tr><th>Regra</th><th>Apontamento</th><th>Como está</th>"
-            "<th>Revisão sugerida</th></tr></thead><tbody>"
-            + "".join(lines)
-            + "</tbody></table>"
-            + "".join(f'<p class="legal">{e(legal_text)}</p>' for legal_text in legal)
-            + "</section>"
-        )
-    operations = "".join(
-        "<tr>"
-        + "".join(
-            f"<td>{e(row.get(k))}</td>"
-            for k in ("cfop", "nature", "category", "icms_rate", "items", "value", "icms_value")
-        )
-        + "</tr>"
-        for row in result.summary.get("operations", [])
-    )
-    operation_table = (
-        (
-            "<h2>Conferência por CFOP, categoria e alíquota</h2><p>Categorias baseadas no cadastro informado; totais do arquivo, não apuração do mês.</p><table><thead><tr><th>CFOP</th><th>Natureza</th><th>Categoria</th><th>ICMS %</th><th>Itens</th><th>Valor R$</th><th>ICMS R$</th></tr></thead><tbody>"
-            + operations
-            + "</tbody></table>"
-        )
-        if operations
-        else ""
-    )
     cover = "".join(f"<p><strong>{e(k)}:</strong> {e(v)}</p>" for k, v in context.items())
-    top = CounterCodes(result)
-    potential = result.summary["potential_impact"]
-    impacts_text = (
-        f"Possível excesso documental: R$ {potential['pago_a_mais']}; "
-        f"possível insuficiência documental: R$ {potential['pago_a_menos']}"
+    base = result.summary.get("base_review")
+    sections = []
+    if base:
+        sections.append(
+            f"<h2>Base de PIS e COFINS — CST 01 e 02</h2><ul><li>{base['missing_icms']} linhas sem descontar o ICMS da base.</li><li>{base['other_difference']} linha(s) com outra divergência na composição da base.</li><li>{base['compatible']} linhas compatíveis com a fórmula.</li></ul>"
+        )
+        sections.append(
+            "<p>Fórmula conforme o método cadastrado. Valor da operação = valor do item − desconto + frete + seguro + outras despesas. Cada linha é contada uma vez.</p>"
+        )
+        if base["unassessed"]:
+            sections.append(
+                f"<p>{base['unassessed']} linha(s) sem comparação completa; não contabilizadas como compatíveis ou como erro.</p>"
+            )
+        if base["rows"]:
+            sections.append(f"<p><strong>Exemplo:</strong> {e(example(base['rows'][0]))}</p>")
+            sections.append(
+                "<h2>Linhas com divergência na base</h2><table><thead><tr><th>Nota / linha</th><th>Produto</th><th>Operação / ICMS</th><th>Base esperada</th><th>Base PIS / COFINS</th><th>Diferença</th></tr></thead><tbody>"
+            )
+            for row in base["rows"]:
+                sections.append(
+                    f"<tr><td>{e(row['document'])} / {e(row['source'].get('line'))}</td><td>{e(row['description'])}</td><td>{brl(row['operation_value'])}<br>{brl(row['icms'])}</td><td>{brl(row['expected_base'])}</td><td>{brl(row['pis_base'])}<br>{brl(row['cofins_base'])}</td><td>{'ICMS não descontado' if row['kind'] == 'missing_icms' else 'Composição da base'}</td></tr>"
+                )
+            sections.append("</tbody></table>")
+    others = [f for f in result.findings if not base or f.code != "C09"]
+    if others:
+        sections.append("<h2>Outras divergências documentais</h2>")
+        for f in others:
+            for ev in f.evidence:
+                sections.append(
+                    f"<p><strong>Nota {e(ev['document'])}, linha {e(ev['item']['source'].get('line'))} — {e(f.description)}</strong><br>{e(f.message)}<br>ICMS informado: {brl(ev['item']['icms']['value'])}. {e(f.expected) if f.expected else ''}</p>"
+                )
+    if not result.findings:
+        sections.append(
+            "<p>Nenhuma divergência documental identificada nas comparações realizadas.</p>"
+        )
+    limitations = "".join(
+        f"<p>{e(x)}</p>"
+        for x in result.summary.get("limitations", [])
+        if "arquivo" in x.lower() or "trunc" in x.lower() or "descart" in x.lower()
     )
     return f'''<!doctype html><html lang="pt-BR"><meta charset="utf-8"><style>
-    @page {{size:A4; margin:18mm; @bottom-center {{content:"{FOOTER}";font-size:8pt}}}}
-    body{{font:10pt sans-serif;color:{color}}} h1{{font-size:30pt}} h2{{font-size:15pt}}
-    table{{border-collapse:collapse;width:100%;font-size:8pt}}td,th{{padding:7px;border-bottom:1px solid #ddd;text-align:left}}
-    th{{background:#edf4f0}}section{{margin-top:24px}}.cover{{page-break-after:always}}.legal,small{{font-size:8pt;color:#53685f}}
-    .warning{{background:#fff0d4;padding:12px}}p{{overflow-wrap:anywhere}}tr{{break-inside:avoid}}
-    </style><body><div class="cover">{logo_html}<p>{e(branding.get("nome", "AUDITORIA FISCAL"))}</p>
-    <h1>Conferência fiscal</h1>{cover}<p>Motor: {e(result.engine_version)}</p>
-    <p class="legal">Entradas: {result.input_hash}<br>Base: {result.rules_hash}</p>
-    <div class="warning">{e(result.summary["impact_notice"])}<br>
-    A análise é limitada aos documentos e regras disponíveis. Checagens não avaliadas: {len(result.skipped)}.</div>
-    <h2>Resumo executivo</h2><p>{len(result.findings)} apontamentos · {len(groups)} produtos</p>
-    <p>Por severidade: {e(result.summary["severity"])}</p><p>Principais ocorrências: {e(top)}</p>
-    <p>Impactos potenciais: {e(impacts_text)}</p>
-    {"".join(f"<p>{e(x)}</p>" for x in result.summary["limitations"])}</div>
-    {operation_table}
-    {"".join(sections) or "<h2>Nenhuma divergência identificada nas checagens executadas.</h2>"}
-    <p>{e(branding.get("rodape", ""))}</p></body></html>'''
-
-
-def CounterCodes(result):
-    from collections import Counter
-
-    return ", ".join(
-        f"{k}: {v}" for k, v in Counter(f.code for f in result.findings).most_common(5)
-    )
+    @page {{size:A4; margin:15mm; @bottom-center {{content:"{FOOTER}";font-size:8pt}}}}
+    body{{font:10pt sans-serif;color:{color}}} h1{{font-size:24pt}} h2{{font-size:14pt}}
+    table{{border-collapse:collapse;width:100%;font-size:8pt}}td,th{{padding:6px;border-bottom:1px solid #ddd;text-align:left}}th{{background:#edf4f0}}tr{{break-inside:avoid}}p{{overflow-wrap:anywhere}}small{{font-size:7pt}}
+    </style><body>{logo_html}<h1>Conferência fiscal</h1>{cover}{"".join(sections)}
+    <p>A conferência mostra diferenças verificáveis nos dados e na fórmula cadastrada. A classificação fiscal dos demais produtos não foi concluída.</p>{limitations}
+    <small>Motor: {e(result.engine_version)}<br>Entradas: {e(result.input_hash)}<br>Regras: {e(result.rules_hash)}</small><p>{e(branding.get("rodape", ""))}</p></body></html>'''
 
 
 def pdf_report(result: Result, context: dict, branding: dict | None = None) -> bytes:

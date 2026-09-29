@@ -130,6 +130,11 @@ def test_upload_to_reports_and_reissue_immutable(runtime):
     assert tick(settings)
     result = http.get("/api/analyses/" + analysis).json()
     assert result["status"] == "concluida", result
+    assert result["resumo"]["report_policy"] == "documentary-only-v1"
+    listed = http.get("/api/analyses", params={"client_id": ident})
+    assert listed.status_code == 200, listed.text
+    assert listed.json()[0]["resumo"]["findings"] == result["resumo"]["findings"]
+    assert "saved_findings" not in listed.json()[0]
     assert result["parcial"]  # nenhuma base fiscal validada ainda
     assert any(v.startswith(b"%PDF") for v in objects.values())
     assert any(

@@ -277,7 +277,7 @@ export default function Home() {
   const client = clients.find((c) => c.id === clientId);
   const profile = client?.profiles[client.profiles.length - 1];
   const done = analyses.filter((a) => a.status === "concluida");
-  const findings = done.reduce((n, a) => n + (a.resumo?.findings || 0), 0);
+  const findings = done[0]?.resumo?.findings || 0;
   async function openAnalysis(id: string) {
     setBusy(true);
     try {
@@ -600,7 +600,7 @@ export default function Home() {
                           icon: FileCheck2,
                         },
                         {
-                          label: "Apontamentos",
+                          label: "Divergências · última análise",
                           value: findings,
                           note: "Nas análises concluídas exibidas",
                           icon: FileSearch,
@@ -683,7 +683,7 @@ export default function Home() {
                             <tr>
                               <th>Período</th>
                               <th>Status</th>
-                              <th>Apontamentos</th>
+                              <th>Linhas com divergência</th>
                               <th>Cobertura</th>
                               <th></th>
                             </tr>

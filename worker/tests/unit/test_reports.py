@@ -9,13 +9,14 @@ from auditoria.reports import html_report, pdf_report, xlsx_report
 def test_xlsx_formula_injection_is_escaped(document, profile):
     document.items[0].description = '=HYPERLINK("https://evil.invalid")'
     document.items[0].ncm = "00000000"
+    document.items[0].icms.cst = "41"
     result = evaluate([document], [profile], [])
     data = xlsx_report(result, {"Cliente": "=1+1"})
     book = openpyxl.load_workbook(BytesIO(data))
     assert book["Resumo"]["B1"].value.startswith("'")
     assert book["Ocorrências"]["D2"].data_type == "s"
     assert book["Ocorrências"]["D2"].value.startswith("'")
-    assert "Não avaliadas" in book.sheetnames
+    assert "Não avaliadas" not in book.sheetnames
 
 
 def test_pdf_and_html_escape_customer_text(document, profile):
@@ -55,10 +56,11 @@ def test_branding_rejects_external_resource():
 
 def test_pdf_product_sections_show_findings(document, profile):
     document.items[0].ncm = "00000000"
+    document.items[0].icms.cst = "41"
     result = evaluate([document], [profile], [])
     html = html_report(result, {"Cliente": "Teste"})
-    assert "NCM coringa" in html and "Produto sintético" in html
-    assert "ocorrência(s)" in html
+    assert "NCM coringa" not in html and "Produto sintético" in html
+    assert "Outras divergências documentais" in html
     assert pdf_report(result, {"Cliente": "Teste"}).startswith(b"%PDF")
 
 
@@ -70,4 +72,4 @@ def test_operation_report_keeps_non_error_rows_and_missing_values(document, prof
     assert book["Itens conferidos"].max_row == 2
     assert book["Itens conferidos"]["M2"].value is None
     assert book["Por CFOP e categoria"]["B2"].value.startswith("Devolução")
-    assert "Conferência por CFOP" in html_report(result, {})
+    assert "Operação de natureza específica" not in html_report(result, {})

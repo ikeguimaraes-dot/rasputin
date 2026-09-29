@@ -12,8 +12,9 @@ from psycopg.types.json import Jsonb
 from pydantic import Field, field_validator
 
 from auditoria.auth import Actor, identity, require_org
+from auditoria.confirmed_report import confirmed, line_key, publish
 from auditoria.db import audit, connect
-from auditoria.domain import Model, Profile, Rule
+from auditoria.domain import Finding, Model, Profile, Result, Rule
 from auditoria.ingestion.sheets import headers, preview, workbook
 from auditoria.ingestion.xml import MAX_BYTES
 from auditoria.service import create_analysis, enqueue, new_rule, reissue
@@ -342,12 +343,21 @@ def analysis_create(body: AnalysisInput, request: Request, actor: Actor = Depend
 def analyses(request: Request, client_id: UUID, actor: Actor = Depends(identity)):
     require_org(actor)
     with connect(request.app.state.settings) as conn:
-        return conn.execute(
-            "select id,status,periodo_ini,periodo_fim,parcial,resumo,erro,criado_em "
+        rows = conn.execute(
+            "select id,status,periodo_ini,periodo_fim,parcial,resumo,erro,criado_em, "
+            "result_payload->'findings' as saved_findings "
             "from analises where organizacao_id=%s and cliente_id=%s "
             "order by criado_em desc limit 100",
             (actor.org, client_id),
         ).fetchall()
+
+        for row in rows:
+            findings = [Finding(**f) for f in (row.pop("saved_findings") or [])]
+            if row.get("resumo"):
+                row["resumo"]["findings"] = len(
+                    {line_key(ev) for f in findings if confirmed(f) for ev in f.evidence}
+                )
+        return rows
 
 
 @router.get("/analyses/{ident}")
@@ -355,7 +365,11 @@ def analysis_detail(ident: UUID, request: Request, actor: Actor = Depends(identi
     require_org(actor)
     with connect(request.app.state.settings) as conn:
         row = owned(conn, "analises", ident, actor.org)
-        row.pop("input_snapshot", None)
+        snapshot = row.pop("input_snapshot", None)
+        if row.get("result_payload"):
+            result = publish(Result(**row["result_payload"]), snapshot)
+            row["result_payload"] = result.model_dump(mode="json")
+            row["resumo"] = result.summary
         return row
 
 

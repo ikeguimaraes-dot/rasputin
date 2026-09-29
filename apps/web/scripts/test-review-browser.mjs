@@ -88,8 +88,42 @@ try {
     periodo_fim: "2026-08-31",
     resumo: { findings: 0 },
     result_payload: {
-      summary: { review_rows: rows },
-      findings: [],
+      summary: {
+        review_rows: rows,
+        base_review: {
+          missing_icms: 1,
+          other_difference: 0,
+          compatible: 1,
+          unassessed: 0,
+          rows: [
+            {
+              document: "2",
+              issued: "2026-08-01",
+              source: { line: 8 },
+              description: "Bebida sintética",
+              cfop: "5102",
+              kind: "missing_icms",
+              operation_value: "200",
+              icms: "50",
+              expected_base: "150",
+              pis_base: "200",
+              cofins_base: "200",
+              pis_cst: "01",
+              cofins_cst: "01",
+            },
+          ],
+        },
+      },
+      findings: [
+        {
+          id: "guess",
+          code: "D05",
+          message: "SUSPEITA INDEVIDA",
+          product: "P1",
+          evidence: [],
+          expected: {},
+        },
+      ],
       skipped: [],
       input_hash: "synthetic",
       rules_hash: "synthetic",
@@ -136,17 +170,37 @@ try {
   await page
     .getByRole("button", { name: "Ver resultado", exact: true })
     .click();
+  await page.getByText(/linhas sem descontar o ICMS da base/).waitFor();
+  assert.equal(await page.getByText("SUSPEITA INDEVIDA").count(), 0);
+  assert.equal(
+    await page.getByRole("button", { name: /Não avaliadas/ }).count(),
+    0,
+  );
+  await page.getByText("Ver as 1 linhas com divergência na base").click();
+  await page
+    .getByRole("cell", { name: "ICMS não descontado", exact: true })
+    .waitFor();
+  await page.getByText("Ver as 1 linhas com divergência na base").click();
   await page.getByRole("button", { name: /Itens por CFOP/ }).click();
-  assert.equal(await page.getByRole("dialog").locator("tbody tr").count(), 3);
+  assert.equal(
+    await page.getByRole("dialog").locator("tbody tr:visible").count(),
+    3,
+  );
   await page.getByLabel("CFOP", { exact: true }).selectOption("5202");
-  assert.equal(await page.getByRole("dialog").locator("tbody tr").count(), 1);
+  assert.equal(
+    await page.getByRole("dialog").locator("tbody tr:visible").count(),
+    1,
+  );
   await page
     .getByRole("cell", { name: /Devolução de compra para comercialização/ })
     .waitFor();
   await page.getByLabel("CFOP", { exact: true }).selectOption("");
   await page.getByLabel("Alíquota ICMS", { exact: true }).selectOption("25.0");
   await page.getByRole("cell", { name: /Bebida sintética/ }).waitFor();
-  assert.equal(await page.getByRole("dialog").locator("tbody tr").count(), 1);
+  assert.equal(
+    await page.getByRole("dialog").locator("tbody tr:visible").count(),
+    1,
+  );
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({
     path: "/private/tmp/rasputin-review-mobile.png",
